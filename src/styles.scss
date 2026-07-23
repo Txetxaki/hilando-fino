@@ -136,11 +136,16 @@ textarea { resize: vertical; }
 @media (max-width: 720px) {
   .hero { padding: 2rem 1.25rem; border-radius: 1.25rem; }
   .field-pair { grid-template-columns: 1fr; }
-  /* Same 8vw scaling as the base h1 rule (keeps sizing continuous across the
-     breakpoint) with a lower ceiling so headings don't render larger on phones
-     than they do on desktop — the previous 15vw/4.25rem values produced up to
-     68px headings on narrow phones, worse than the desktop rule at 720px. */
-  h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
+  /* The base h1/h2 rules use an 8vw/4vw preferred value with a floor that's
+     only reachable above ~500px/800px width — every phone below that (320 to
+     ~480px, i.e. all real phones) was pinned to the floor regardless of how
+     narrow the screen actually was: a flat 40px h1 and 32px h2 on a 320px
+     phone look identical to a 480px phone, and are oversized relative to
+     both. Raise the vw multiplier so headings keep scaling down across the
+     full phone range instead of hitting a floor immediately.
+  */
+  h1 { font-size: clamp(1.9rem, 9vw, 2.9rem); }
+  h2 { font-size: clamp(1.5rem, 7vw, 2.1rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
