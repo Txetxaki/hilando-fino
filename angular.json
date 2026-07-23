@@ -1,0 +1,60 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "hilando-fino": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "hf",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/hilando-fino",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "server": "src/main.server.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              { "glob": "**/*", "input": "public" },
+              { "glob": "logo.png", "input": "." }
+            ],
+            "styles": ["src/styles.scss"],
+            "ssr": { "entry": "server.ts" },
+            "prerender": true,
+            "security": { "allowedHosts": ["localhost", "127.0.0.1"] },
+            "budgets": [
+              { "type": "initial", "maximumWarning": "300kB", "maximumError": "500kB" },
+              { "type": "anyComponentStyle", "maximumWarning": "12kB", "maximumError": "20kB" }
+            ]
+          },
+          "configurations": {
+            "production": { "optimization": true, "sourceMap": false, "namedChunks": false, "extractLicenses": true },
+            "pages": {
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "fileReplacements": [
+                { "replace": "src/environments/site-config.ts", "with": "src/environments/site-config.pages.ts" }
+              ]
+            },
+            "development": { "optimization": false, "sourceMap": true, "extractLicenses": false }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": { "buildTarget": "hilando-fino:build:production" },
+            "development": { "buildTarget": "hilando-fino:build:development" }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "name": "hilando-fino",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.15.0",
+    "npm": ">=11.0.0"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "npm run sitemap && node node_modules/@angular/cli/bin/ng.js build",
+    "build:pages": "node --import tsx tools/build-pages.mjs",
+    "serve:prerender": "node dist/hilando-fino/server/server.mjs",
+    "test": "vitest run --coverage=false",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.spec.json --noEmit",
+    "e2e": "npm run build && playwright test --grep-invert @a11y",
+    "e2e:ci": "playwright test --grep-invert @a11y",
+    "a11y": "npm run build && playwright test --grep @a11y",
+    "a11y:ci": "playwright test --grep @a11y",
+    "sitemap": "tsx tools/generate-sitemap.ts",
+    "verify:inventory": "node tools/verify-change-inventory.mjs",
+    "verify:prerender": "node --import tsx tools/verify-prerender-output.mjs",
+    "verify:pages": "node --import tsx tools/verify-pages-artifact.mjs",
+    "pages:smoke": "node --import tsx tools/pages-smoke.mjs",
+    "performance:smoke": "node tools/performance-smoke.mjs",
+    "performance:smoke:ci": "node tools/performance-smoke.mjs --skip-build",
+    "lighthouse": "npm run build && node tools/lighthouse-budget.mjs",
+    "lighthouse:ci": "node tools/lighthouse-budget.mjs"
+  },
+  "dependencies": {
+    "@angular/common": "22.0.8",
+    "@angular/compiler": "22.0.8",
+    "@angular/core": "22.0.8",
+    "@angular/forms": "22.0.8",
+    "@angular/platform-browser": "22.0.8",
+    "@angular/platform-server": "22.0.8",
+    "@angular/router": "22.0.8",
+    "@angular/ssr": "22.0.7",
+    "express": "5.2.0",
+    "rxjs": "7.8.2",
+    "tslib": "2.8.1",
+    "zone.js": "0.16.0"
+  },
+  "devDependencies": {
+    "@angular/build": "22.0.7",
+    "@angular/cli": "22.0.7",
+    "@angular/compiler-cli": "22.0.8",
+    "@axe-core/playwright": "4.11.0",
+    "@playwright/test": "1.57.0",
+    "@types/express": "5.0.6",
+    "@types/node": "24.10.2",
+    "angular-eslint": "22.1.0",
+    "chrome-launcher": "1.2.0",
+    "eslint": "10.7.0",
+    "lighthouse": "13.4.1",
+    "node": "^24.15.0",
+    "tsx": "4.21.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.65.0",
+    "vitest": "4.1.10"
+  },
+  "overrides": {
+    "@hono/node-server": "2.0.11",
+    "esbuild": "0.28.1"
+  }
+}

@@ -1,0 +1,108 @@
+schema: spec-driven
+project: hilando-fino
+initialized: 2026-07-22
+persistence:
+  mode: hybrid
+  backends:
+    openspec: true
+    engram: true
+session_preflight:
+  execution_mode: auto
+  artifact_store_mode: hybrid
+  chained_pr_strategy: ask-always
+  review_budget_lines: 800
+context: |
+  Current repository state: implemented Angular 22 public website using static prerender output plus an Express API/server boundary for contact, health, and safe 404 handling. Runtime SSR is not claimed for the current delivery.
+  Current implementation includes package/lock manifests, Angular workspace config, source under src/**, tests, tools, docs, GitHub Pages CI, and draft-safe public robots/sitemap artifacts.
+  Initial-state note (2026-07-22): the repository originally contained brand documentation, Claude Project content docs, a Stitch static HTML/image export, and brand assets, with no Angular workspace, package manifest, framework config, CI, or application source.
+  Public website copy is expected to be Spanish, while SDD technical artifacts remain English by default.
+  Brand constraints: warm professional psychology practice; do not invent health professional facts or promise clinical outcomes.
+stack:
+  detected:
+    application_framework: Angular 22
+    rendering: static-prerender plus Express API; runtime SSR is not claimed
+    languages:
+      - TypeScript
+      - Markdown
+      - HTML
+      - SCSS
+    source_exports:
+      - Stitch static HTML export using Tailwind CDN
+    package_manager: npm
+    build_system: Angular CLI application builder with prerender output
+    server_runtime: Express 5 API/static-prerender server
+    ci: GitHub Actions quality and Pages preview workflow
+  initial_state:
+    detected_at: 2026-07-22
+    application_framework: none
+    package_manager: none
+    build_system: none
+testing:
+  strict_tdd: false
+  reason: Current project has tests and quality commands, but strict TDD was not enabled for this SDD change and the apply phase remains Standard mode.
+  updated_at: 2026-07-23
+  initial_state_note: No test runner, package manifest, Angular workspace, CI config, or implementation code was detected during init on 2026-07-22.
+  commands:
+    test: npm test
+    coverage: npm test -- --coverage
+    lint: npm run lint
+    typecheck: npm run typecheck
+    format: ""
+    build: npm run build
+    verify_prerender: npm run verify:prerender
+    build_pages: npm run build:pages
+    verify_pages: npm run verify:pages
+    inventory: npm run verify:inventory
+    e2e: npm run e2e
+    a11y: npm run a11y
+    performance_smoke: npm run performance:smoke
+    lighthouse: npm run lighthouse
+  layers:
+    unit:
+      available: true
+      tool: Vitest
+    integration:
+      available: true
+      tool: Vitest HTTP contract tests
+    e2e:
+      available: true
+      tool: Playwright
+  quality_tools:
+    linter:
+      available: true
+      command: npm run lint
+    type_checker:
+      available: true
+      command: npm run typecheck
+    formatter:
+      available: false
+      command: ""
+rules:
+  proposal:
+    - Be explicit when a change moves from brand/docs export to Angular implementation.
+    - Include rollback or non-destructive migration notes for generated app structure changes.
+  specs:
+    - Use RFC 2119 keywords and Given/When/Then scenarios.
+    - Keep technical specs in English unless explicitly requested otherwise.
+    - Preserve Spanish public-facing website copy and healthcare communication constraints.
+  design:
+    - Distinguish detected current stack from requested future stack.
+    - Include accessibility and healthcare trust constraints for public website features.
+    - Treat Stitch export and brand docs as input references, not production architecture.
+  tasks:
+    - Keep tasks reviewable within the configured 800-line review budget.
+    - Surface chained PR decisions because chained_pr_strategy is ask-always.
+  apply:
+    tdd: false
+    test_command: npm test
+    guidance:
+      - Preserve the current static-prerender plus Express API model unless a future SDD change explicitly approves runtime SSR.
+      - Keep tasks 6.1-6.4 blocked until Marta/legal/publication approvals exist.
+  verify:
+    test_command: npm run lint && npm run typecheck && npm test
+    build_command: npm run build && npm run verify:prerender && npm run build:pages && npm run verify:pages
+    coverage_threshold: 0
+    guidance:
+      - Include inventory, audit, browser, accessibility, performance smoke, Lighthouse, and git diff whitespace checks before staging/commit readiness.
+  archive:
+    - Preserve OpenSpec audit trail under openspec/changes/archive/.

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marta Martín - Hilando Fino Psicología</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300&amp;family=Manrope:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#362b30",
+                      "on-tertiary-container": "#b3b1ae",
+                      "surface": "#fff8f7",
+                      "surface-variant": "#f0dfde",
+                      "surface-container-highest": "#f0dfde",
+                      "primary-fixed": "#f0dee4",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#504349",
+                      "on-primary-container": "#beadb3",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed": "#340f0c",
+                      "surface-dim": "#e7d6d6",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed": "#e5e2df",
+                      "surface-bright": "#fff8f7",
+                      "on-tertiary-fixed": "#1c1c1a",
+                      "on-surface": "#22191a",
+                      "tertiary-fixed-dim": "#c8c6c3",
+                      "inverse-on-surface": "#feedec",
+                      "outline": "#7e7578",
+                      "on-secondary-container": "#7b4843",
+                      "surface-container": "#fbeaea",
+                      "on-tertiary-fixed-variant": "#474745",
+                      "on-secondary": "#ffffff",
+                      "on-background": "#22191a",
+                      "outline-variant": "#cfc3c7",
+                      "on-secondary-fixed-variant": "#693934",
+                      "secondary-fixed": "#ffdad6",
+                      "inverse-primary": "#d3c2c8",
+                      "surface-container-low": "#fff0f0",
+                      "surface-container-high": "#f6e4e4",
+                      "error": "#ba1a1a",
+                      "background": "#fff8f7",
+                      "on-primary": "#ffffff",
+                      "surface-tint": "#685b60",
+                      "tertiary-container": "#454442",
+                      "on-surface-variant": "#4d4548",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#2e2e2c",
+                      "primary-fixed-dim": "#d3c2c8",
+                      "on-error": "#ffffff",
+                      "secondary": "#85504b",
+                      "secondary-fixed-dim": "#fab6ae",
+                      "on-primary-fixed": "#22191d",
+                      "secondary-container": "#ffbbb4",
+                      "primary-container": "#4d4146",
+                      "inverse-surface": "#382e2e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "container-max": "1140px",
+                      "unit": "8px",
+                      "gutter": "24px",
+                      "section-gap": "120px"
+              },
+              "fontFamily": {
+                      "display": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-md": [
+                              "Manrope"
+                      ],
+                      "accent-handwritten": [
+                              "Epilogue"
+                      ],
+                      "headline-lg": [
+                              "Manrope"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-md": [
+                              "Manrope"
+                      ]
+              },
+              "fontSize": {
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "accent-handwritten": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.7",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Custom "Thread" divider animation */
+        @keyframes drawThread {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .thread-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            opacity: 0.3;
+            margin: var(--spacing-section-gap) 0;
+            width: 0;
+            animation: drawThread 2s ease-out forwards;
+            animation-play-state: paused;
+        }
+        .thread-divider.is-visible {
+            animation-play-state: running;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Top Navigation Bar -->
+<nav class="bg-background dark:bg-surface text-primary dark:text-primary-fixed full-width top-0 sticky z-50 bg-background/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
+<a class="font-display text-display text-primary dark:text-primary-fixed tracking-tight" href="#">Marta Martín</a>
+<div class="hidden md:flex space-x-8 items-center font-label-md text-label-md">
+<a class="text-secondary dark:text-secondary-fixed-dim font-bold border-b-2 border-secondary pb-1 opacity-80 scale-98 transition-all" href="#">Servicios</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-secondary transition-colors hover:text-secondary dark:hover:text-secondary-fixed duration-300" href="#">Sobre mí</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-secondary transition-colors hover:text-secondary dark:hover:text-secondary-fixed duration-300" href="#">Contacto</a>
+</div>
+<button class="hidden md:inline-flex items-center justify-center px-6 py-3 min-h-[48px] bg-secondary text-on-secondary font-label-md text-label-md rounded-full hover:bg-on-secondary-container transition-colors shadow-sm hover:shadow-md">
+                Pedir Cita
+            </button>
+<button class="md:hidden p-2 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+</div>
+</nav>
+<main>
+<!-- Editorial Header Block -->
+<header class="w-full bg-surface-container-low min-h-[70vh] flex flex-col justify-center items-center py-section-gap px-margin-mobile md:px-gutter relative">
+<div class="max-w-[800px] w-full mx-auto text-center z-10 relative">
+<!-- Huge Logo Injection -->
+<img alt="Marta Martín - Hilando Fino Psicología Logo" class="w-full h-auto max-w-[600px] mx-auto mb-12 opacity-90 drop-shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0HF3ve-E3gcav9yZPtPthB2y-OlKA_2lQGikU642IeEddOAuuI2YS0lGIGEdXyUoYRpfNzOzlxiqlsTucf_6xgGziC8OgfJgaO3FpCwtPjKToz6K5VRlLStVOWJdJ-FhOzSOETbUkO9If8W3gbPEIjHprgF2bNeNxy7UH130nryg6e-_4_Ia3uQB6GkrZJTRLrViWmRQkwQxyYSVdGCs_ldeCbLv6yhu9TpEJxvMOvPC5LIzC11KFj5Pw2DvX7eX-hnk"/>
+<h1 class="font-display text-display text-primary mb-6">Hilando Fino Psicología</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10">
+                    Un espacio seguro para desenredar tus pensamientos, tejer una nueva narrativa y encontrar la claridad que necesitas. Psicología con un enfoque empático, paciente y profundamente humano.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<button class="px-8 py-4 min-h-[48px] bg-secondary text-on-secondary font-label-md text-label-md rounded-full hover:bg-on-secondary-container transition-all hover:shadow-[0_8px_20px_-8px_rgba(133,80,75,0.4)]">
+                        Comienza tu proceso
+                    </button>
+<button class="px-8 py-4 min-h-[48px] bg-transparent border border-outline text-primary font-label-md text-label-md rounded-full hover:border-secondary hover:text-secondary transition-colors">
+                        Conóceme
+                    </button>
+</div>
+</div>
+<!-- Subtle background organic shape -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+<svg class="absolute top-[-10%] right-[-10%] w-[80%] h-[80%] text-secondary-fixed fill-current transform rotate-12 blur-3xl" viewbox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+<path d="M453.5 258.5C578.5 131.5 765.5 125 873 214C980.5 303 993 543 898 684C803 825 588 887 403 846C218 805 168 625 186.5 481.5C205 338 328.5 385.5 453.5 258.5Z"></path>
+</svg>
+</div>
+</header>
+<!-- Divider -->
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter">
+<div class="thread-divider text-outline-variant js-observe"></div>
+</div>
+<!-- Bento Grid Services Block -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-24">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Servicios de Terapia</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Enfoques personalizados para abordar diferentes etapas y necesidades de tu vida.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(250px,auto)]">
+<!-- Bento Item 1: Large -->
+<div class="md:col-span-2 md:row-span-2 bg-surface-container rounded-3xl p-8 border border-outline-variant/30 flex flex-col justify-between group hover:bg-surface-container-high transition-colors">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Terapia Individual</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 max-w-md">Un espacio confidencial uno a uno para explorar ansiedades, depresión, trauma o simplemente buscar crecimiento personal. Tejeremos juntos las soluciones.</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="px-4 py-1.5 bg-tertiary/5 text-primary font-label-md text-[12px] rounded-full">Ansiedad</span>
+<span class="px-4 py-1.5 bg-tertiary/5 text-primary font-label-md text-[12px] rounded-full">Autoestima</span>
+<span class="px-4 py-1.5 bg-tertiary/5 text-primary font-label-md text-[12px] rounded-full">Depresión</span>
+</div>
+</div>
+<a class="font-label-md text-label-md text-secondary group-hover:underline flex items-center gap-1" href="#">Saber más <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+</div>
+<!-- Bento Item 2 -->
+<div class="bg-surface-variant rounded-3xl p-8 border border-outline-variant/20 flex flex-col justify-between hover:bg-surface-dim transition-colors">
+<div>
+<span class="material-symbols-outlined text-on-surface-variant text-3xl mb-4" style="font-variation-settings: 'FILL' 0;">diversity_3</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-2 text-xl">Terapia de Pareja</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Mejora la comunicación y reconstruye vínculos afectivos fuertes.</p>
+</div>
+</div>
+<!-- Bento Item 3 -->
+<div class="bg-primary-fixed rounded-3xl p-8 border border-outline-variant/10 flex flex-col justify-between hover:bg-primary-fixed-dim transition-colors">
+<div>
+<span class="material-symbols-outlined text-on-primary-fixed-variant text-3xl mb-4" style="font-variation-settings: 'FILL' 0;">laptop_mac</span>
+<h3 class="font-headline-md text-headline-md text-on-primary-fixed-variant mb-2 text-xl">Terapia Online</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Sesiones flexibles desde la comodidad de tu hogar.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Divider -->
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-gutter">
+<div class="thread-divider text-outline-variant js-observe"></div>
+</div>
+<!-- Asymmetrical Editorial Block: About -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-24">
+<div class="flex flex-col md:flex-row gap-16 items-center">
+<div class="w-full md:w-5/12 order-2 md:order-1 relative">
+<div class="w-full h-[500px] rounded-[40px] overflow-hidden bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a calm, empathetic psychologist in a bright, warmly lit office. The aesthetic is organic minimalist with neutral taupe and dusty rose accents, reflecting a safe, modern clinical space. Soft, natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyMIA_DWKkbK_mm2MsHaCH1V74cLQEi-_6Yts6xwMOAge9sXNgFoAK4t_SBi6lm4y6NZW-zNXgVNPL6z45bNOtIzutU9nZi-SgH-8uKBL_b8d96drYy9bnOgdwWneoLBG5-sRze8u_q90HHJ_ow1FrXqDycPzFP07mIRKx_BFm5yx3SPtaI0cdMpcwrJ5ahwDC0pQwm20LUpCXnNQ4Pee8eCCr8Lk01-R5y2X5nQAQzi0TZmnRcV-Kng"/>
+</div>
+<!-- Decorative overlay shape -->
+<div class="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary-fixed rounded-full -z-10 blur-xl opacity-60"></div>
+</div>
+<div class="w-full md:w-7/12 order-1 md:order-2 pl-0 md:pl-8">
+<p class="font-accent-handwritten text-accent-handwritten text-secondary mb-4 italic">Sobre mí</p>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Marta Martín. Tejiendo bienestar emocional.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">
+                        Soy psicóloga sanitaria dedicada a ayudar a las personas a desenredar sus conflictos internos. Mi enfoque es integrador, adaptándome siempre a las necesidades únicas de cada paciente.
+                    </p>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 opacity-80">
+                        Crear un espacio seguro, libre de juicios y lleno de empatía es el primer paso para hilar fino y construir una vida más plena y consciente. Entiendo la terapia como un trabajo en equipo donde tú eres el experto en tu vida y yo aporto las herramientas psicológicas.
+                    </p>
+<ul class="space-y-4 mb-8">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-1" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+<span class="font-body-md text-body-md text-on-surface">Colegiada M-XXXXX por el Colegio Oficial de la Psicología.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-1" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+<span class="font-body-md text-body-md text-on-surface">Máster en Psicología General Sanitaria.</span>
+</li>
+</ul>
+<button class="px-6 py-3 min-h-[48px] bg-transparent border border-outline text-primary font-label-md text-label-md rounded-full hover:border-secondary hover:text-secondary transition-colors">
+                        Leer mi trayectoria completa
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="bg-surface-container-low dark:bg-surface-container border-t border-outline-variant/30 dark:border-outline-variant/10 full-width bottom-0 mt-section-gap">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 px-gutter py-12 max-w-container-max mx-auto">
+<div class="font-display text-headline-md text-primary">Marta Martín</div>
+<div class="flex flex-wrap gap-6 items-center justify-center font-body-md text-body-md">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors click:scale-95 duration-150" href="#">Privacidad</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors click:scale-95 duration-150" href="#">Cookies</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed transition-colors click:scale-95 duration-150" href="#">Aviso Legal</a>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant text-center md:text-right text-sm">
+                © 2024 Marta Martín - Hilando Fino Psicología. Todos los derechos reservados.
+            </div>
+</div>
+</footer>
+<script>
+        // Simple Intersection Observer to trigger thread animation
+        document.addEventListener("DOMContentLoaded", function() {
+            const threads = document.querySelectorAll('.js-observe');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            threads.forEach(thread => {
+                observer.observe(thread);
+            });
+        });
+    </script>
+</body></html>

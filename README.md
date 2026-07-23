@@ -16,3 +16,36 @@ Paquete de identidad de marca y de configuración de un [Claude Project](https:/
 ## Estado
 
 `conocimiento-01-sobre-marta-y-la-consulta.md` tiene campos pendientes de completar con datos reales (colegiatura, especialidades, enfoque terapéutico, contacto). El resto del paquete está listo para usar.
+
+## Website runtime draft
+
+The Angular website draft is static-prerendered and served by Express with a small `/api/contact` boundary. It is not runtime SSR at this stage. Unknown routes intentionally return HTTP `404` with `noindex` instead of serving the home page.
+
+The GitHub Pages preview is static only and deploys from `dist/hilando-fino/browser` after `npm run build:pages`. It uses the repository base URL `/hilando-fino/`, remains `noindex`, and does not deploy the Express server, `/api/contact`, server bundles, `.env` files, source maps, or contact backend code. Contact stays visibly disabled in the preview.
+
+GitHub Pages is public even for a private repository. `noindex` is not access control; do not publish secrets, patient data, private clinical notes, or approved-only production claims in the preview.
+
+Live contact is blocked. `CONTACT_ENABLED=true` alone is not a working activation path: the UI intentionally does not submit, and the provider implementation rejects until a separate legal/provider/retention/HTTPS deployment approval change lands. Multi-instance contact also requires approved shared CSRF replay storage or sticky sessions.
+
+Use Node `24.15.0` (`.nvmrc`, `.node-version`, `package.json#engines`, CI, and lockfile-pinned `node@24.15.0` dev dependency). Run `npm ci` first so scripts resolve the same local Node runtime; do not use floating `npx -p node@...` execution.
+
+Quality commands:
+
+- `npm run lint`
+- `npm run typecheck`
+- `npm test`
+- `npm audit --audit-level=moderate`
+- `npm audit --omit=dev`
+- `npm run build`
+- `npm run build:pages`
+- `npm run verify:inventory`
+- `npm run verify:prerender`
+- `npm run verify:pages`
+- `npm run e2e`
+- `npm run a11y`
+- `npm run performance:smoke` — self-contained deterministic build/start/navigation smoke only, not Lighthouse/CWV
+- `npm run lighthouse` — real Lighthouse lab budget; does not claim INP
+
+Pushes to `master` and manual `workflow_dispatch` runs deploy the safe Pages preview through GitHub Actions using the official Pages actions. Pull requests run quality gates but do not deploy.
+
+The oversized first delivery is intentionally covered by `docs/review/size-exception-review-guide.md` and `docs/review/change-inventory.md`, including complete untracked-file inventory checks, hot spots, package-lock treatment, verification sequence, and rollback boundaries. The raw `stitch_psicolog_a_mart_n_filo.zip` export is local-only/ignored; review `code.html`, `screen.png`, and `DESIGN.md` instead.

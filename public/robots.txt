@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Draft-safe default: no verified-publishable routes with approval metadata yet.
+Sitemap: https://pending-domain.invalid/sitemap.xml
