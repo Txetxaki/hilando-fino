@@ -348,3 +348,254 @@ Marta must answer these before proposal/spec moves into implementation-ready sco
 Yes — proceed to proposal for a bounded first slice: **Angular 22 SSR public website + local SEO architecture + privacy-safe contact flow + launch gates**, while explicitly deferring CRM/intake automation, clinical records, booking/payment integrations, and local AI handling of sensitive data.
 
 The orchestrator should tell the user that exploration is ready for proposal, but implementation remains blocked until Marta confirms the missing real-world facts and legal/privacy texts.
+
+---
+
+## Treatment-page and first-person voice corrective addendum (2026-07-23)
+
+### Addendum scope and merge note
+
+This addendum MERGES new authoritative requirements into the existing exploration for `marta-digital-practice-platform`. It does not replace the prior strategic research. It corrects the current implementation direction after the previous apply introduced an Angular 22 static-prerender app, central route/content manifests, navigation changes, and a first local trauma pillar, but did not yet satisfy the user's new treatment-page ownership and voice requirements.
+
+No application code was modified during this exploration. Current uncommitted application/content/navigation changes must be preserved by later phases.
+
+### Current State Update
+
+The repository now contains an Angular 22 app with SSR/static-prerender support rather than only brand/source documents. Relevant current architecture observed:
+
+- `src/app/content/interventions.ts` preserves the exact 29 supplied treatment/topic labels, but currently marks them as `merge-into-hub` with `cannibalizationRule: 'hub-only'`.
+- `src/app/pages/page-data.ts` renders the 29 treatments as static cards inside four parent hub pages; `content.spec.ts` currently asserts cards have no `href`, which directly conflicts with the new requirement that every treatment/topic has its own substantial page.
+- `src/app/content/public-routes.ts` enumerates the public prerender manifest manually; this works for ~15 routes but will become brittle with 29 child pages plus hubs/pillars.
+- `src/app/app.routes.server.ts` maps `publicRouteManifest` to `RenderMode.Prerender`; Angular docs confirm parameterized prerender routes can instead use `getPrerenderParams()` to generate static documents for content-driven paths.
+- `src/app/app.component.ts` has a dropdown for sector discovery and a footer sitemap; later menu design must expose sectors and child discoverability without dumping all 29 links in top-level navigation.
+- `src/app/pages/page-data.ts` and `src/app/content/content-matrix.ts` still contain public copy written about Marta/brand in third person, e.g. `Hilando Fino Psicología nace...`, `Marta Martín trabaja...`, `La web está pensada...`, `Marta Martín está al frente...`, `Marta describe...`, `Hilando Fino Psicología prioriza...`, and `Los talleres de Hilando Fino Psicología se conciben...`. These patterns violate the new first-person public voice contract.
+
+### Authoritative Corrections
+
+1. **Public visitor copy voice is first person from Marta.** Public website copy must sound like Marta speaking directly and naturally. It must not narrate Marta as a client, object, or third-party professional.
+2. **All 29 supplied sector-specific treatments/topics require dedicated page ownership.** Hubs can summarize and route, but they cannot replace substantial child pages.
+3. **Treatment pages must be researched, differentiated, and useful.** No cloned pages, doorway pages, keyword stuffing, generic symptom lists, or thin pages created only to satisfy SEO inventory.
+
+### A. Visitor-Copy Voice Contract
+
+#### Mechanical contract for public copy
+
+Public visitor-facing text MUST use one of these voice modes:
+
+- **Marta first person singular** for method, care stance, CTAs, and therapeutic-process explanations.
+  - Example direction: `Trabajo desde una evaluación cuidadosa para comprender qué ocurre antes de decidir cómo intervenir.`
+  - Example direction: `Si estás en Ciudad Real y quieres valorar si puedo acompañarte, puedes escribirme con una primera orientación breve.`
+- **Direct second person** for visitor situations and questions.
+  - Example direction: `Puede que te preocupe ver a tu hijo con miedo, bloqueos o cambios de sueño.`
+- **Neutral informational Spanish** only where first person would be unnatural: navigation labels, breadcrumbs, H1/title tags, legal pages, privacy copy, schema labels, technical metadata, form field labels, and clinical/educational definitions.
+
+#### Forbidden public-copy patterns
+
+Later spec/apply MUST lint visible visitor fields for these patterns:
+
+- Third-person Marta narration: `Marta trabaja`, `Marta acompaña`, `Marta ofrece`, `Marta explica`, `Marta describe`, `Marta quiere`, `Marta está al frente`, `su forma de trabajar`, `la fuente de trabajo de Marta`.
+- Agency/brand narration: `Hilando Fino Psicología nace`, `Hilando Fino Psicología prioriza`, `se orienta a`, `se concibe como`, `la web está pensada`, `esta página reúne`, `el proyecto busca`.
+- Internal instructions or approval state in visitor text: `pendiente`, `borrador`, `cuando se confirme`, `faltan datos`, `placeholder`, `aprobación`, `noindex`, `launch gate`, `estado`.
+- Copy addressed to Marta internally: `Marta debe confirmar`, `Marta tiene que`, `preguntar a Marta`, except inside private technical artifacts.
+
+#### Allowed exceptions
+
+- `Marta Martín` may appear in logo alt text, structured `Person` data, legal/professional identification, page titles such as `Sobre mí | Marta Martín`, and neutral metadata where first-person phrasing is not natural.
+- Clinical, legal, and privacy boundaries may use neutral language: `Esta web no sustituye una valoración profesional`, `En una emergencia...`, `Responsable del tratamiento...`.
+- Technical code identifiers may remain English/neutral and are outside this public-copy voice requirement.
+
+### B. Complete 29-Page Keyword-to-Route Map
+
+All entries are planning candidates until Marta confirms she actively offers the area. H1/title/meta directions are final-facing Spanish directions, not final copy. Every child page belongs under exactly one parent hub and must have its own canonical route, title, meta description, H1, body outline, FAQ, internal links, and content QA record.
+
+| # | Sector / audience | Canonical route | Search intent + local variant | Differentiation | H1 / title / meta direction | Page-specific questions + outline | Links / breadcrumb ownership | Cannibalization guard |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/ansiedad-infantil` | Parents seeking child anxiety help; `ansiedad infantil Ciudad Real`, `psicóloga infantil ansiedad Ciudad Real`. | Owns anxiety expressed through children and family routines, not adolescent autonomy or adult overwork. | H1: `Ansiedad infantil`; title: `Ansiedad infantil en Ciudad Real`; meta: `Acompaño a familias cuando la preocupación, el miedo o la anticipación empiezan a pesar en la vida cotidiana del niño.` | Questions: When is worry more than a phase? How can family respond without reinforcing fear? Outline: signs without diagnosis, school/somatic/routine impact, family containment, my way of working, FAQ. | Breadcrumb: Inicio > Infancia y familias > Ansiedad infantil. In: children hub, anxiety adult/adolescent pages, local page. Out: miedos, regulación emocional, sueño, contacto. | Do not target adult `ansiedad`; must use child/family language and guardian involvement. |
+| 2 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/miedos-infantiles` | `miedos infantiles psicóloga Ciudad Real`, parents seeking help with fears. | Owns developmentally normal vs impairing fears; narrower than child anxiety. | H1: `Miedos infantiles`; meta: `Trabajo con familias para comprender el miedo del niño sin ridiculizarlo ni convertirlo automáticamente en diagnóstico.` | Questions: Which fears are expected by age? What if fear blocks sleep/school/separation? Outline: developmental framing, family responses, safety/routines, process, FAQ. | In: children hub, anxiety child, sleep. Out: ansiedad infantil, sueño, separación padres, contacto. | Avoid duplicating anxiety page; focus on fear themes and family response. |
+| 3 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/regulacion-emocional-infantil` | `regulación emocional niños Ciudad Real`, `rabietas psicóloga infantil Ciudad Real`. | Owns emotional co-regulation with adults; differs from adolescent self-regulation. | H1: `Regulación emocional infantil`; meta: `Acompaño a familias para entender rabietas, bloqueos o enfados intensos desde vínculo, límites y contexto.` | Questions: What is behind intense reactions? How do limits and attachment work together? Outline: emotion signals, co-regulation, body/routines, parenting stance, FAQ. | In: children hub, conducta, anxiety child. Out: problemas de conducta, autoestima infantil, cómo trabajo. | Do not become a discipline/behavior-only page. |
+| 4 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/problemas-de-conducta-infantil` | `problemas de conducta niños Ciudad Real`, `psicóloga infantil conducta`. | Owns behavior as communication within family/school context. | H1: `Problemas de conducta infantil`; meta: `Miro la conducta como una señal dentro de una historia, un vínculo y un contexto, no como una etiqueta aislada.` | Questions: What might behavior be communicating? When involve school? Outline: conduct examples, functional/context reading, family-school coordination, boundaries, FAQ. | In: children hub, regulación, school. Out: regulación emocional, dificultades escolares, asesoramiento familiar. | Avoid punitive tone or promises to “fix” children. |
+| 5 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/dificultades-escolares` | `dificultades escolares Ciudad Real`, `psicóloga infantil colegio Ciudad Real`. | Owns school distress in children/family; education-training page owns formal guidance/coordination service. | H1: `Dificultades escolares`; meta: `Acompaño cuando el colegio empieza a ser fuente de malestar, bloqueo, conflicto o pérdida de confianza.` | Questions: Is it learning, emotion, relationship, or context? How coordinate with teachers? Outline: school signs, emotional impact, family role, referral/coordination, FAQ. | In: children hub, education hub. Out: aprendizaje, coordinación centros, autoestima infantil. | Cross-link but do not compete with `/orientacion-educativa-y-formacion/dificultades-de-aprendizaje`. |
+| 6 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/trauma-y-duelo-infantil` | `duelo infantil Ciudad Real`, `trauma infantil psicóloga Ciudad Real`. | Owns trauma/grief in children with caregiver language and developmental explanation. | H1: `Trauma y duelo infantil`; meta: `Acompaño a familias cuando una pérdida o experiencia difícil necesita palabras claras, ritmo y presencia adulta segura.` | Questions: How do children show grief? What should adults say? Outline: child signs, caregiver support, play/body/school, when to seek help, FAQ. | In: children hub, trauma pillar, adult/adolescent trauma pages. Out: separación padres, ansiedad infantil, `/psicologia-trauma-ciudad-real`. | Must not be swallowed by cross-sector pillar; age-specific ownership required. |
+| 7 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/separacion-de-los-padres` | `separación padres niños psicóloga Ciudad Real`, `divorcio hijos psicóloga Ciudad Real`. | Owns child adjustment and co-parent communication; not legal divorce advice. | H1: `Separación de los padres`; meta: `Acompaño a familias para cuidar la comunicación y la seguridad emocional de los hijos durante una separación.` | Questions: How tell children? What if behavior changes? Outline: child needs, adult communication, transitions/routines, limits, FAQ. | In: children hub, family advice. Out: duelo infantil, conducta, asesoramiento familiar. | Add legal boundary: not legal mediation/advice unless verified. |
+| 8 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/autoestima-infantil` | `autoestima infantil Ciudad Real`, parents seeking confidence support. | Owns self-concept built through family/school feedback; adolescent page owns body/peers/identity. | H1: `Autoestima infantil`; meta: `Trabajo la autoestima infantil mirando la mirada recibida, las experiencias de logro, los límites y la forma de narrarse.` | Questions: What damages child confidence? How support without pressure? Outline: signs, family/school experiences, attachment, practical process, FAQ. | In: children hub, adolescent/adult autoestima. Out: dificultades escolares, regulación, ansiedad infantil. | Differentiate from adolescent comparison/body and adult self-worth. |
+| 9 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/problemas-de-sueno-infantil` | `problemas de sueño infantil Ciudad Real`, `niño no duerme psicóloga`. | Owns sleep as routine/security/emotional activation; medical sleep disorders boundary. | H1: `Problemas de sueño infantil`; meta: `Acompaño a familias cuando el sueño se cruza con miedo, rutinas, seguridad y activación emocional.` | Questions: What is emotional vs medical? How reduce pressure? Outline: sleep patterns, family routines, fear/separation, coordination with pediatrics if needed, FAQ. | In: children hub, anxiety/miedos. Out: miedos infantiles, control esfínteres, contacto. | Must include medical referral boundary when symptoms suggest pediatric issue. |
+| 10 | Infancia y familias | `/areas-de-intervencion/infancia-y-familias/control-de-esfinteres` | `control de esfínteres psicóloga Ciudad Real`, `enuresis encopresis psicóloga Ciudad Real`. | Owns respectful developmental support; medical assessment boundary. | H1: `Control de esfínteres`; meta: `Acompaño el control de esfínteres con respeto al desarrollo, sin presión, vergüenza ni lecturas simplistas.` | Questions: When worry? How avoid shame? Outline: developmental timing, emotional/family context, school/routine impact, pediatric boundary, FAQ. | In: children hub, sleep. Out: sueño, regulación emocional, contacto. | Avoid promising elimination outcomes; include pediatric/medical boundary. |
+| 11 | Adolescentes | `/areas-de-intervencion/adolescentes/autoestima-adolescente` | `autoestima adolescentes Ciudad Real`, `psicóloga adolescentes autoestima`. | Owns body, comparison, group belonging, identity; not child family-based autoestima. | H1: `Autoestima en adolescentes`; meta: `Acompaño procesos de autoestima adolescente cuando cuerpo, grupo, exigencia e identidad se mezclan.` | Questions: How does comparison affect self-worth? How include family without invading privacy? Outline: signs, peers/body/social media, family/confidentiality, process, FAQ. | In: adolescent hub, child/adult autoestima. Out: identidad, relaciones sociales, ansiedad adolescente. | Distinguish from adult self-esteem/relationship patterns. |
+| 12 | Adolescentes | `/areas-de-intervencion/adolescentes/ansiedad-adolescente` | `ansiedad adolescentes Ciudad Real`, `psicóloga adolescentes ansiedad`. | Owns study, peer, identity, autonomy pressure; not child attachment/routine or adult work stress. | H1: `Ansiedad en adolescentes`; meta: `Trabajo la ansiedad adolescente escuchando estudios, vínculos, cuerpo, decisiones y necesidad de autonomía.` | Questions: How does anxiety look in teens? What is parent role? Outline: school/social/body signs, avoidance, confidentiality, resources, FAQ. | In: adolescent hub, local page. Out: autoestima, relaciones sociales, orientación académica. | Avoid cloning child/adult anxiety page. |
+| 13 | Adolescentes | `/areas-de-intervencion/adolescentes/relaciones-sociales-adolescencia` | `relaciones sociales adolescentes psicóloga Ciudad Real`, `aislamiento adolescentes Ciudad Real`. | Owns friendships, belonging, conflict, isolation; not couples/adult relational patterns. | H1: `Relaciones sociales en la adolescencia`; meta: `Acompaño dificultades con amistades, pertenencia, conflicto o aislamiento desde escucha y cuidado del vínculo.` | Questions: Is isolation chosen or painful? How manage group conflict? Outline: belonging, conflict/bullying boundary, family role, skills/emotion, FAQ. | In: adolescent hub. Out: autoestima adolescente, identidad, ansiedad adolescente. | Include bullying/escalation boundary; do not become school discipline page. |
+| 14 | Adolescentes | `/areas-de-intervencion/adolescentes/identidad-adolescente` | `identidad adolescentes psicóloga Ciudad Real`, `orientación identidad adolescente psicóloga`. | Owns identity exploration with safety/respect; not academic orientation. | H1: `Identidad en adolescentes`; meta: `Acompaño dudas, cambios y preguntas sobre identidad con respeto, escucha y un espacio seguro.` | Questions: How support without forcing answers? How involve family? Outline: identity development, body/group/future, safe conversation, boundaries, FAQ. | In: adolescent hub. Out: autoestima, relaciones sociales, orientación académica. | Avoid claims around gender/sexuality expertise unless confirmed; write inclusively but prudently. |
+| 15 | Adolescentes | `/areas-de-intervencion/adolescentes/orientacion-academica-adolescentes` | `orientación académica adolescentes Ciudad Real`, `psicóloga orientación estudios Ciudad Real`. | Owns teen academic decisions and emotional pressure; education hub owns school coordination service. | H1: `Orientación académica en adolescentes`; meta: `Acompaño decisiones académicas mirando intereses, capacidades, presión externa y momento vital.` | Questions: What if they feel blocked? How distinguish motivation, fear, and fit? Outline: decisions, pressure, family expectations, coordination if useful, FAQ. | In: adolescent hub, education hub. Out: identidad, ansiedad adolescente, coordinación centros. | Do not compete with educational guidance hub; this is adolescent-facing decision support. |
+| 16 | Adolescentes | `/areas-de-intervencion/adolescentes/trauma-adolescente` | `trauma adolescente Ciudad Real`, `psicóloga trauma adolescentes Ciudad Real`. | Owns trauma in adolescence: consent, safety, family balance, autonomy. | H1: `Trauma en adolescentes`; meta: `Acompaño experiencias difíciles en adolescencia con evaluación prudente, seguridad y ritmo.` | Questions: What if teen does not want to talk? How coordinate family support? Outline: adolescent signs, stabilization, family/confidentiality, EMDR only if suitable, FAQ. | In: adolescent hub, trauma pillar. Out: duelo adolescente, ansiedad adolescente, `/psicologia-trauma-ciudad-real`. | Must not compete with adult trauma or cross-sector pillar; age-specific route owns adolescent intent. |
+| 17 | Adolescentes | `/areas-de-intervencion/adolescentes/duelo-adolescente` | `duelo adolescente Ciudad Real`, `psicóloga duelo adolescentes`. | Owns grief amid school, peers, silence/rage/autonomy. | H1: `Duelo en adolescentes`; meta: `Acompaño pérdidas en adolescencia respetando silencio, rabia, cambios de ánimo y necesidad de seguir viviendo lo cotidiano.` | Questions: What is normal after loss? How help a teen who rejects help? Outline: expressions of grief, school/peer context, family support, process, FAQ. | In: adolescent hub, trauma pillar. Out: trauma adolescente, regulación emocional, contacto. | Differentiate from child grief (caregiver language) and adult grief (life role/loss meaning). |
+| 18 | Adolescentes | `/areas-de-intervencion/adolescentes/regulacion-emocional-adolescente` | `regulación emocional adolescentes Ciudad Real`, `control emocional adolescentes psicóloga`. | Owns intense emotions with autonomy, body, limits, family. | H1: `Regulación emocional en adolescentes`; meta: `Trabajo la regulación emocional adolescente combinando comprensión, límites, cuerpo, vínculo y recursos sostenibles.` | Questions: When are emotional swings concerning? How set limits without rupture? Outline: emotion intensity, family frame, body/resources, school/social context, FAQ. | In: adolescent hub, child regulation. Out: ansiedad adolescente, relaciones sociales, identidad. | Avoid copying child co-regulation page; adolescent page must honor autonomy/confidentiality. |
+| 19 | Adultos | `/areas-de-intervencion/adultos/ansiedad` | `psicóloga ansiedad Ciudad Real`, `terapia ansiedad Ciudad Real`. | Owns adult anxiety: alarm, overcontrol, body, responsibility, history. | H1: `Ansiedad en adultos`; meta: `Acompaño la ansiedad en adultos mirando alarma, exigencia, historia personal, cuerpo y contexto actual.` | Questions: Why does anxiety appear now? What if symptoms are bodily? Outline: signs without diagnosis, triggers/maintenance, evaluation, possible process, FAQ. | In: adult hub, local page, child/adolescent anxiety. Out: estrés, trauma adulto, contacto. | Adult route owns broad anxiety; child/adolescent pages own age-specific variants. |
+| 20 | Adultos | `/areas-de-intervencion/adultos/estres` | `psicóloga estrés Ciudad Real`, `estrés laboral psicóloga Ciudad Real`. | Owns overload, limits, responsibility, rest; adjacent but narrower than anxiety. | H1: `Estrés en adultos`; meta: `Trabajo el estrés atendiendo a carga, límites, cuerpo, descanso, decisiones y responsabilidades sostenidas.` | Questions: Is this stress, burnout, anxiety? How recover limits? Outline: overload signs, work/family load, body/rest, boundaries, process, FAQ. | In: adult hub, local page. Out: ansiedad adultos, crecimiento personal, contacto. | Keep separate from anxiety by focusing on load/context and limits. |
+| 21 | Adultos | `/areas-de-intervencion/adultos/trauma` | `psicóloga trauma Ciudad Real`, `EMDR trauma Ciudad Real`. | Owns adult trauma route; cross-sector pillar supports local/EMDR cluster. | H1: `Trauma en adultos`; meta: `Acompaño trauma en adultos con evaluación cuidadosa, seguridad, ritmo y trabajo integrador cuando tiene sentido.` | Questions: Do I need to tell everything? Is EMDR always appropriate? Outline: trauma signs, stabilization, history/body/relationships, EMDR boundary, FAQ. | In: adult hub, trauma pillar, method page. Out: duelo adultos, ansiedad adultos, `/psicologia-trauma-ciudad-real`. | Pillar targets cross-sector local overview; this owns adult trauma process. |
+| 22 | Adultos | `/areas-de-intervencion/adultos/duelo` | `psicóloga duelo Ciudad Real`, `terapia duelo Ciudad Real`. | Owns adult loss, changed life roles, ambivalence, time pressure. | H1: `Duelo en adultos`; meta: `Acompaño el duelo sin imponer tiempos ni frases hechas, atendiendo a la pérdida y a la vida que cambia.` | Questions: Is my grief normal? What if I feel guilt/relief/anger? Outline: grief experiences, role changes, process, relationship to loss, FAQ. | In: adult hub, trauma pillar. Out: trauma adultos, crecimiento personal, contacto. | Avoid competing with child/adolescent grief; include adult role/life-context specificity. |
+| 23 | Adultos | `/areas-de-intervencion/adultos/dependencia-emocional` | `dependencia emocional Ciudad Real`, `psicóloga dependencia emocional Ciudad Real`. | Owns relational patterns, fear, limits, attachment; not couples therapy. | H1: `Dependencia emocional`; meta: `Trabajo la dependencia emocional mirando vínculo, miedo, autoestima, límites y patrones aprendidos.` | Questions: Why is leaving/setting limits so hard? Is this love or fear? Outline: signs, relational history, boundaries, self-worth, process, FAQ. | In: adult hub, pareja, autoestima-adolescent/adult if future. Out: relaciones de pareja, ansiedad adultos, contacto. | Must not diagnose visitors or promise breakup/outcome. |
+| 24 | Adultos | `/areas-de-intervencion/adultos/relaciones-de-pareja` | `psicóloga pareja Ciudad Real`, `terapia de pareja Ciudad Real` if offered. | Owns relationship/couple dynamics; must clarify if individual-only or couple sessions once confirmed. | H1: `Relaciones de pareja`; meta: `Acompaño dificultades de pareja mirando comunicación, conflicto, necesidades, historia vincular y límites.` | Questions: Is this individual or couple work? When is therapy not enough/safe? Outline: conflict patterns, communication, attachment, safety/boundaries, FAQ. | In: adult hub, local page. Out: dependencia emocional, crecimiento personal, contacto. | Do not claim couples therapy format unless confirmed; include violence/emergency boundary where relevant. |
+| 25 | Adultos | `/areas-de-intervencion/adultos/crecimiento-personal` | `crecimiento personal psicóloga Ciudad Real`, `autoconocimiento psicóloga Ciudad Real`. | Owns non-crisis self-knowledge, values, decisions; not generic coaching. | H1: `Crecimiento personal`; meta: `Acompaño procesos de autoconocimiento, responsabilidad, deseo y coherencia con la propia vida.` | Questions: Can I consult without a crisis? What changes do I want to understand? Outline: motivations, values/limits, life transitions, process, FAQ. | In: adult hub, stress, local page. Out: estrés, relaciones, contacto. | Avoid vague coaching/guaranteed transformation language. |
+| 26 | Orientación educativa y formación | `/areas-de-intervencion/orientacion-educativa-y-formacion/dificultades-de-aprendizaje` | `dificultades de aprendizaje Ciudad Real`, `trastornos del aprendizaje Ciudad Real`. | Owns learning needs as educational guidance; children school page owns school distress. | H1: `Dificultades de aprendizaje`; meta: `Acompaño a familias cuando aprender se vuelve difícil y hace falta mirar emoción, escuela, recursos y coordinación.` | Questions: Is it learning, attention, emotion, or context? What reports are needed? Outline: learning signs, family-school view, assessment/referral boundaries, coordination, FAQ. | In: education hub, child school page. Out: coordinación centros, altas capacidades, dificultades escolares. | Avoid making diagnostic/assessment claims unless service confirmed. |
+| 27 | Orientación educativa y formación | `/areas-de-intervencion/orientacion-educativa-y-formacion/altas-capacidades` | `altas capacidades Ciudad Real`, `orientación altas capacidades Ciudad Real`. | Owns high-ability guidance, sensitivity, boredom, mismatch; not general academic orientation. | H1: `Altas capacidades`; meta: `Acompaño a familias cuando las altas capacidades conviven con sensibilidad, aburrimiento, exigencia o desajustes.` | Questions: What if ability and distress coexist? How coordinate school? Outline: common situations, myths, emotional/school fit, coordination/referral, FAQ. | In: education hub, learning difficulties. Out: coordinación centros, asesoramiento familiar, autoestima infantil. | Must avoid diagnosis/testing claims unless Marta confirms qualifications/protocol. |
+| 28 | Orientación educativa y formación | `/areas-de-intervencion/orientacion-educativa-y-formacion/coordinacion-centros-educativos` | `coordinación centros educativos psicóloga Ciudad Real`, `psicóloga colegios Ciudad Real`. | Owns school-family-professional coordination, not individual child treatment. | H1: `Coordinación con centros educativos`; meta: `Cuando ayuda, puedo coordinar lenguaje, expectativas y apoyos entre familia y centro educativo.` | Questions: When is coordination useful? What privacy/consent is needed? Outline: coordination goals, consent/privacy, school language, limits, FAQ. | In: education hub, child/adolescent academic pages. Out: dificultades aprendizaje, orientación académica, asesoramiento familiar. | Must include consent/data-sharing boundaries. |
+| 29 | Orientación educativa y formación | `/areas-de-intervencion/orientacion-educativa-y-formacion/asesoramiento-familiar` | `asesoramiento familiar Ciudad Real`, `orientación familiar psicóloga Ciudad Real`. | Owns parent/family guidance across child/adolescent situations; not family therapy claim unless confirmed. | H1: `Asesoramiento familiar`; meta: `Acompaño a familias que necesitan comprender necesidades, ajustar respuestas y sostener cambios en casa.` | Questions: Can parents consult without the child? What changes can be made at home? Outline: family concerns, attachment/limits, routines, coordination, FAQ. | In: education hub, children hub. Out: separación padres, conducta infantil, coordinación centros. | Avoid claiming family therapy or parenting program unless confirmed. |
+
+### C. `/psicologia-trauma-ciudad-real` Pillar Decision
+
+Keep `/psicologia-trauma-ciudad-real` as a **cross-sector local pillar**, but redefine it as an overview and routing page rather than the only trauma page.
+
+The pillar should own broad local intent such as `psicología trauma Ciudad Real`, `psicóloga trauma y duelo Ciudad Real`, and cautious EMDR/local education. It should not own child/adolescent/adult-specific treatment intent. It must link prominently to:
+
+- `/areas-de-intervencion/infancia-y-familias/trauma-y-duelo-infantil`
+- `/areas-de-intervencion/adolescentes/trauma-adolescente`
+- `/areas-de-intervencion/adolescentes/duelo-adolescente`
+- `/areas-de-intervencion/adultos/trauma`
+- `/areas-de-intervencion/adultos/duelo`
+- `/como-trabajo` for integrative approach/EMDR context.
+
+Cannibalization rule: the pillar explains trauma/duelo as a careful local cluster and helps users choose by age/stage; child/adolescent/adult pages own the specific process, examples, FAQ, and CTAs for that audience.
+
+### D. Spanish Search and Competitor Pattern Evidence (checked 2026-07-23)
+
+Search-engine result pages can be blocked by anti-bot flows, so evidence combines direct market pages, directories, and named competitor pages.
+
+| Cluster | Named evidence | Observed pattern | Implication |
+| --- | --- | --- | --- |
+| Anxiety | MundoPsicologos `https://www.mundopsicologos.com/centros/ansiedad/ciudad-real` | Page title/H1 `Psicólogos Ansiedad Ciudad Real`; directory lists 36 centers; repeated CTAs `Pedir cita` / `Contactar`; professionals often combine anxiety with depression/other categories. | Dedicated anxiety pages exist in the market. Marta needs separate child/adolescent/adult anxiety pages to avoid generic “ansiedad” cloning. |
+| Trauma / EMDR | MundoPsicologos `https://www.mundopsicologos.com/centros/trauma/ciudad-real`; Luis Fernando Rivas `https://psicologialuisfernandorivas.com/` | Directory has `Centros psicológicos especializados en Trauma en Ciudad Real` and 17 centers. Luis Fernando Rivas leads with `Psicoterapia EMDR, Trauma, Apego y Disociación` and has an EMDR subcluster (`qué es`, `historia`, `cómo funciona`, `trauma y EMDR`). | EMDR/trauma has real local and topical competition. Marta's content must be cautious, first-person, and non-promissory, with EMDR only as possible tool after evaluation. |
+| Grief | MundoPsicologos `https://www.mundopsicologos.com/centros/duelo/ciudad-real` | H1 `Centros psicológicos especializados en Duelo en Ciudad Real`; 22 centers; directory copy frames loss as potentially requiring professional support. | Grief deserves its own adult/adolescent pages and child grief combined with trauma under child route, not only a generic trauma pillar. |
+| Self-esteem | MundoPsicologos `https://www.mundopsicologos.com/centros/autoestima/ciudad-real` | H1 `Centros psicológicos especializados en Autoestima en Ciudad Real`; 30 centers; directory links to anxiety, stress, dependence, child psychology, learning disorders. | Self-esteem is a large cluster; child and adolescent pages must differentiate developmental context. |
+| Stress | MundoPsicologos `https://www.mundopsicologos.com/centros/estres/ciudad-real` | H1 `Psicólogos para el tratamiento del Estrés en Ciudad Real`; 33 centers; sits next to anxiety/adult therapy categories. | Adult stress page should focus on load, limits, body, rest, and responsibilities to avoid anxiety cannibalization. |
+| Learning difficulties | MundoPsicologos `https://www.mundopsicologos.com/centros/trastornos-del-aprendizaje/ciudad-real` | H1 `Centros psicológicos especializados en Trastornos del aprendizaje en Ciudad Real`; 15 centers; listings mention children/adolescents, TDAH, school-related support. | Education-training child pages need stronger school/coordination content and clear diagnostic-boundary language. |
+| Child psychology / behavior / sleep / toilet training | MundoPsicologos `https://www.mundopsicologos.com/centros/psicologia-infantil/ciudad-real` | H1 `Psicólogo infantil Ciudad Real`; 16 centers; directory cross-links to TDAH, school failure, aggressiveness, family therapies, child psychology. | Child-specific treatment pages should use parent search language and include pediatric/referral boundaries for sleep/toilet concerns. |
+| Emotional dependence / couples | MundoPsicologos `https://www.mundopsicologos.com/centros/dependencia-emocional/ciudad-real`; `https://www.mundopsicologos.com/centros/terapias-de-pareja/ciudad-real` | Dependencia page has exact cluster; couple page H1 `Psicólogos de pareja en Ciudad Real` and 16 centers. | Separate adult pages are justified, but claims must clarify whether Marta offers individual relational work, couples therapy, or both. |
+| Adolescent identity/social relationships | MundoPsicologos child/adolescent listings and Luis Fernando Rivas menu include adolescent/family/crianza/apego adjacent categories, but exact identity/social pages are less visible locally. | Market gap: local content can be useful if it avoids SEO-doorway behavior and explains adolescence with real situations. | Build these pages as helpful user-education routes, not volume-first SEO pages. |
+| High abilities | Direct local directory URL `altas-capacidades/ciudad-real` returned 404 during fetch; learning/education categories are stronger visible patterns. | High abilities may be a lower-volume/local-gap topic. | Publish only with substantial guidance and Marta-confirmed scope; avoid thin page created only because inventory says so. |
+
+Quality lesson from competitor review: directories dominate many local modifier queries with templated pages and long cross-link lists. Marta can differentiate by writing in a real first-person professional voice, using age/stage-specific substance, and refusing doorway copy.
+
+### E. Repeatable High-Quality Treatment-Page Model
+
+Every treatment page should follow the same recognizable structure, but the substance must be page-specific.
+
+Recommended model:
+
+1. **Empathetic first-person opening** — Marta names the visitor's likely situation without diagnosing.
+   - Example: `Si estás leyendo esto porque la ansiedad está ocupando demasiado espacio en tu vida, lo primero es no reducirlo todo a una etiqueta.`
+2. **Situations/signs without diagnosis** — concrete, age-specific examples; no symptom checklist that pretends to diagnose.
+3. **Impact/context** — family, school, body, work, relationships, routines, autonomy, grief, or developmental context depending on page.
+4. **My way of working** — first person, grounded in known method: careful evaluation, integrative view, pace, humanistic/person-centered stance, attachment/family view where relevant, EMDR only where contextually appropriate and verified.
+5. **What a process may involve** — possible steps without promises: evaluation, clarification, stabilization, family/school coordination, resources, review of fit, referral if needed.
+6. **Page-specific FAQ** — 3-5 real questions, not generic SEO filler.
+7. **Related pages** — parent hub, sibling pages, pillar/method, contact; anchors must be natural.
+8. **Local CTA** — first-person and privacy-safe: `Si estás en Ciudad Real y quieres valorar si puedo ayudarte, puedes escribirme con una primera orientación breve.`
+9. **Emergency/non-substitution boundary only where appropriate** — trauma, severe risk, self-harm, violence, medical/pediatric symptoms, legal/custody contexts, or contact page. Do not spam every page with the same disclaimer.
+
+Minimum meaningful depth per child page:
+
+- 900-1,400 useful Spanish words for core/high-intent pages: anxiety variants, trauma/grief, stress, learning difficulties, child behavior, couples/dependence.
+- 700-1,000 useful Spanish words for narrower/low-volume pages, still with unique examples and FAQ.
+- At least 5 page-specific body sections or 4 sections + substantial FAQ.
+- At least 3 page-specific questions answered.
+- At least 4 contextual links, including parent hub and contact.
+
+### F. E-E-A-T / YMYL Safeguards and Anti-Doorway Acceptance Tests
+
+Psychology content is YMYL-adjacent and must be conservative.
+
+Safeguards:
+
+- No invented credentials, registration numbers, address, prices, outcomes, testimonials, availability, contact details, services, or professional claims.
+- Every page must have source facts: user-supplied inventory, verified method text, Marta-approved service scope, and credible external sources where educational claims are made.
+- Medical/psychology boundaries: no diagnosis, no “cure”, no guaranteed results, no fixed therapy claims, no self-test as decision tool, no “EMDR solves trauma” claim.
+- EMDR copy: allowed only as `possible tool after evaluation` and only after training/scope is confirmed; avoid presenting it as mandatory or universally suitable.
+- Pediatric/medical concerns: sleep/toilet training pages must mention consultation/referral when physical/medical symptoms or developmental concerns require it.
+- Couple/dependence pages: include safety boundary for coercion/violence when relevant; do not suggest therapy is enough in unsafe contexts.
+- Originality: no competitor rewrites, no directory-style boilerplate, no cloned structure with swapped keywords.
+
+Acceptance tests:
+
+- First-person lint: fail visible visitor text with forbidden third-person/agency/internal patterns.
+- Doorway test: fail any page where removing the keyword leaves a generic page indistinguishable from another topic.
+- Differentiation test: anxiety/trauma/duelo/autoestima variants must mention age/stage-specific context in H1/meta/body/FAQ.
+- Similarity test: flag page body cosine/Jaccard similarity above 0.72 against any sibling treatment page for manual review; fail above 0.82 unless there is a documented reason.
+- Metadata uniqueness: title, meta description, H1, canonical route unique across all 29 pages plus hubs/pillars.
+- Substance test: minimum sections, FAQ count, body length, page-specific examples, local CTA, and at least 4 meaningful links.
+- E-E-A-T test: page has source facts, last-reviewed date, approver gate before indexable publication, and boundaries where appropriate.
+
+### G. Scalable Angular Static-Prerender Route/Content Architecture
+
+Do not add 29 one-off components or a giant hard-coded switch.
+
+Recommended architecture:
+
+- `src/app/content/treatment-pages.ts` — array of `TreatmentPage` data records generated/maintained from the approved route map.
+- `src/app/content/treatment-types.ts` — `TreatmentSector`, `TreatmentPage`, `ContentSection`, `FaqItem`, `InternalLink`, `SourceFact`, `BoundaryNote`, `SchemaProfile`.
+- `src/app/content/treatment-index.ts` — lookups by `canonicalPath`, `sector`, `slug`, `topicKey`, and parent hub.
+- `src/app/pages/treatment-page.component.ts` — one generic renderer for all treatment pages.
+- `src/app/pages/hub-page.component.ts` or existing `StandardPageComponent` extension — parent hubs visibly list every child page in that sector.
+- `src/app/content/public-routes.ts` — derive routes from `staticPages`, `hubPages`, `treatmentPages`, and `pillarPages`, not hand-entered duplicates.
+- `src/app/core/seo/schema.ts` — generate `BreadcrumbList`; use `FAQPage` only when FAQs are visible; use healthcare/local schema only after facts are verified.
+
+Angular prerender strategy:
+
+- Current approach maps concrete manifest entries to `RenderMode.Prerender`.
+- For 29 treatment pages, either generate concrete entries from `treatmentPages` or use a parameterized route such as `areas-de-intervencion/:sector/:topic` plus Angular server-route `getPrerenderParams()`.
+- Angular docs (checked 2026-07-23 via Context7 `/websites/angular_dev`) show `ServerRoute` with `RenderMode.Prerender` and `getPrerenderParams()` returning param objects for build-time document generation. This fits content-driven treatment pages.
+- Ensure generated prerender paths feed sitemap, route tests, and Pages artifact verification from the same source array.
+
+### H. Internal-Link Graph Requirements
+
+- No orphan pages: every treatment page must have at least one parent-hub inlink and at least two additional contextual inlinks.
+- Parent/child links: each sector hub links every child treatment page visibly; every child links back to its parent hub.
+- Sibling links: each child links 2-4 clinically adjacent siblings when useful, not mechanically.
+- Pillar links: cross-sector pillar `/psicologia-trauma-ciudad-real` links to all trauma/duelo child pages; child trauma/duelo pages link back to the pillar.
+- Strategic pages (`/psicologia-ciudad-real`, `/como-trabajo`, `/contacto`, sector hubs, trauma pillar) must each have at least 3 meaningful contextual inlinks; high-priority local/treatment pages should target 4+.
+- Max depth: every treatment page reachable in <= 3 clicks from home: Home -> Areas -> Sector -> Treatment, with menu/mega-menu reducing discovery friction.
+- Anchor text: natural Spanish, no exact-match stuffing. Prefer `cómo trabajo la ansiedad en adolescentes` over repeated `psicóloga ansiedad Ciudad Real`.
+
+### I. Menu / Mega-Menu Behavior for 29 Treatment Pages
+
+Top-level navigation should not dump 29 treatment links.
+
+Recommended behavior:
+
+- Header: `Inicio`, `Sobre mí`, `Cómo trabajo`, `Áreas de intervención` dropdown/mega-menu, `Psicología Ciudad Real`, `Talleres`, `Contacto`.
+- Desktop mega-menu: show four sector columns with 3-5 prioritized child links each plus `Ver todos en [sector]`; include the trauma pillar as a strategic link, not as a replacement for child pages.
+- Mobile menu: accordion by sector. Open sector reveals all child pages or a `Ver todos` route depending on height; must remain keyboard accessible.
+- Sector landing pages: must visibly link **every** child treatment page for that sector with short differentiated descriptions.
+- Footer: show strategic subset (local, method, contact, sector hubs, trauma pillar) plus `Áreas de intervención` full hub. Do not list all 29 in footer unless a compact sitemap section is deliberately designed.
+- Sitemap page/XML: include all indexable approved treatment pages once approvals/noindex gates are lifted.
+
+### J. Verification Plan
+
+Required verification for later spec/apply:
+
+- **First-person voice lint**: scan visible public content fields and rendered HTML for forbidden third-person/agency/internal wording; allow neutral technical/legal fields through explicit allowlist.
+- **Route/prerender coverage**: assert 29 treatment pages + hubs + pillars are in the route manifest, Angular routes, server prerender config, generated sitemap, Pages artifact verifier, and e2e route smoke list.
+- **Unique metadata**: assert unique canonical path, H1, title, meta description, breadcrumb label, and schema `@id`/URL for all treatment pages.
+- **Duplicate-content QA**: compute similarity across treatment bodies; warn above 0.72, fail above 0.82; require manual evidence for intentionally similar clinical boundary paragraphs.
+- **Substantial content metrics**: fail pages below minimum section count, FAQ count, local CTA, page-specific example count, related links, and source facts. Metrics must not reward filler: repeated boilerplate, repeated disclaimers, and generic paragraphs count once.
+- **Internal-link graph**: assert no orphans, parent-child reciprocity, sibling links where mapped, trauma pillar reciprocal links, strategic pages 3+ inlinks, and max click depth <= 3 from home.
+- **Menu/mobile nav**: Playwright checks for desktop mega-menu/sector discovery, mobile accordion access, keyboard focus, Escape close, route activation, and no top-level 29-link dump.
+- **Accessibility**: heading order, skip link, visible focus, touch targets, ARIA state for mega-menu/accordion, contrast, and no link text ambiguity like repeated `Leer más` without context.
+- **No visible internal status wording**: render-level scan for `borrador`, `noindex`, `placeholder`, `approval`, `pendiente`, `cuando se confirme`, and internal blocker text.
+- **YMYL boundaries**: snapshot/assert required caution modules only on relevant pages (trauma, violence/couple safety, medical/pediatric, emergency/contact), avoiding repetitive blanket disclaimers.
+
+### Recommendation Update
+
+Proceed to a corrective proposal/spec addendum before any new apply. The next SDD phase should revise requirements/design/tasks so the implementation changes from `29 topics as hub-only cards` to `29 substantial treatment pages generated from structured content data`, with a first-person visitor-copy contract and anti-doorway verification.
+
+The existing `/psicologia-trauma-ciudad-real` should remain, but as a cross-sector local pillar that routes to child/adolescent/adult trauma and grief pages. The pillar must not be the only trauma/grief content route.
+
+### Addendum Risks
+
+- Scope is large: 29 researched pages plus navigation, schema, sitemap, and tests can exceed review budget even with the accepted size exception; task planning should still slice implementation logically.
+- Research depth is uneven across topics: local directory patterns are strong for anxiety/trauma/grief/stress/self-esteem/learning/couples, weaker for high abilities and adolescent identity/social pages.
+- First-person conversion can accidentally overstate Marta's confirmed services; every page must remain blocked from indexable publication until Marta confirms scope and facts.
+- EMDR/trauma copy is high-risk for overpromising and should be reviewed with extra care.
+- Similarity thresholds can catch clones but cannot prove usefulness; human review remains required.
+
+### Ready for Proposal Addendum
+
+Yes — proceed to proposal/spec correction for treatment-page ownership, first-person voice, scalable content architecture, and verification. Later apply must preserve existing uncommitted work, touch application code only after updated specs/tasks exist, and avoid staging/committing unless explicitly requested.

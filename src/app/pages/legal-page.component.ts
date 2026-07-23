@@ -2,22 +2,8 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { contentPages } from '../content/content-matrix';
+import { legalCopy } from '../content/legal-copy';
 import { assertPublicPageKey } from '../content/public-routes';
-
-const legalCopy = {
-  legalNotice: [
-    'Este aviso legal está pendiente de completar con datos profesionales y legales verificados.',
-    'No se publica identidad fiscal, domicilio profesional, número de colegiación ni datos regulatorios hasta que Marta los confirme.'
-  ],
-  privacy: [
-    'La política de privacidad está bloqueada hasta aprobar responsable del tratamiento, proveedor de email/hosting, base jurídica, retención y canal de ejercicio de derechos.',
-    'Por ese motivo el formulario público permanece desactivado y no se envían datos sensibles a terceros.'
-  ],
-  cookies: [
-    'Este borrador no instala analítica de terceros ni cookies de marketing.',
-    'Cualquier medición futura deberá usar la taxonomía segura aprobada y consentimiento cuando corresponda.'
-  ]
-};
 
 @Component({
   selector: 'hf-legal-page',
@@ -31,7 +17,7 @@ const legalCopy = {
         <span>{{ page().h1 }}</span>
       </nav>
       <header class="hero compact-hero">
-        <p class="draft-pill">Documento legal no publicable todavía</p>
+        <p class="overline-pill">Información clara para navegar con confianza</p>
         <h1>{{ page().h1 }}</h1>
         <p class="hero-copy">{{ page().description }}</p>
       </header>
@@ -39,7 +25,11 @@ const legalCopy = {
         @for (paragraph of paragraphs(); track paragraph) {
           <p>{{ paragraph }}</p>
         }
-        <p>Hasta completar estos datos, esta ruta queda noindex y omitida del sitemap.</p>
+        <div class="inline-links">
+          <a routerLink="/contacto">Ir a contacto</a>
+          <a routerLink="/privacidad">Leer privacidad</a>
+          <a routerLink="/cookies">Leer cookies</a>
+        </div>
       </section>
     </article>
   `

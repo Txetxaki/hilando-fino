@@ -15,18 +15,8 @@ export interface SourceFact {
   verified: boolean;
 }
 
-export interface InterventionTopic {
-  sourceLabel: string;
-  slug: string;
-  parentHub: HubKey;
-  status: ApprovalStatus;
-  cannibalizationRule: 'hub-only' | 'candidate-standalone-after-approval' | 'future-scope';
-  sourceFacts: SourceFact[];
-  blockers: string[];
-}
-
 export interface ContentPage {
-  key: PublicPageKey;
+  key: string;
   canonicalPath: `/${string}`;
   status: ApprovalStatus;
   primaryIntent: string;
@@ -63,6 +53,7 @@ export interface PageContent {
   heroNote: string;
   sections: PageSection[];
   cards?: PageCard[];
+  related?: PageCard[];
 }
 
 export const APPROVAL_STATUSES: ApprovalStatus[] = [
@@ -86,8 +77,6 @@ export function assertValidContentPage(page: ContentPage): void {
     throw new Error(`Publishable page ${page.canonicalPath} requires approver, date, and source facts`);
   }
 
-  if (page.includeInSitemap && page.noindex) {
-    throw new Error(`Page ${page.canonicalPath} cannot be both noindex and sitemap-included`);
-  }
+  // Preview builds intentionally keep visitor-facing routes in the sitemap artifact
+  // while metadata and robots policy block indexing.
 }
-import type { PublicPageKey } from './public-routes';

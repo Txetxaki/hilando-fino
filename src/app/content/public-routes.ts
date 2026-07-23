@@ -1,4 +1,6 @@
-export type PublicRouteKind = 'standard' | 'contact' | 'legal';
+import { treatmentRouteManifest } from './treatment-index';
+
+export type PublicRouteKind = 'standard' | 'contact' | 'legal' | 'treatment';
 
 export interface PublicRouteManifestEntry {
   path: string;
@@ -10,7 +12,7 @@ export interface PublicRouteManifestEntry {
   requiredForPagesPreview: boolean;
 }
 
-export const publicRouteManifest = [
+export const staticPublicRouteManifest = [
   { path: '', canonicalPath: '/', pageKey: 'home', kind: 'standard', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
   { path: 'sobre-mi', canonicalPath: '/sobre-mi', pageKey: 'about', kind: 'standard', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
   { path: 'como-trabajo', canonicalPath: '/como-trabajo', pageKey: 'method', kind: 'standard', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
@@ -44,6 +46,7 @@ export const publicRouteManifest = [
     requiredForPagesPreview: true
   },
   { path: 'psicologia-ciudad-real', canonicalPath: '/psicologia-ciudad-real', pageKey: 'local', kind: 'standard', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
+  { path: 'psicologia-trauma-ciudad-real', canonicalPath: '/psicologia-trauma-ciudad-real', pageKey: 'traumaLocal', kind: 'standard', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
   { path: 'contacto', canonicalPath: '/contacto', pageKey: 'contact', kind: 'contact', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
   { path: 'talleres', canonicalPath: '/talleres', pageKey: 'workshops', kind: 'standard', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
   { path: 'aviso-legal', canonicalPath: '/aviso-legal', pageKey: 'legalNotice', kind: 'legal', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
@@ -51,7 +54,10 @@ export const publicRouteManifest = [
   { path: 'cookies', canonicalPath: '/cookies', pageKey: 'cookies', kind: 'legal', prerender: true, draftNoindex: true, requiredForPagesPreview: true }
 ] as const satisfies readonly PublicRouteManifestEntry[];
 
+export const publicRouteManifest = [...staticPublicRouteManifest, ...treatmentRouteManifest] as const satisfies readonly PublicRouteManifestEntry[];
+
 export type PublicPageKey = (typeof publicRouteManifest)[number]['pageKey'];
+export type StaticPublicPageKey = (typeof staticPublicRouteManifest)[number]['pageKey'];
 type PublicRouteForKind<K extends PublicRouteKind> = Extract<(typeof publicRouteManifest)[number], { kind: K }>;
 export type StandardPageKey = PublicRouteForKind<'standard'>['pageKey'];
 

@@ -93,3 +93,34 @@ The website foundation MUST preserve a visible internal roadmap for later practi
 - WHEN scope review runs
 - THEN the task MUST be rejected from this change
 - AND require a separate legal/privacy-gated SDD change
+
+### Requirement: Treatment navigation discoverability without top-level dumping
+
+The site MUST make all exactly 29 required treatment preview pages discoverable without listing 29 child links as top-level navigation. Top-level navigation SHALL keep the main pages and an `Áreas de intervención` discovery path. Desktop navigation SHOULD use a sector mega-menu with prioritized children plus sector links; mobile navigation MUST use accessible sector accordions or equivalent. Every sector hub MUST visibly expose and link all child treatment pages it owns; hubs organize children and MUST NOT replace them.
+
+#### Scenario: Desktop navigation exposes sectors
+- GIVEN a desktop visitor opens `Áreas de intervención`
+- WHEN the discovery menu appears
+- THEN it SHALL group children by sector
+- AND SHALL NOT dump all 29 treatment links as top-level peers
+
+#### Scenario: Mobile visitor finds every child route
+- GIVEN a mobile visitor opens the menu
+- WHEN they expand a sector or visit its hub
+- THEN every owned child treatment route is reachable
+- AND focus, Escape/close behavior, and route activation remain accessible
+
+### Requirement: Static route, prerender, and accessibility verification for treatment pages
+
+The system MUST verify that the 29 treatment routes, sector hubs, and trauma pillar are present in route discovery, prerender output, sitemap artifacts, canonical metadata, breadcrumbs, schema identifiers, desktop/mobile navigation, and route smoke tests. Verification MUST include heading order, skip link, focus visibility, touch targets, contrast, ARIA state, and unambiguous link text.
+
+#### Scenario: Treatment route coverage is complete
+- GIVEN the route manifest, prerender output, sitemap, and smoke list are generated
+- WHEN coverage checks run
+- THEN all 29 treatment routes, parent hubs, and `/psicologia-trauma-ciudad-real` MUST be present once
+- AND each MUST have a canonical URL, breadcrumb, and unique schema URL or `@id`
+
+#### Scenario: Accessibility regression is introduced
+- GIVEN mega-menu, mobile accordion, treatment links, or breadcrumbs change
+- WHEN accessibility checks run
+- THEN failures in keyboard access, focus, headings, contrast, ARIA state, touch targets, or ambiguous link text MUST block approval

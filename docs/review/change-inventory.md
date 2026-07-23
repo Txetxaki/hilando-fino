@@ -19,7 +19,7 @@ Run `npm run verify:inventory` before staging and again after staging. It compar
 
 - `package.json`, `package-lock.json`, `angular.json`, `tsconfig*.json`, `eslint.config.js`, `vitest.config.ts`, `playwright.config.ts`, `.node-version`, `.nvmrc` — Angular 22 workspace, deterministic Node/npm/tooling, dependency lock evidence.
 - `server.ts`, `src/server/**` — Express static-prerender server, 404 contract, contact API validation, CSRF, rate limiting, provider boundary, security policy constants.
-- `src/app/**`, `src/environments/**`, `src/styles.scss`, `src/index.html`, `src/main*.ts` — public routes, content registry, SEO/schema, analytics no-op adapter, contact UI, Pages site-origin configuration.
+- `src/app/**`, `src/environments/**`, `src/styles.scss`, `src/index.html`, `src/main*.ts` — public routes, content registry, typed 29-page treatment source, generic treatment renderer, SEO/schema, analytics no-op adapter, contact UI, Pages site-origin configuration.
 - `tests/e2e/**` — Playwright route and accessibility checks.
 - `tools/**` — sitemap, build, verification, performance, Lighthouse, Pages artifact and smoke scripts.
 

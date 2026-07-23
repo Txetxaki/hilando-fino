@@ -2,7 +2,7 @@ export const notFoundContent = {
   title: 'Página no encontrada | Hilando Fino Psicología',
   label: 'Página no encontrada',
   h1: 'No hemos encontrado esta página',
-  body: 'La ruta solicitada no existe o todavía no está publicada.',
+  body: 'La ruta solicitada no existe. Te ayudamos a volver a una página útil.',
   homeLabel: 'Volver al inicio',
   canonicalPath: '/404'
 } as const;

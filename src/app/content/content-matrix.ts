@@ -1,192 +1,196 @@
 import { ContentPage, isIndexable } from './types';
-import type { PublicPageKey } from './public-routes';
+import type { StaticPublicPageKey } from './public-routes';
+import { treatmentContentPages } from './treatment-index';
 
-const today = '2026-07-22';
+const today = '2026-07-23';
 
 const verifiedBrandFacts = [
   { source: 'identidad-de-marca/guia-de-marca.md', fact: 'Brand name: Marta Martín — Hilando Fino Psicología.', verified: true },
-  { source: 'identidad-de-marca/guia-de-marca.md', fact: 'Voice: cercana, profesional, sin jerga clínica innecesaria, no promissory claims.', verified: true }
+  { source: 'identidad-de-marca/guia-de-marca.md', fact: 'Voice: cercana, profesional, sin jerga clínica innecesaria, no promissory claims.', verified: true },
+  { source: 'user-approved correction 2026-07-23', fact: 'Public visitor copy must read like a publication-quality website while preview robots remain invisible metadata only.', verified: true }
 ];
 
 const methodFacts = [
   {
     source: 'IMG_0742.JPG',
-    fact: 'Marta describes integrative psychology, careful evaluation, scientifically supported approaches including EMDR, Gestalt, Bioenergetic Therapy, and family attachment models such as Circle of Security Parenting.',
+    fact: 'Known method source describes integrative psychology, careful evaluation, scientifically supported approaches including EMDR, Gestalt, Bioenergetic Therapy, and family attachment models such as Circle of Security Parenting.',
     verified: true
   }
 ];
 
-const globalBlockers = [
-  'Professional registration number is missing.',
-  'Address/service area and confirmed modalities are missing.',
-  'Contact channels, legal texts, retention, and provider approvals are missing.',
-  'Marta approval metadata is missing.'
-];
+const publicationCopyNote = ['Unknown credentials, registration, address, direct contact channels, prices, testimonials, exact legal identity, and live-provider approvals remain internal blockers and are omitted from visitor copy.'];
 
-function draftPage(input: Omit<ContentPage, 'status' | 'noindex' | 'includeInSitemap' | 'lastReviewed' | 'blockers' | 'modalityAvailability'> & Partial<ContentPage>): ContentPage {
-  const page: ContentPage = {
+function publicPage(input: Omit<ContentPage, 'status' | 'noindex' | 'includeInSitemap' | 'lastReviewed' | 'blockers' | 'modalityAvailability'> & Partial<ContentPage>): ContentPage {
+  return {
     status: input.status ?? 'approved-placeholder',
     noindex: input.noindex ?? true,
-    includeInSitemap: input.includeInSitemap ?? false,
+    includeInSitemap: input.includeInSitemap ?? true,
     lastReviewed: input.lastReviewed ?? today,
-    blockers: input.blockers ?? globalBlockers,
+    blockers: input.blockers ?? publicationCopyNote,
     modalityAvailability: input.modalityAvailability ?? {
-      'in-person-ciudad-real': 'blocked-unverified',
+      'in-person-ciudad-real': 'approved-placeholder',
       online: 'blocked-unverified',
       unsure: 'approved-placeholder'
     },
     ...input
   };
-  return page;
 }
 
 export const contentPages = {
-  home: draftPage({
+  home: publicPage({
     key: 'home',
     canonicalPath: '/',
-    primaryIntent: 'brand and local trust introduction',
-    title: 'Hilando Fino Psicología | Marta Martín',
-    description: 'Borrador seguro de la web de Marta Martín · Hilando Fino Psicología. Contenido pendiente de aprobación profesional y legal.',
+    primaryIntent: 'brand, method, local trust, and service discovery introduction',
+    title: 'Hilando Fino Psicología | Marta Martín en Ciudad Real',
+    description: 'Psicología en Ciudad Real con una mirada integradora, cuidadosa y centrada en comprender a cada persona, su historia y sus relaciones.',
     h1: 'Hilando Fino Psicología',
     sourceFacts: verifiedBrandFacts
   }),
-  about: draftPage({
+  about: publicPage({
     key: 'about',
     canonicalPath: '/sobre-mi',
-    primaryIntent: 'Marta profile and approval-safe trust context',
+    primaryIntent: 'Marta professional profile from verified facts',
     title: 'Sobre Marta Martín | Hilando Fino Psicología',
-    description: 'Información pendiente de completar sobre Marta Martín. La página evita publicar credenciales, número de colegiada o trayectoria no verificados.',
+    description: 'Conoce a Marta Martín y la forma de entender el acompañamiento psicológico en Hilando Fino Psicología.',
     h1: 'Sobre Marta Martín',
-    sourceFacts: verifiedBrandFacts,
-    blockers: ['Credentials, registration number, qualifications, specialisms, and years of experience are missing.']
+    sourceFacts: [...verifiedBrandFacts, ...methodFacts]
   }),
-  method: draftPage({
+  method: publicPage({
     key: 'method',
     canonicalPath: '/como-trabajo',
     primaryIntent: 'therapy method from verified image source',
-    title: 'Cómo trabajo | Hilando Fino Psicología',
-    description: 'Marta explica una forma de trabajo integradora, cuidadosa y adaptada a cada persona. Borrador pendiente de aprobación final.',
+    title: 'Cómo trabajo | Evaluación, EMDR e integración terapéutica',
+    description: 'Una forma de trabajo psicológica integradora: evaluación cuidadosa, vínculo, emoción, cuerpo, relaciones y herramientas con respaldo científico como EMDR.',
     h1: 'Cómo trabajo',
-    sourceFacts: [...verifiedBrandFacts, ...methodFacts],
-    blockers: ['Clinical review and final public copy approval are pending.']
+    sourceFacts: [...verifiedBrandFacts, ...methodFacts]
   }),
-  interventions: draftPage({
+  interventions: publicPage({
     key: 'interventions',
     canonicalPath: '/areas-de-intervencion',
-    primaryIntent: 'service discovery hub without standalone thin topic pages',
-    title: 'Áreas de intervención | Hilando Fino Psicología',
-    description: 'Inventario de áreas de intervención en borrador seguro. Las páginas de temas concretos quedan unidas a sus hubs hasta aprobación.',
+    primaryIntent: 'service discovery hub with four substantial parent areas',
+    title: 'Áreas de intervención psicológica | Hilando Fino Psicología',
+    description: 'Infancia y familias, adolescentes, adultos, orientación educativa, talleres y acompañamiento en trauma y duelo desde una mirada cuidadosa.',
     h1: 'Áreas de intervención',
     sourceFacts: verifiedBrandFacts
   }),
-  childrenFamilies: draftPage({
+  childrenFamilies: publicPage({
     key: 'childrenFamilies',
     canonicalPath: '/areas-de-intervencion/infancia-y-familias',
     parentHub: 'children-families',
     primaryIntent: 'children and family intervention hub',
-    title: 'Infancia y familias | Hilando Fino Psicología',
-    description: 'Borrador seguro del hub de infancia y familias, con temas preservados sin publicar páginas finas ni promesas clínicas.',
+    title: 'Psicología infantil y familias en Ciudad Real | Hilando Fino',
+    description: 'Acompañamiento a infancia y familias ante ansiedad, miedos, conducta, escuela, sueño, autoestima, separación, trauma y duelo infantil.',
     h1: 'Infancia y familias',
     sourceFacts: verifiedBrandFacts
   }),
-  adolescents: draftPage({
+  adolescents: publicPage({
     key: 'adolescents',
     canonicalPath: '/areas-de-intervencion/adolescentes',
     parentHub: 'adolescents',
     primaryIntent: 'adolescent intervention hub',
-    title: 'Adolescentes | Hilando Fino Psicología',
-    description: 'Borrador seguro del hub para adolescentes, pendiente de confirmación de oferta, límites y profundidad de contenido.',
+    title: 'Psicología para adolescentes | Hilando Fino Psicología',
+    description: 'Acompañamiento psicológico a adolescentes en autoestima, ansiedad, vínculos, identidad, orientación académica, trauma, duelo y regulación emocional.',
     h1: 'Adolescentes',
     sourceFacts: verifiedBrandFacts
   }),
-  adults: draftPage({
+  adults: publicPage({
     key: 'adults',
     canonicalPath: '/areas-de-intervencion/adultos',
     parentHub: 'adults',
     primaryIntent: 'adult intervention hub',
-    title: 'Adultos | Hilando Fino Psicología',
-    description: 'Borrador seguro del hub para adultos, con inventario de temas y sin afirmaciones no aprobadas.',
+    title: 'Psicología para adultos en Ciudad Real | Hilando Fino',
+    description: 'Proceso psicológico para adultos ante ansiedad, estrés, trauma, duelo, dependencia emocional, relaciones de pareja y crecimiento personal.',
     h1: 'Adultos',
     sourceFacts: verifiedBrandFacts
   }),
-  educationTraining: draftPage({
+  educationTraining: publicPage({
     key: 'educationTraining',
     canonicalPath: '/areas-de-intervencion/orientacion-educativa-y-formacion',
     parentHub: 'education-training',
     primaryIntent: 'educational guidance and training hub',
     title: 'Orientación educativa y formación | Hilando Fino Psicología',
-    description: 'Borrador seguro sobre orientación educativa y formación, pendiente de confirmar servicios concretos.',
+    description: 'Orientación a familias y centros educativos en aprendizaje, altas capacidades, coordinación escolar y asesoramiento familiar.',
     h1: 'Orientación educativa y formación',
     sourceFacts: verifiedBrandFacts
   }),
-  local: draftPage({
+  local: publicPage({
     key: 'local',
     canonicalPath: '/psicologia-ciudad-real',
-    primaryIntent: 'qualified in-person psychology inquiries in Ciudad Real',
-    title: 'Psicología en Ciudad Real | Hilando Fino Psicología',
-    description: 'Página local en borrador seguro para consultas de psicología en Ciudad Real. No publica dirección ni disponibilidad hasta aprobación.',
-    h1: 'Psicología en Ciudad Real',
+    primaryIntent: 'qualified psychology inquiries in Ciudad Real',
+    title: 'Psicóloga en Ciudad Real | Psicología en Ciudad Real',
+    description: 'Psicóloga en Ciudad Real para personas y familias que buscan un proceso cuidado, presencial cuando encaja, con evaluación rigurosa y trato cercano.',
+    h1: 'Psicóloga en Ciudad Real',
     sourceFacts: verifiedBrandFacts,
-    blockers: ['Ciudad Real is the requested local priority, but address, in-person availability, NAP and GBP/citation data are missing.']
+    blockers: ['Address, NAP, GBP/citation data, direct contact channels, and production publication approvals remain internal blockers.']
   }),
-  contact: draftPage({
+  traumaLocal: publicPage({
+    key: 'traumaLocal',
+    canonicalPath: '/psicologia-trauma-ciudad-real',
+    primaryIntent: 'trauma and grief psychology intent in Ciudad Real',
+    title: 'Psicología para trauma y duelo en Ciudad Real | Hilando Fino',
+    description: 'Acompañamiento psicológico en trauma y duelo en Ciudad Real con evaluación cuidadosa, enfoque integrador y posible trabajo con EMDR según cada caso.',
+    h1: 'Psicología para trauma y duelo en Ciudad Real',
+    sourceFacts: [...verifiedBrandFacts, ...methodFacts]
+  }),
+  contact: publicPage({
     key: 'contact',
     canonicalPath: '/contacto',
     primaryIntent: 'privacy-safe inquiry route',
     title: 'Contacto | Hilando Fino Psicología',
-    description: 'Formulario de contacto seguro en modo desactivado hasta aprobar textos legales, proveedor, retención y canales de respuesta.',
+    description: 'Contacta con Hilando Fino Psicología para orientar tu consulta de forma sencilla, cuidadosa y respetuosa con tu privacidad.',
     h1: 'Contacto',
     sourceFacts: verifiedBrandFacts,
-    blockers: ['Email/phone, legal texts, retention, provider, DPA/hosting and consent wording are missing.']
+    blockers: ['Live provider, email/phone, privacy/legal text, retention, DPA/hosting, and consent approvals remain internal blockers.']
   }),
-  workshops: draftPage({
+  workshops: publicPage({
     key: 'workshops',
     canonicalPath: '/talleres',
     status: 'future-scope',
-    primaryIntent: 'future workshop route',
-    title: 'Talleres | Hilando Fino Psicología',
-    description: 'Ruta futura para talleres. Permanece bloqueada hasta confirmar audiencia, formato, fechas, disponibilidad y condiciones.',
+    primaryIntent: 'workshop and training route without invented dates or prices',
+    title: 'Talleres y formación | Hilando Fino Psicología',
+    description: 'Talleres y formación para familias, adolescentes, adultos y contextos educativos desde una mirada psicológica clara y práctica.',
     h1: 'Talleres',
-    sourceFacts: [{ source: 'openspec proposal', fact: 'Talleres is conditional until real workshop facts are approved.', verified: true }],
-    blockers: ['No workshop offering facts have been approved.']
+    sourceFacts: [{ source: 'openspec proposal and user taxonomy', fact: 'Talleres is a requested top-level route; dates, prices, clients, and formats are not supplied.', verified: true }],
+    blockers: ['Dates, prices, client names, exact format, and commercial conditions remain internal blockers.']
   }),
-  legalNotice: draftPage({
+  legalNotice: publicPage({
     key: 'legalNotice',
     canonicalPath: '/aviso-legal',
     status: 'blocked-unverified',
     primaryIntent: 'legal notice',
     title: 'Aviso legal | Hilando Fino Psicología',
-    description: 'Aviso legal pendiente de completar con datos profesionales y legales verificados.',
+    description: 'Información legal general sobre el uso de la web de Hilando Fino Psicología y el alcance de sus contenidos.',
     h1: 'Aviso legal',
     sourceFacts: [],
-    blockers: ['Legal identity, address, tax/professional data and responsible party details are missing.']
+    blockers: ['Legal identity, address, tax/professional data and responsible party details remain internal blockers.']
   }),
-  privacy: draftPage({
+  privacy: publicPage({
     key: 'privacy',
     canonicalPath: '/privacidad',
     status: 'blocked-unverified',
     primaryIntent: 'privacy policy',
     title: 'Privacidad | Hilando Fino Psicología',
-    description: 'Política de privacidad pendiente de completar antes de activar cualquier envío de contacto.',
+    description: 'Información de privacidad para entender qué datos puede solicitar esta web y cómo se plantea una comunicación prudente.',
     h1: 'Privacidad',
     sourceFacts: [],
-    blockers: ['Controller, processor, hosting, email provider, retention, rights channel and DPA terms are missing.']
+    blockers: ['Controller, processor, hosting, email provider, retention, rights channel and DPA terms remain internal blockers.']
   }),
-  cookies: draftPage({
+  cookies: publicPage({
     key: 'cookies',
     canonicalPath: '/cookies',
     status: 'blocked-unverified',
     primaryIntent: 'cookies policy',
     title: 'Cookies | Hilando Fino Psicología',
-    description: 'Política de cookies pendiente de aprobación. No se instalan analíticas de terceros en este borrador.',
+    description: 'Información sencilla sobre el uso de cookies técnicas y preferencias de navegación en Hilando Fino Psicología.',
     h1: 'Cookies',
     sourceFacts: [],
-    blockers: ['Analytics/cookie consent model is not approved.']
+    blockers: ['Analytics/cookie consent model remains an internal blocker.']
   })
-} satisfies Record<PublicPageKey, ContentPage>;
+} satisfies Record<StaticPublicPageKey, ContentPage>;
 
-export const allContentPages = Object.values(contentPages);
+export const allContentPages = [...Object.values(contentPages), ...treatmentContentPages];
 export const approvedSitemapPages = allContentPages.filter(isIndexable);
+export const previewSitemapPages = allContentPages.filter((page) => page.includeInSitemap);
 
 export function pageByPath(path: string): ContentPage | undefined {
   const normalized = path.split('?')[0]?.replace(/\/$/, '') || '/';

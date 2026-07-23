@@ -1,79 +1,67 @@
-# Proposal: Marta Digital Practice Platform — Public Website Foundation
+# Proposal: Marta Digital Practice Platform — Treatment Page Preview Correction
 
 ## Intent
 
-Plan the first bounded slice: an Angular 22 **SSR** public website foundation for Marta Martín / Hilando Fino Psicología. The user’s “SSE” is recorded as corrected to **SSR**. Business outcome: attract qualified in-person psychology inquiries in Ciudad Real, build trust with verified facts, and avoid unsafe clinical/SEO claims.
-
-## Users
-
-- Prospective clients and parents comparing psychology options in Ciudad Real.
-- Marta, who needs an approvable source-of-truth, contact flow, and launch gates.
+Correct the website plan so the preview implementation owns Marta's treatment taxonomy with substantial child routes, not hub-only cards. Outcome: visitors can evaluate age/sector-specific fit while preview publication remains legally gated.
 
 ## Scope
 
 ### In Scope
-- IA/routes: `/`, `/sobre-mi`, `/como-trabajo`, `/areas-de-intervencion`, `/psicologia-ciudad-real`, `/contacto`, `/aviso-legal`, `/privacidad`, `/cookies`; `/talleres` is a requested top-level route/section, conditional on real workshop offering details.
-- Bounded first slice: website IA, content model, local SEO architecture, accessible visual system, privacy-safe contact flow, launch gates, and measurement baseline.
-- Content approval inventory below: every topic must receive publishability status, parent hub ownership, and thin-page/cannibalization decision before launch.
-
-### Complete Content Inventory
-Inclusion here is planning inventory only. It does **not** automatically mean a standalone page, verified clinical offer, SEO target, or launch-ready claim.
-
-- **Infancia y familias**: ansiedad; miedos; regulación emocional; problemas de conducta; dificultades escolares; trauma y duelo infantil; separación de los padres; autoestima; problemas de sueño; control de esfínteres.
-- **Adolescentes**: autoestima; ansiedad; relaciones sociales; identidad; orientación académica; trauma; duelo; regulación emocional.
-- **Adultos**: ansiedad; estrés; trauma; duelo; dependencia emocional; relaciones de pareja; crecimiento personal.
-- **Orientación educativa y formación**: dificultades de aprendizaje; altas capacidades; coordinación con centros educativos; asesoramiento familiar.
-- **Talleres**: requested as a top-level route/section only if Marta confirms actual workshops, audience, format, dates/availability, privacy boundaries, and commercial/legal details.
+- Angular 22 static-prerender public site plus Express API/static boundary; runtime SSR is not claimed.
+- Exactly **29 dedicated treatment pages/routes** under the four parent sectors, as mapped in the exploration addendum: Infancia y familias (10), Adolescentes (8), Adultos (7), Orientación educativa y formación (4).
+- Each treatment page must exist, be substantial, differentiated, first-person in Marta's voice, prerendered, canonical/breadcrumbed, linked, and testable.
+- Sector hubs organize and link all owned children. Hub-only cards are no longer sufficient.
+- `/psicologia-trauma-ciudad-real` remains a local cross-sector trauma/duelo/EMDR pillar and must not replace child/adolescent/adult trauma or grief routes.
+- Preview route existence is separate from indexable publication: meta `noindex`/robots remain until Marta/legal approval; unsupported credentials, contact data, NAP/LocalBusiness, testimonials, prices, modalities, and service claims remain gated.
 
 ### Out of Scope
-- Clinical records, session recording, automated diagnosis/triage, booking/payment/CRM integrations, patient-data AI/Raspberry Pi workflows.
-- Publishing testimonials, unverified credentials, final service claims, prices, address, modalities, standalone topic pages, or SEO copy.
-- Larger business OS roadmap: content engine, reputation loop, intake ops, booking/payment, CRM, local AI for non-sensitive admin.
+- Diagnosis, triage, treatment guarantees, self-tests as decision tools, clinical AI, patient records, session recording, booking, payments, CRM, live contact publication, fabricated facts, testimonials, unsupported LocalBusiness/NAP, and unapproved EMDR/service claims.
+- Agency narration or third-person Marta copy in public visitor text.
+- Larger practice OS roadmap and sensitive Raspberry Pi/local AI workflows.
 
 ## Capabilities
 
 ### New Capabilities
-- `public-website-foundation`: Angular 22 SSR/prerender public IA, Stitch-informed design system, accessibility constraints.
-- `local-seo-content-architecture`: Ciudad Real SEO, route taxonomy, internal linking, schema rules, cannibalization controls.
-- `content-approval-system`: verified/placeholder content model, inventory status, hub ownership, and Marta approval workflow.
-- `privacy-contact-and-launch-gates`: minimized contact flow, legal/privacy gates, safe analytics, launch checklist.
+- `public-website-foundation`: static-prerender IA, accessible treatment navigation, preview-safe route coverage.
+- `local-seo-content-architecture`: exactly-29 treatment route ownership, internal linking, trauma pillar, anti-cannibalization QA.
+- `content-approval-system`: first-person Marta voice, verified-facts model, preview/noindex separation, approval audit trail.
+- `privacy-contact-and-launch-gates`: privacy-safe contact, contextual clinical boundaries, legal/publication gates.
 
 ### Modified Capabilities
-- None — no existing `openspec/specs/` specs were found.
+- None — capabilities remain change-scoped deltas.
 
 ## Approach
 
-Use the static Stitch export only as migration/design reference. Future implementation creates an Angular 22 SSR app with prerendered SEO-critical routes and server-side contact submission. Spanish public copy is authored later from approved facts only. Hubs own broad intent; topics split only when Marta confirms offer, depth, and non-cannibalization.
+Use typed treatment content as the single source for routes, prerender params, sitemap, navigation, schema, link graph, and QA. Add one generic treatment renderer; keep existing hubs/pillars, but make hubs link every child. Preserve current publication-copy/navigation work where safe.
 
 ## Affected Areas
 
 | Area | Impact | Description |
 |------|--------|-------------|
-| `openspec/changes/marta-digital-practice-platform/` | Modified | Proposal/spec trail with complete topic inventory. |
-| `code.html`, `screen.png`, `DESIGN.md` | Referenced | Stitch v20 migration input only. |
-| `claude-project/**`, `IMG_0742.JPG` | Referenced | Source facts; placeholders remain launch blockers. |
-| Future `src/app/**`, SSR/server config | New | Later implementation only. |
+| `src/app/content/treatment-*` | New | Canonical 29-page treatment model and indexes. |
+| `src/app/pages/**`, `src/app/app.routes*` | Modified | Generic renderer, child routes, hub links, prerender params. |
+| `src/app/content/public-routes.ts`, `tools/**`, `tests/**` | Modified | Derived route/sitemap/schema/link/voice/depth verification. |
+| `openspec/changes/marta-digital-practice-platform/**` | Modified | Corrected SDD trail. |
 
 ## Risks
 
 | Risk | Likelihood | Mitigation |
 |------|------------|------------|
-| Unverified clinical/legal claims | High | Block launch until Marta/legal approval. |
-| Thin SEO pages/cannibalization | Med | Require status, hub owner, and split/merge decision per topic. |
-| Contact form captures sensitive data | High | Minimize fields, consent, retention, no analytics payloads. |
-| Scope expands into business OS | Med | Defer roadmap into separate SDD changes. |
+| Review burden from 29 pages | High | Accepted `size:exception`; still slice implementation and verify in batches. |
+| Thin/duplicated YMYL content | High | Depth, similarity, route ownership, and human review gates. |
+| Unverified clinical/legal facts | High | Keep preview `noindex`; gate publication and unsupported schema/contact. |
 
 ## Rollback Plan
 
-Keep Stitch export intact. If Angular implementation fails, revert Angular commits, retain static reference assets, disable contact endpoint/analytics, and keep OpenSpec artifacts for replanning.
+Remove treatment modules/routes and return hubs to the prior static-card model; keep static pages, contact/server boundary, and OpenSpec artifacts for replanning.
 
 ## Dependencies
 
-- Marta approval of credentials, registration, address, contact channels, modalities, exclusions, intervention topics, workshops, legal/privacy texts, retention, GBP/citation decisions.
+- Exploration addendum route map; Marta/legal approval before indexable publication.
 
 ## Success Criteria
 
-- [ ] Specs can be written for all four new capabilities without implementing code.
-- [ ] Every supplied topic is present in inventory and has owner, publishability status, and cannibalization rule before launch.
-- [ ] `/talleres` is treated as requested top-level route/section but blocked until offering details are confirmed.
-- [ ] Future business OS items remain visible but excluded from this first slice.
+- [ ] Exactly 29 mapped child routes exist once, prerender, link from hubs, and pass route/sitemap/canonical tests.
+- [ ] Each page has first-person Marta voice, differentiated substance, FAQ, CTA, related links, boundaries, and source/approval metadata.
+- [ ] Preview remains non-indexable; unsupported facts/schema/contact stay gated.
+- [ ] Non-goals remain excluded despite accepted `size:exception` and high review burden.

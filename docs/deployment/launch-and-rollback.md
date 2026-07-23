@@ -75,7 +75,15 @@ The current delivery is static-prerender plus Express API, not runtime SSR. Know
 ## Rollback notes
 
 1. Set `CONTACT_ENABLED=false` or remove it to disable submissions immediately.
-2. For Pages, find the last known-good workflow run/SHA, then rerun `workflow_dispatch` from that SHA or revert/fix-forward the failing change and rerun the Pages job.
+2. For Pages, find the last known-good commit SHA. GitHub's `workflow_dispatch` API only accepts a branch/tag ref, not a raw commit SHA, so either create/push a branch or tag pointing at that SHA and dispatch the workflow against that ref, or use the revert/fix-forward fallback: revert or fix-forward the failing change on the normal branch and rerun the Pages job.
 3. Regenerate sitemap/robots in draft-safe mode if publication facts become invalid.
-4. Revert only the public-web delivery; keep OpenSpec and source documentation intact.
-5. Do not remove brand/reference sources (`code.html`, `screen.png`, `DESIGN.md`, `IMG_0742.JPG`, `identidad-de-marca/**`, `claude-project/**`).
+4. To roll back the treatment-page correction only, remove `src/app/content/treatment-*`, `src/app/content/legal-copy.ts`, `src/app/content/hub-labels.ts`, and `src/app/pages/treatment-page.component.ts`, then return hubs/navigation/sitemap/schema tests to the hub-only model.
+5. Revert only the public-web delivery; keep OpenSpec and source documentation intact.
+6. Do not remove brand/reference sources (`code.html`, `screen.png`, `DESIGN.md`, `IMG_0742.JPG`, `identidad-de-marca/**`, `claude-project/**`).
+
+## Known follow-ups before full launch
+
+- Express `trust proxy` is never configured; if `CONTACT_TRUST_PROXY=true` is ever flipped without also correctly configuring `app.set('trust proxy', ...)` for the real deployment topology, the rate limiter collapses to one shared bucket for all visitors. Dormant today (contact stays disabled); needs real deployment topology info before it is safe to configure.
+- No `Content-Security-Policy`/`Strict-Transport-Security` headers on Express responses yet. Defense-in-depth gap, no active exploit found; deferred until a dedicated testing pass to avoid breaking the app.
+- No Angular `ErrorHandler`/production error observability for client-side exceptions yet. Needs a privacy-conscious decision on whether/how to capture client errors for a health-adjacent site before implementing.
+- The 29-page e2e test bundles all 29 live navigations into one un-isolated Playwright test. Coverage works today; splitting it into per-page tests is a nice-to-have refactor, not scheduled yet.

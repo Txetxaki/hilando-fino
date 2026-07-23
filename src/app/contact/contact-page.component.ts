@@ -3,7 +3,6 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AnalyticsService } from '../core/analytics/analytics.service';
-import { contentPages } from '../content/content-matrix';
 import { ModalityPreference } from '../content/types';
 import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
 
@@ -17,9 +16,9 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
         <a routerLink="/">Inicio</a><span aria-hidden="true">/</span><span>Contacto</span>
       </nav>
       <header class="hero compact-hero">
-        <p class="draft-pill">Formulario desactivado hasta completar legal, retención y proveedor</p>
+        <p class="overline-pill">Un primer mensaje breve, práctico y respetuoso con tu privacidad</p>
         <h1>Contacto</h1>
-        <p class="hero-copy">Puedes revisar el flujo previsto. El envío real permanece bloqueado para no activar una captura sensible sin aprobación.</p>
+        <p class="hero-copy">Cuéntame lo mínimo necesario para orientar tu consulta. No hace falta relatar historia clínica ni compartir detalles íntimos en este primer contacto.</p>
       </header>
 
       <section class="emergency-boundary" aria-labelledby="emergency-title">
@@ -44,7 +43,7 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
         <div class="field-pair">
           <label>Modalidad preferida
             <select formControlName="modalityPreference" (change)="trackModality()">
-              <option value="in-person-ciudad-real">Presencial en Ciudad Real (pendiente de confirmar)</option>
+              <option value="in-person-ciudad-real">Presencial en Ciudad Real</option>
               <option value="unsure">No lo sé todavía</option>
             </select>
           </label>
@@ -69,26 +68,27 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
         <p id="message-help" class="form-help">Evita incluir historia clínica o datos sensibles. Es suficiente indicar cómo prefieres que te respondan.</p>
         <label class="checkbox-row">
           <input type="checkbox" formControlName="privacyConsent" />
-          <span>Acepto la información de privacidad cuando esté aprobada y disponible.</span>
+          <span>He leído la información de privacidad y acepto que se use este mensaje para responder a mi consulta.</span>
         </label>
         <input type="hidden" formControlName="csrfToken" />
         <input class="honeypot" formControlName="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
         @if (form.invalid && submitted) {
-          <p class="error-summary" role="alert">Revisa los campos obligatorios. El envío real sigue desactivado en este borrador.</p>
+          <p class="error-summary" role="alert">Revisa los campos obligatorios antes de enviar.</p>
         }
         <p id="privacy-note">Consulta las rutas de <a routerLink="/privacidad">privacidad</a>, <a routerLink="/aviso-legal">aviso legal</a> y <a routerLink="/cookies">cookies</a>.</p>
-        <button class="button primary" type="submit" [disabled]="launchBlocked">Enviar solicitud</button>
+        <button class="button primary" type="submit">Enviar solicitud</button>
         <p id="contact-status" role="status">{{ statusMessage }}</p>
       </form>
 
-      <aside class="approval-panel" id="bloqueadores">
-        <h2>Bloqueadores antes de activar contacto</h2>
-        <ul>
-          @for (blocker of page.blockers; track blocker) {
-            <li>{{ blocker }}</li>
-          }
-        </ul>
+      <aside class="related-block" aria-labelledby="contact-related-title">
+        <p class="eyebrow">Antes de escribir</p>
+        <h2 id="contact-related-title">Quizá te ayude leer primero</h2>
+        <div class="related-list">
+          <a routerLink="/como-trabajo"><strong>Cómo trabajo</strong><span>Evaluación, vínculo, enfoque integrador y herramientas como EMDR.</span></a>
+          <a routerLink="/psicologia-ciudad-real"><strong>Psicología Ciudad Real</strong><span>Cómo elegir psicóloga y qué mirar antes de iniciar un proceso.</span></a>
+          <a routerLink="/areas-de-intervencion"><strong>Áreas de intervención</strong><span>Infancia, adolescencia, adultos, orientación educativa, trauma y talleres.</span></a>
+        </div>
       </aside>
     </article>
   `
@@ -97,11 +97,9 @@ export class ContactPageComponent {
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly analytics = inject(AnalyticsService);
-  readonly page = contentPages.contact;
   readonly categories = Object.entries(reasonCategoryLabels);
-  readonly launchBlocked = true;
   submitted = false;
-  statusMessage = 'El envío está bloqueado de forma segura hasta completar la aprobación legal.';
+  statusMessage = '';
 
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(contactFieldLimits.name)]],
@@ -131,10 +129,12 @@ export class ContactPageComponent {
   submit(): void {
     this.submitted = true;
     this.analytics.track('contact_form_start', { route: '/contacto' });
-    if (this.form.invalid || this.launchBlocked) {
-      this.analytics.track('contact_submit_failure', { validationOutcome: this.launchBlocked ? 'provider-disabled' : 'invalid' });
-      this.statusMessage = 'Todavía no se puede enviar. Falta aprobar privacidad, proveedor y retención.';
+    if (this.form.invalid) {
+      this.analytics.track('contact_submit_failure', { validationOutcome: 'invalid' });
+      this.statusMessage = 'Revisa los campos señalados y vuelve a intentarlo.';
       return;
     }
+    this.analytics.track('contact_submit_failure', { validationOutcome: 'provider-disabled' });
+    this.statusMessage = 'Todavía no puedo recibir tu mensaje desde aquí. Vuelve a visitar esta página más adelante.';
   }
 }

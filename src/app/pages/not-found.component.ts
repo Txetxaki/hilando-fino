@@ -10,7 +10,7 @@ import { notFoundContent } from '../content/not-found';
   template: `
     <article class="page-shell">
       <header class="hero compact-hero">
-        <p class="draft-pill">{{ content.label }}</p>
+        <p class="overline-pill">{{ content.label }}</p>
         <h1>{{ content.h1 }}</h1>
         <p class="hero-copy">{{ content.body }} Puedes volver al inicio o revisar las áreas de intervención.</p>
         <div class="hero-actions">

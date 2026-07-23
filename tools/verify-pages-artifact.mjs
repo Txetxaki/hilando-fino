@@ -9,6 +9,17 @@ const pagesSiteUrl = 'https://txetxaki.github.io/hilando-fino';
 const requiredRoutes = requiredPagesArtifactFiles;
 const failures = [];
 
+// The contact-unavailable message only renders client-side after a submit interaction, so it
+// never appears in the prerendered contacto/index.html snapshot. The compiled client JS bundle
+// is the closest sound static-artifact proof that the honest message shipped and the old
+// dishonest/retryable wording did not regress back in. esbuild minification may re-encode
+// accented characters as \xHH escapes instead of literal UTF-8 bytes, so match both encodings.
+const contactHonestMessage = 'Todavía no puedo recibir tu mensaje desde aquí. Vuelve a visitar esta página más adelante.';
+const contactDishonestMessage = 'No he podido enviar la solicitud desde esta página. Por favor, vuelve a intentarlo más tarde.';
+const contactHonestMessageVariants = [contactHonestMessage, hexEscapeNonAscii(contactHonestMessage)];
+const contactDishonestMessageVariants = [contactDishonestMessage, hexEscapeNonAscii(contactDishonestMessage)];
+let contactHonestMessageFound = false;
+
 if (!existsSync(browserDir)) failures.push('dist/hilando-fino/browser is missing. Run npm run build:pages first.');
 
 for (const route of requiredRoutes) {
@@ -47,6 +58,12 @@ for (const file of walk(browserDir)) {
   for (const forbidden of ['CONTACT_CSRF_SECRET', 'CONTACT_ENABLED=true', 'CONTACT_RETENTION_APPROVED=true', '/api/contact', 'contact_provider_failure', 'LocalBusiness']) {
     if (text.includes(forbidden)) failures.push(`${rel} contains forbidden Pages artifact text: ${forbidden}`);
   }
+  if (contactHonestMessageVariants.some((variant) => text.includes(variant))) contactHonestMessageFound = true;
+  if (contactDishonestMessageVariants.some((variant) => text.includes(variant))) failures.push(`${rel} still contains the old dishonest/retryable contact failure message`);
+}
+
+if (!contactHonestMessageFound) {
+  failures.push('Pages artifact never includes the honest contact-unavailable message in any built file; the client bundle should carry it since contacto/index.html cannot capture post-interaction state.');
 }
 
 if (failures.length > 0) {
@@ -54,16 +71,13 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log('GitHub Pages artifact verification passed: base href, routes, noindex, disabled contact, 404, and sensitive-file checks are safe.');
+console.log('GitHub Pages artifact verification passed: base href, routes, noindex metadata, contact fallback, 404, and sensitive-file checks are safe.');
 
 function verifyHtml(route, html) {
   if (!html.includes('<base href="/hilando-fino/">')) failures.push(`${route} does not use the GitHub Pages base href`);
   if (!html.includes('name="robots" content="noindex, nofollow"')) failures.push(`${route} is not draft-safe noindex`);
   if (html.includes('@type":"LocalBusiness') || html.includes('@type":"HealthAndBeautyBusiness')) failures.push(`${route} contains local business schema before NAP approval`);
-  if (route === 'contacto/index.html') {
-    if (!html.includes('Formulario desactivado hasta completar legal, retención y proveedor')) failures.push('contact route does not state provider-disabled preview mode');
-    if (!html.includes('disabled')) failures.push('contact route submit button is not prerendered as disabled');
-  }
+  if (route === 'contacto/index.html' && !html.includes('Un primer mensaje breve, práctico y respetuoso con tu privacidad')) failures.push('contact route does not render final-facing contact guidance');
   const unsafeUrls = collectRelevantUrls(html).filter((url) => isUnsafeRootAbsoluteRepositoryUrl(url));
   if (unsafeUrls.length > 0) failures.push(`${route} has root-absolute repository URLs outside ${baseHref}: ${unsafeUrls.join(', ')}`);
   verifyUrlContracts(route, html);
@@ -146,6 +160,17 @@ function* walk(dir) {
     if (stats.isDirectory()) yield* walk(path);
     else yield path;
   }
+}
+
+function hexEscapeNonAscii(value) {
+  return [...value]
+    .map((char) => {
+      const code = char.codePointAt(0) ?? 0;
+      if (code <= 127) return char;
+      if (code <= 255) return `\\x${code.toString(16).toUpperCase().padStart(2, '0')}`;
+      return `\\u${code.toString(16).toUpperCase().padStart(4, '0')}`;
+    })
+    .join('');
 }
 
 function readTextIfSafe(file) {

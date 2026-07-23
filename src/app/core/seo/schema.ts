@@ -1,4 +1,5 @@
 import { ContentPage } from '../../content/types';
+import { treatmentByPath } from '../../content/treatment-index';
 
 export interface JsonLdNode {
   '@context': 'https://schema.org';
@@ -15,13 +16,13 @@ export function websiteSchema(siteUrl: string): JsonLdNode {
   };
 }
 
-export function organizationSchema(siteUrl: string): JsonLdNode {
+export function personSchema(siteUrl: string): JsonLdNode {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Marta Martín · Hilando Fino Psicología',
+    '@type': 'Person',
+    name: 'Marta Martín',
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`
+    description: 'Marta Martín · Hilando Fino Psicología'
   };
 }
 
@@ -44,7 +45,19 @@ export function breadcrumbSchema(siteUrl: string, page: ContentPage): JsonLdNode
 export function schemaForPage(siteUrl: string, page: ContentPage): JsonLdNode[] {
   const nodes = [breadcrumbSchema(siteUrl, page)];
   if (page.canonicalPath === '/') {
-    nodes.push(websiteSchema(siteUrl), organizationSchema(siteUrl));
+    nodes.push(websiteSchema(siteUrl), personSchema(siteUrl));
+  }
+  const treatment = treatmentByPath(page.canonicalPath);
+  if (treatment) {
+    nodes.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: treatment.faq.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer }
+      }))
+    });
   }
   return nodes;
 }

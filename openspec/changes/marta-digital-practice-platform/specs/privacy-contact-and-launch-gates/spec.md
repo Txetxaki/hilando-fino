@@ -77,6 +77,22 @@ The contact flow and content MUST state that the website is not an emergency ser
 - THEN the site SHALL direct them to appropriate emergency channels
 - AND SHALL NOT invite form-based crisis handling
 
+### Requirement: Contextual medical, pediatric, and relationship safety boundaries
+
+Treatment pages MUST include boundary language only where contextually needed. Sleep and toilet-training pages MUST refer families toward pediatric/developmental assessment when physical symptoms, pain, regression, or medical/developmental concerns may be relevant. Trauma, self-harm, coercion, violence, couple/dependence, and emergency contexts MUST state that the website/contact form is not crisis handling. Boundaries MUST be useful and page-specific, not repeated filler.
+
+#### Scenario: Pediatric symptoms are relevant
+- GIVEN a sleep or toilet-training treatment page describes concerns that may be physical or developmental
+- WHEN the page boundary is reviewed
+- THEN it MUST mention appropriate pediatric/developmental consultation or referral
+- AND it MUST NOT promise psychological resolution
+
+#### Scenario: Relationship safety risk is relevant
+- GIVEN a couple, dependence, trauma, or emergency context may involve coercion, violence, or acute risk
+- WHEN the page or contact guidance is rendered
+- THEN it MUST direct visitors toward appropriate urgent/safety resources
+- AND it MUST NOT imply therapy or the form is sufficient for unsafe situations
+
 ### Requirement: Explicit excluded platform scope
 
 This change MUST preserve the future roadmap while excluding it from the first implementation. Future candidates MAY include content/reputation operations, intake/admin automation, booking/payment/CRM after review, safe non-sensitive local AI, and separately gated Raspberry Pi/patient-data research. This change MUST NOT implement sensitive clinical AI, clinical records, patient data stores, session recording, automated diagnosis, triage, booking, payments, CRM, or local AI over patient data. Outcome: the first slice stays within privacy, legal, and review-budget boundaries.

@@ -1,9 +1,38 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 
 import { AnalyticsService } from './core/analytics/analytics.service';
 import { SeoService } from './core/seo/seo.service';
+import { hubLabels } from './content/hub-labels';
+import { parentHref, treatmentsForSector } from './content/treatment-index';
+import type { TreatmentSector } from './content/treatment-types';
+
+const areaLinks = [
+  { label: hubLabels['children-families'], href: parentHref('children-families') },
+  { label: hubLabels.adolescents, href: parentHref('adolescents') },
+  { label: hubLabels.adults, href: parentHref('adults') },
+  { label: hubLabels['education-training'], href: parentHref('education-training') },
+  { label: 'Trauma y duelo', href: '/psicologia-trauma-ciudad-real' }
+] as const;
+
+const treatmentSectors: readonly TreatmentSector[] = ['children-families', 'adolescents', 'adults', 'education-training'];
+
+const sectorMenu: readonly { label: string; href: string; sector: TreatmentSector; children: readonly { label: string; href: string }[] }[] = treatmentSectors.map((sector) => ({
+  label: hubLabels[sector],
+  href: parentHref(sector),
+  sector,
+  children: treatmentsForSector(sector).map((page) => ({ label: page.h1, href: page.canonicalPath }))
+}));
+
+const primaryLinks = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Sobre mí', href: '/sobre-mi' },
+  { label: 'Cómo trabajo', href: '/como-trabajo' },
+  { label: 'Psicología Ciudad Real', href: '/psicologia-ciudad-real' },
+  { label: 'Talleres', href: '/talleres' },
+  { label: 'Contacto', href: '/contacto' }
+] as const;
 
 @Component({
   selector: 'hf-root',
@@ -11,20 +40,52 @@ import { SeoService } from './core/seo/seo.service';
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
     <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
-    <section class="draft-banner" aria-label="Aviso de vista previa pública">
-      Vista previa pública no clínica: contenido en borrador, noindex, sin diagnóstico, triaje, urgencias ni envío real de contacto.
-    </section>
     <header class="site-header" aria-label="Cabecera principal">
       <nav class="nav-shell" aria-label="Navegación principal">
-        <a routerLink="/" class="brand" aria-label="Hilando Fino Psicología, inicio">
+        <a routerLink="/" class="brand" aria-label="Hilando Fino Psicología, inicio" (click)="closeMenus()">
           <img src="logo.png" width="220" height="86" alt="Marta Martín · Hilando Fino Psicología" />
         </a>
-        <div class="nav-links">
-          <a routerLink="/sobre-mi" routerLinkActive="active">Sobre mí</a>
-          <a routerLink="/como-trabajo" routerLinkActive="active">Cómo trabajo</a>
-          <a routerLink="/areas-de-intervencion" routerLinkActive="active">Áreas</a>
-          <a routerLink="/psicologia-ciudad-real" routerLinkActive="active">Ciudad Real</a>
-          <a routerLink="/contacto" class="nav-cta">Contacto</a>
+
+        <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileOpen()" aria-controls="primary-navigation" (click)="toggleMobile($event)">
+          Menú
+        </button>
+
+        <div id="primary-navigation" class="nav-links" [class.open]="mobileOpen()">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenus()">Inicio</a>
+          <a routerLink="/sobre-mi" routerLinkActive="active" (click)="closeMenus()">Sobre mí</a>
+          <a routerLink="/como-trabajo" routerLinkActive="active" (click)="closeMenus()">Cómo trabajo</a>
+
+          <div class="nav-dropdown" [class.open]="areasOpen()">
+            <button
+              class="dropdown-trigger"
+              type="button"
+              aria-controls="areas-menu"
+              [attr.aria-expanded]="areasOpen()"
+              [class.active]="isAreaRoute()"
+              (click)="toggleAreas($event)"
+              (keydown.arrowdown)="focusFirstAreaLink($event)"
+            >
+              Áreas de intervención
+            </button>
+            <div id="areas-menu" class="dropdown-panel">
+              <a routerLink="/areas-de-intervencion" routerLinkActive="active" (click)="closeMenus()">Vista general</a>
+              <div class="mega-grid" aria-label="Tratamientos por área">
+              @for (sector of sectorMenu; track sector.href) {
+                <section class="mega-sector">
+                  <a class="mega-sector-title" [routerLink]="sector.href" routerLinkActive="active" (click)="closeMenus()">{{ sector.label }}</a>
+                  @for (child of sector.children; track child.href) {
+                    <a class="mega-child" [routerLink]="child.href" routerLinkActive="active" (click)="closeMenus()">{{ child.label }}</a>
+                  }
+                </section>
+              }
+              </div>
+              <a routerLink="/psicologia-trauma-ciudad-real" routerLinkActive="active" (click)="closeMenus()">Trauma y duelo</a>
+            </div>
+          </div>
+
+          <a routerLink="/psicologia-ciudad-real" routerLinkActive="active" (click)="closeMenus()">Psicología Ciudad Real</a>
+          <a routerLink="/talleres" routerLinkActive="active" (click)="closeMenus()">Talleres</a>
+          <a routerLink="/contacto" class="nav-cta" routerLinkActive="active" (click)="closeMenus()">Contacto</a>
         </div>
       </nav>
     </header>
@@ -34,14 +95,30 @@ import { SeoService } from './core/seo/seo.service';
     </main>
 
     <footer class="site-footer">
-      <div>
+      <div class="footer-intro">
         <strong>Hilando Fino Psicología</strong>
-        <p>Web en modo borrador seguro hasta completar aprobación profesional, legal y de contenidos.</p>
+        <p>Psicología en Ciudad Real con una mirada integradora, cercana y respetuosa con cada proceso.</p>
       </div>
-      <nav aria-label="Navegación legal">
-        <a routerLink="/aviso-legal">Aviso legal</a>
-        <a routerLink="/privacidad">Privacidad</a>
-        <a routerLink="/cookies">Cookies</a>
+      <nav class="footer-sitemap" aria-label="Mapa del sitio">
+        <div>
+          <h2>Web</h2>
+          @for (link of primaryLinks; track link.href) {
+            <a [routerLink]="link.href">{{ link.label }}</a>
+          }
+        </div>
+        <div>
+          <h2>Áreas</h2>
+          <a routerLink="/areas-de-intervencion">Áreas de intervención</a>
+          @for (link of areaLinks; track link.href) {
+            <a [routerLink]="link.href">{{ link.label }}</a>
+          }
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <a routerLink="/aviso-legal">Aviso legal</a>
+          <a routerLink="/privacidad">Privacidad</a>
+          <a routerLink="/cookies">Cookies</a>
+        </div>
       </nav>
     </footer>
   `
@@ -50,11 +127,49 @@ export class AppComponent {
   private readonly router = inject(Router);
   private readonly seo = inject(SeoService);
   private readonly analytics = inject(AnalyticsService);
+  readonly areaLinks = areaLinks;
+  readonly sectorMenu = sectorMenu;
+  readonly primaryLinks = primaryLinks;
+  readonly mobileOpen = signal(false);
+  readonly areasOpen = signal(false);
+  readonly currentUrl = signal('/');
 
   constructor() {
     this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd)).subscribe((event) => {
+      this.currentUrl.set(event.urlAfterRedirects.split('?')[0] || '/');
       this.seo.applyForPath(event.urlAfterRedirects);
       this.analytics.track('page_view', { route: event.urlAfterRedirects });
     });
+  }
+
+  @HostListener('document:keydown.escape')
+  closeMenus(): void {
+    this.mobileOpen.set(false);
+    this.areasOpen.set(false);
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeOnOutsideClick(event: MouseEvent): void {
+    if (!(event.target as HTMLElement | null)?.closest('.nav-shell')) this.closeMenus();
+  }
+
+  toggleMobile(event: Event): void {
+    event.stopPropagation();
+    this.mobileOpen.update((value) => !value);
+  }
+
+  toggleAreas(event: Event): void {
+    event.stopPropagation();
+    this.areasOpen.update((value) => !value);
+  }
+
+  isAreaRoute(): boolean {
+    return this.currentUrl().startsWith('/areas-de-intervencion') || this.currentUrl() === '/psicologia-trauma-ciudad-real';
+  }
+
+  focusFirstAreaLink(event: Event): void {
+    event.preventDefault();
+    this.areasOpen.set(true);
+    setTimeout(() => document.querySelector<HTMLAnchorElement>('#areas-menu a')?.focus());
   }
 }
