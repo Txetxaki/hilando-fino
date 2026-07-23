@@ -44,7 +44,10 @@ a:hover { color: var(--color-plum-dark); }
 .menu-toggle { display: none; min-height: 44px; border: 1px solid rgba(90, 67, 76, .25); border-radius: 999px; background: #fff; color: var(--color-plum-dark); padding: .6rem 1rem; font: inherit; font-weight: 800; }
 .nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem .55rem; font-size: .93rem; font-weight: 700; }
 .nav-links a, .dropdown-trigger { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; padding: .65rem .72rem; border-radius: 999px; color: var(--color-plum-dark); }
-.nav-links a.active, .dropdown-trigger.active { background: var(--color-plum-light); }
+/* Active/current-page state uses solid terracotta + ink text (5.81:1,
+   verified) instead of the previous pale plum-light background, so the real
+   second brand color marks "you are here" instead of a barely-visible tint. */
+.nav-links a.active, .dropdown-trigger.active { background: var(--color-terracotta); color: var(--color-ink); }
 .nav-cta { background: var(--color-plum); color: white !important; }
 .nav-links .nav-cta.active { background: var(--color-plum); color: white !important; }
 .dropdown-trigger { border: 0; background: transparent; font: inherit; cursor: pointer; }
@@ -66,7 +69,18 @@ a:hover { color: var(--color-plum-dark); }
 .hero { position: relative; overflow: hidden; border: 1px solid rgba(90, 67, 76, .14); border-radius: 2rem; padding: clamp(2.4rem, 7vw, 5.7rem); background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(248,235,235,.92)); }
 .woven-hero::before { content: ''; position: absolute; inset: auto -5rem -5rem auto; width: 22rem; height: 22rem; border: 1px solid rgba(90, 67, 76, .22); border-radius: 48% 52% 60% 40% / 58% 38% 62% 42%; transform: rotate(-18deg); }
 .woven-hero::after { content: ''; position: absolute; right: 4rem; top: 3rem; width: 8rem; height: 8rem; border: 1px solid rgba(133, 80, 75, .32); border-radius: 999px 42% 999px 45%; transform: rotate(22deg); }
-.overline-pill, .eyebrow { display: inline-flex; width: fit-content; border-radius: 999px; padding: .45rem .75rem; background: var(--color-terracotta-light); color: var(--color-plum-dark); font-weight: 800; font-size: .82rem; letter-spacing: .02em; }
+/* Solid terracotta background + ink text = 5.81:1 contrast (verified) - the
+   real logo terracotta (#d1807e) was previously only ever shown as a pale
+   tint or a darkened "safe" substitute, because raw terracotta text/border
+   on light backgrounds fails WCAG (2.8-2.96:1). Ink-on-terracotta is the one
+   combination where the actual brand color can appear solid and still pass
+   contrast, so it carries the kicker badge that appears on every page. */
+/* !important on color: .eyebrow is also used as `<p class="eyebrow">` inside
+   .content-band, where `.content-band p { color: var(--color-muted) }` (a
+   more specific selector) would otherwise win and put muted gray text on
+   the solid terracotta background - measured 2.47:1 by axe, a real failure,
+   not the 5.81:1 ink combination this rule intends everywhere it's used. */
+.overline-pill, .eyebrow { display: inline-flex; width: fit-content; border-radius: 999px; padding: .45rem .75rem; background: var(--color-terracotta); color: var(--color-ink) !important; font-weight: 800; font-size: .82rem; letter-spacing: .02em; }
 h1, h2, h3 { font-family: var(--font-display); color: var(--color-plum-dark); line-height: 1.04; letter-spacing: -.03em; }
 h1 { max-width: 14ch; margin: 1rem 0; font-size: clamp(3rem, 8vw, 6.5rem); }
 h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
@@ -86,7 +100,10 @@ h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
 .inline-links a { padding: .55rem .8rem; border-bottom: 2px solid var(--color-terracotta-safe); text-decoration: none; font-weight: 800; }
 
 .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; margin: 3rem 0; }
-.thread-card { min-height: 13rem; padding: 1.35rem; border-radius: 1.25rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: transform .16s ease, box-shadow .16s ease; }
+/* border-top uses terracotta-safe, not raw terracotta: raw terracotta on the
+   card's paper background only reaches 2.91:1, just under the 3:1 minimum
+   for non-text UI contrast; terracotta-safe reaches 6.37:1. */
+.thread-card { min-height: 13rem; padding: 1.35rem; border-radius: 1.25rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); border-top: 4px solid var(--color-terracotta-safe); text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; transition: transform .16s ease, box-shadow .16s ease; }
 a.thread-card:hover { transform: translateY(-2px); box-shadow: 0 1rem 2rem rgba(90, 67, 76, .08); }
 .thread-card h2 { font-size: 1.42rem; }
 .thread-card p { color: var(--color-muted); line-height: 1.62; }
