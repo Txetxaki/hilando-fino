@@ -146,6 +146,11 @@ export class AppComponent {
   closeMenus(): void {
     this.mobileOpen.set(false);
     this.areasOpen.set(false);
+    // The desktop mega-menu panel stays visually open via `.nav-dropdown:focus-within`
+    // even after `areasOpen` flips to false, because SPA navigation does not blur the
+    // clicked link. Blurring here lets the CSS focus fallback release the panel.
+    const active = document.activeElement as HTMLElement | null;
+    if (active?.closest('.nav-shell')) active.blur();
   }
 
   @HostListener('document:click', ['$event'])

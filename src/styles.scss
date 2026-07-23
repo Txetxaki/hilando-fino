@@ -21,7 +21,15 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Prevent mobile browsers' automatic text-size inflation ("font boosting"), which
+     silently renders fonts up to ~20% larger than the authored CSS on real phones —
+     invisible in desktop devtools, but the direct cause of oversized/overflowing
+     layouts on real devices. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 body { margin: 0; background: radial-gradient(circle at 8% 10%, #f8ebeb 0 18rem, transparent 19rem), linear-gradient(180deg, #fffdfb 0, var(--color-cream) 34rem); }
 a { color: var(--color-plum); }
 a:hover { color: var(--color-plum-dark); }
@@ -128,7 +136,11 @@ textarea { resize: vertical; }
 @media (max-width: 720px) {
   .hero { padding: 2rem 1.25rem; border-radius: 1.25rem; }
   .field-pair { grid-template-columns: 1fr; }
-  h1 { font-size: clamp(2.65rem, 15vw, 4.25rem); }
+  /* Same 8vw scaling as the base h1 rule (keeps sizing continuous across the
+     breakpoint) with a lower ceiling so headings don't render larger on phones
+     than they do on desktop — the previous 15vw/4.25rem values produced up to
+     68px headings on narrow phones, worse than the desktop rule at 720px. */
+  h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {

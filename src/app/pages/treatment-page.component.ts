@@ -30,11 +30,11 @@ import type { TreatmentPage } from '../content/treatment-types';
 
       <nav class="toc" aria-label="Índice de la página">
         <p>En esta página</p>
-        <a href="#situaciones">Señales</a>
-        <a href="#impacto">Impacto</a>
-        <a href="#acompanarte">Cómo puedo acompañarte</a>
-        <a href="#proceso">Proceso</a>
-        <a href="#preguntas">Preguntas frecuentes</a>
+        <a [routerLink]="[]" fragment="situaciones">Señales</a>
+        <a [routerLink]="[]" fragment="impacto">Impacto</a>
+        <a [routerLink]="[]" fragment="acompanarte">Cómo puedo acompañarte</a>
+        <a [routerLink]="[]" fragment="proceso">Proceso</a>
+        <a [routerLink]="[]" fragment="preguntas">Preguntas frecuentes</a>
       </nav>
 
       <section id="situaciones" class="content-band"><p class="eyebrow">{{ page().situations.eyebrow }}</p><h2>{{ page().situations.title }}</h2>@for (paragraph of page().situations.body; track paragraph) { <p>{{ paragraph }}</p> }</section>

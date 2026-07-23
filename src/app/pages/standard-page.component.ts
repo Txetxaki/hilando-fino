@@ -35,7 +35,7 @@ import { pageContents } from './page-data';
         <nav class="toc" aria-label="Índice de la página">
           <p>En esta página</p>
           @for (section of content().sections; track section.title) {
-            <a [href]="'#' + sectionId(section.title)">{{ section.title }}</a>
+            <a [routerLink]="[]" [fragment]="sectionId(section.title)">{{ section.title }}</a>
           }
         </nav>
       }
