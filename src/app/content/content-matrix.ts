@@ -7,18 +7,28 @@ const today = '2026-07-23';
 const verifiedBrandFacts = [
   { source: 'identidad-de-marca/guia-de-marca.md', fact: 'Brand name: Marta Martín — Hilando Fino Psicología.', verified: true },
   { source: 'identidad-de-marca/guia-de-marca.md', fact: 'Voice: cercana, profesional, sin jerga clínica innecesaria, no promissory claims.', verified: true },
-  { source: 'user-approved correction 2026-07-23', fact: 'Public visitor copy must read like a publication-quality website while preview robots remain invisible metadata only.', verified: true }
-];
-
-const methodFacts = [
+  { source: 'Marta copy document "web (1).docx" 2026-07-31', fact: 'Client-authored, first-person copy for every route, supplied directly by Marta.', verified: true },
   {
-    source: 'IMG_0742.JPG',
-    fact: 'Known method source describes integrative psychology, careful evaluation, scientifically supported approaches including EMDR, Gestalt, Bioenergetic Therapy, and family attachment models such as Circle of Security Parenting.',
+    source: 'Marta copy document "web (1).docx" 2026-07-31',
+    fact: 'Practice identity: Col. CM-03249, Registro Sanitario 1309351/1317777, Calle Ramón y Cajal 2 Local 2.6 Ciudad Real, teléfono 623921707.',
     verified: true
   }
 ];
 
-const publicationCopyNote = ['Unknown credentials, registration, address, direct contact channels, prices, testimonials, exact legal identity, and live-provider approvals remain internal blockers and are omitted from visitor copy.'];
+const methodFacts = [
+  {
+    source: 'Marta copy document "web (1).docx" 2026-07-31',
+    fact: 'Method: careful evaluation, integrative approach, EMDR (WHO/NICE/ISTSS-backed for trauma), Circle of Security Parenting, CBT, Gestalt and Bioenergetics, plus sandtray, projective figures and Dixit cards as in-session resources.',
+    verified: true
+  },
+  {
+    source: 'Marta copy document "web (1).docx" 2026-07-31',
+    fact: 'Training: Grado en Psicología, Máster en Psicología General Sanitaria, Máster en Formación del Profesorado (Orientación Educativa), EMDR, trauma y duelo infanto-juvenil, trastornos de conducta, mediación familiar.',
+    verified: true
+  }
+];
+
+const publicationCopyNote = ['Production domain, brand-bound email address, prices, opening hours, testimonials and the live contact provider approval remain internal blockers and are omitted from visitor copy.'];
 
 function publicPage(input: Omit<ContentPage, 'status' | 'noindex' | 'includeInSitemap' | 'lastReviewed' | 'blockers' | 'modalityAvailability'> & Partial<ContentPage>): ContentPage {
   return {
@@ -103,6 +113,16 @@ export const contentPages = {
     h1: 'Adultos',
     sourceFacts: verifiedBrandFacts
   }),
+  perinatal: publicPage({
+    key: 'perinatal',
+    canonicalPath: '/areas-de-intervencion/psicologia-perinatal',
+    parentHub: 'perinatal',
+    primaryIntent: 'perinatal psychology hub covering fertility, pregnancy, postpartum, early bonding and perinatal loss',
+    title: 'Psicología perinatal en Ciudad Real | Hilando Fino',
+    description: 'Acompañamiento en fertilidad, embarazo, parto, posparto, vínculo con el bebé y duelo perinatal: sostener a quien sostiene.',
+    h1: 'Psicología perinatal',
+    sourceFacts: [...verifiedBrandFacts, ...methodFacts]
+  }),
   educationTraining: publicPage({
     key: 'educationTraining',
     canonicalPath: '/areas-de-intervencion/orientacion-educativa-y-formacion',
@@ -140,18 +160,24 @@ export const contentPages = {
     description: 'Contacta con Hilando Fino Psicología para orientar tu consulta de forma sencilla, cuidadosa y respetuosa con tu privacidad.',
     h1: 'Contacto',
     sourceFacts: verifiedBrandFacts,
-    blockers: ['Live provider, email/phone, privacy/legal text, retention, DPA/hosting, and consent approvals remain internal blockers.']
+    blockers: ['Live form provider, retention policy, DPA/hosting and the brand-bound email address remain internal blockers; phone, address and registration numbers are supplied and published.']
   }),
   workshops: publicPage({
     key: 'workshops',
     canonicalPath: '/talleres',
-    status: 'future-scope',
-    primaryIntent: 'workshop and training route without invented dates or prices',
+    primaryIntent: 'workshop and training catalogue supplied by Marta, without invented dates or prices',
     title: 'Talleres y formación | Hilando Fino Psicología',
-    description: 'Talleres y formación para familias, adolescentes, adultos y contextos educativos desde una mirada psicológica clara y práctica.',
-    h1: 'Talleres',
-    sourceFacts: [{ source: 'openspec proposal and user taxonomy', fact: 'Talleres is a requested top-level route; dates, prices, clients, and formats are not supplied.', verified: true }],
-    blockers: ['Dates, prices, client names, exact format, and commercial conditions remain internal blockers.']
+    description: 'Formación para centros educativos, familias y profesionales: trauma y duelo en el aula, psicología y movimiento y educación emocional.',
+    h1: 'Talleres y formación',
+    sourceFacts: [
+      ...verifiedBrandFacts,
+      {
+        source: 'Marta copy document "web (1).docx" 2026-07-31',
+        fact: 'Three workshop lines supplied: centros educativos ("Trauma y duelo en el aula" with five contents), psicología y movimiento (five contents), educación emocional.',
+        verified: true
+      }
+    ],
+    blockers: ['Dates, prices, past client names and commercial conditions remain internal blockers.']
   }),
   legalNotice: publicPage({
     key: 'legalNotice',
@@ -161,8 +187,8 @@ export const contentPages = {
     title: 'Aviso legal | Hilando Fino Psicología',
     description: 'Información legal general sobre el uso de la web de Hilando Fino Psicología y el alcance de sus contenidos.',
     h1: 'Aviso legal',
-    sourceFacts: [],
-    blockers: ['Legal identity, address, tax/professional data and responsible party details remain internal blockers.']
+    sourceFacts: verifiedBrandFacts,
+    blockers: ['Fiscal identity (NIF), hosting provider and the production domain remain internal blockers; name, address, registration and phone are supplied.']
   }),
   privacy: publicPage({
     key: 'privacy',
@@ -172,8 +198,8 @@ export const contentPages = {
     title: 'Privacidad | Hilando Fino Psicología',
     description: 'Información de privacidad para entender qué datos puede solicitar esta web y cómo se plantea una comunicación prudente.',
     h1: 'Privacidad',
-    sourceFacts: [],
-    blockers: ['Controller, processor, hosting, email provider, retention, rights channel and DPA terms remain internal blockers.']
+    sourceFacts: verifiedBrandFacts,
+    blockers: ['Processor list, hosting and email provider, retention periods and DPA terms remain internal blockers; the controller and the rights channel are supplied.']
   }),
   cookies: publicPage({
     key: 'cookies',

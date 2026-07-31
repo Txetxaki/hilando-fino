@@ -90,6 +90,67 @@ h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
 .button.primary { background: var(--color-plum); color: white; }
 .button.secondary { background: transparent; color: var(--color-plum); }
 
+/* Hero with one of Marta's photos: text keeps the left column, the image sits
+   beside it and collapses above the copy on narrow screens. The picture carries
+   explicit width/height so its box is reserved before the file arrives. */
+.hero.has-media { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+.hero.has-media .hero-text { min-width: 0; }
+.hero-media { display: block; }
+.hero-media img { display: block; width: 100%; height: auto; border-radius: 1.5rem; box-shadow: 0 1.25rem 2.5rem rgba(62, 46, 53, .16); }
+
+.pull-quote { margin: clamp(2.5rem, 6vw, 4rem) 0; padding: clamp(1.5rem, 4vw, 2.5rem); border-left: 4px solid var(--color-terracotta-safe); border-radius: 0 1.35rem 1.35rem 0; background: var(--color-terracotta-light); font-family: var(--font-display); font-style: italic; font-size: clamp(1.15rem, 2.2vw, 1.5rem); line-height: 1.55; color: var(--color-plum-dark); }
+
+.content-figure { margin: clamp(2rem, 5vw, 3.5rem) 0; max-width: 44rem; }
+.content-figure img { display: block; width: 100%; height: auto; border-radius: 1.35rem; }
+.content-figure figcaption { margin-top: .7rem; color: var(--color-muted); font-size: .95rem; line-height: 1.6; }
+
+.block-band { margin: clamp(3rem, 8vw, 6rem) 0; }
+/* Both class selectors are needed: `.content-band { max-width: 55rem }` is declared
+   later in this file, so a single-class `.wide-band` rule loses on source order and
+   silently keeps the model/resource/workshop grids at reading width. The pairing also
+   cancels the `:nth-of-type(even)` right-shift, which is meaningless once the band
+   spans the full container. */
+.content-band.wide-band { max-width: none; margin-left: 0; }
+
+.credential-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-top: 1.75rem; }
+.credential-group { padding: 1.35rem; border-radius: 1.25rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); border-top: 4px solid var(--color-terracotta-safe); }
+.credential-group h3 { margin: 0 0 .75rem; font-size: 1.15rem; letter-spacing: -.01em; }
+.credential-group ul, .checklist, .workshop-item ul, .legal-list { margin: 0; padding-left: 1.15rem; display: grid; gap: .5rem; }
+.credential-group li, .checklist li, .workshop-item li, .legal-list li { color: var(--color-muted); line-height: 1.6; }
+
+.model-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 1rem; margin-top: 1.75rem; }
+.model-card { padding: 1.5rem; border-radius: 1.25rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); }
+.model-card h3 { margin: 0 0 .75rem; font-size: 1.3rem; }
+.model-card p { margin: 0 0 .7rem; color: var(--color-muted); line-height: 1.7; }
+.model-card p:last-child { margin-bottom: 0; }
+.model-card strong { color: var(--color-plum-dark); }
+
+.resource-list { display: grid; gap: 1.5rem; margin-top: 1.75rem; }
+.resource-item { display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); gap: clamp(1rem, 3vw, 2rem); align-items: start; padding: 1.35rem; border-radius: 1.35rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); }
+.resource-item:only-child, .resource-item:not(:has(picture)) { grid-template-columns: 1fr; }
+.resource-item img { display: block; width: 100%; height: auto; border-radius: 1rem; }
+.resource-item h3 { margin: 0 0 .25rem; font-size: 1.35rem; }
+.resource-qualifier { margin: 0 0 .6rem !important; font-weight: 800; font-size: .9rem; letter-spacing: .02em; text-transform: uppercase; color: var(--color-terracotta-safe) !important; }
+.resource-item p { color: var(--color-muted); line-height: 1.7; margin: 0; }
+
+.workshop-list { display: grid; gap: 1.25rem; margin-top: 1.75rem; }
+.workshop-item { padding: 1.5rem; border-radius: 1.35rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); border-top: 4px solid var(--color-terracotta-safe); }
+.workshop-item h3 { margin: 0 0 .6rem; font-size: 1.4rem; }
+.workshop-item p { color: var(--color-muted); line-height: 1.7; }
+.workshop-audience { font-weight: 800; color: var(--color-plum-dark) !important; }
+.workshop-contents-title { margin: 1rem 0 .6rem !important; font-weight: 900; color: var(--color-plum-dark) !important; }
+
+.checklist { margin-top: 1.5rem; }
+.highlight-band { padding: clamp(1.4rem, 3.5vw, 2.4rem); border-radius: 1.45rem; background: linear-gradient(135deg, #fff, var(--color-terracotta-light)); border: 1px solid rgba(133, 80, 75, .2); }
+
+.legal-section { margin: 2.5rem 0; }
+.legal-section h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.legal-list { margin-top: 1rem; }
+
+.footer-nap { margin-top: 1.25rem; display: grid; gap: .3rem; font-style: normal; color: var(--color-muted); line-height: 1.6; }
+.footer-nap a { color: var(--color-plum); }
+.footer-registry { font-size: .88rem; }
+
 .toc { margin: 1.25rem 0 3rem; padding: 1rem; border-radius: 1.25rem; background: rgba(255,255,255,.72); border: 1px solid rgba(90, 67, 76, .12); display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
 .toc p { margin: 0; font-weight: 900; color: var(--color-plum-dark); }
 .toc a { font-weight: 700; text-decoration-thickness: 1px; }
@@ -150,9 +211,16 @@ textarea { resize: vertical; }
   .footer-sitemap { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 960px) {
+  .hero.has-media { grid-template-columns: 1fr; }
+  .hero.has-media .hero-media { order: -1; max-width: 22rem; }
+  .resource-item { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 720px) {
   .hero { padding: 2rem 1.25rem; border-radius: 1.25rem; }
   .field-pair { grid-template-columns: 1fr; }
+  .hero.has-media .hero-media { max-width: none; }
   /* The base h1/h2 rules use an 8vw/4vw preferred value with a floor that's
      only reachable above ~500px/800px width — every phone below that (320 to
      ~480px, i.e. all real phones) was pinned to the floor regardless of how

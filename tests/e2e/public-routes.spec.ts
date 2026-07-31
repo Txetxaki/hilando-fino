@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { REQUIRED_TREATMENT_ROUTE_COUNT } from '../../src/app/content/treatment-index';
 import { treatmentPages } from '../../src/app/content/treatment-pages';
 
 const routes = [
@@ -23,20 +24,27 @@ const treatmentRouteSamples = [
   treatmentPages.find((page) => page.sector === 'children-families')!,
   treatmentPages.find((page) => page.sector === 'adolescents')!,
   treatmentPages.find((page) => page.sector === 'adults')!,
+  treatmentPages.find((page) => page.sector === 'perinatal')!,
   treatmentPages.find((page) => page.sector === 'education-training')!
 ];
 
-const requiredMenuLinks = [
+// Header IA as Marta specified it (copy document, 2026-07-31). `/psicologia-ciudad-real`
+// intentionally left the header: it is reachable from the home, about, hub and
+// treatment pages plus the footer, which the content link-graph test asserts.
+const headerLinks = [
   ['Inicio', '/'],
   ['Sobre mí', '/sobre-mi'],
   ['Cómo trabajo', '/como-trabajo'],
   ['Áreas de intervención', '/areas-de-intervencion'],
-  ['Psicología Ciudad Real', '/psicologia-ciudad-real'],
   ['Talleres', '/talleres'],
-  ['Contacto', '/contacto'],
+  ['Contacto', '/contacto']
+] as const;
+
+const areaMenuLinks = [
   ['Infancia y familias', '/areas-de-intervencion/infancia-y-familias'],
   ['Adolescentes', '/areas-de-intervencion/adolescentes'],
   ['Adultos', '/areas-de-intervencion/adultos'],
+  ['Psicología perinatal', '/areas-de-intervencion/psicologia-perinatal'],
   ['Orientación educativa y formación', '/areas-de-intervencion/orientacion-educativa-y-formacion'],
   ['Trauma y duelo', '/psicologia-trauma-ciudad-real']
 ] as const;
@@ -68,8 +76,8 @@ test.describe('public static-prerender routes', () => {
     });
   }
 
-  test('all 29 dedicated treatment pages are available and internally useful', async ({ page }) => {
-    expect(treatmentPages).toHaveLength(29);
+  test('every dedicated treatment page is available and internally useful', async ({ page }) => {
+    expect(treatmentPages).toHaveLength(REQUIRED_TREATMENT_ROUTE_COUNT);
     for (const route of treatmentPages) {
       await page.goto(route.canonicalPath);
       await expect(page.getByRole('heading', { name: route.h1, level: 1 })).toBeVisible();
@@ -95,21 +103,24 @@ test.describe('public static-prerender routes', () => {
   test('desktop navigation exposes the complete IA and area menu links', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/');
-    for (const [label, href] of requiredMenuLinks.slice(0, 7)) {
+    for (const [label, href] of headerLinks) {
       if (label === 'Áreas de intervención') {
         await expect(page.getByRole('button', { name: label })).toBeVisible();
         continue;
       }
       await expect(page.getByRole('navigation', { name: 'Navegación principal' }).getByRole('link', { name: label, exact: true })).toHaveAttribute('href', href);
     }
+    // Marta asked for this exact header, so a re-added top-level local link is a regression.
+    await expect(page.getByRole('navigation', { name: 'Navegación principal' }).getByRole('link', { name: 'Psicología Ciudad Real', exact: true })).toHaveCount(0);
     await page.getByRole('button', { name: 'Áreas de intervención' }).click();
     await expect(page.locator('#areas-menu').getByRole('link', { name: 'Vista general' })).toHaveAttribute('href', '/areas-de-intervencion');
-    for (const [label, href] of requiredMenuLinks.slice(7)) {
+    for (const [label, href] of areaMenuLinks) {
       await expect(page.locator('#areas-menu').getByRole('link', { name: label, exact: true })).toHaveAttribute('href', href);
     }
     await expect(page.locator('#areas-menu').getByRole('link', { name: 'Ansiedad infantil' })).toHaveAttribute('href', '/areas-de-intervencion/infancia-y-familias/ansiedad-infantil');
     await expect(page.locator('#areas-menu').getByRole('link', { name: 'Ansiedad en adolescentes' })).toHaveAttribute('href', '/areas-de-intervencion/adolescentes/ansiedad-adolescente');
     await expect(page.locator('#areas-menu').getByRole('link', { name: 'Ansiedad en adultos' })).toHaveAttribute('href', '/areas-de-intervencion/adultos/ansiedad');
+    await expect(page.locator('#areas-menu').getByRole('link', { name: 'Elaboración del duelo perinatal' })).toHaveAttribute('href', '/areas-de-intervencion/psicologia-perinatal/duelo-perinatal');
   });
 
   test('dropdown supports keyboard focus, escape close, outside close, and current route state', async ({ page }) => {
@@ -133,14 +144,19 @@ test.describe('public static-prerender routes', () => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Menú' }).click();
     await page.getByRole('button', { name: 'Áreas de intervención' }).click();
-    for (const [label, href] of requiredMenuLinks) {
-      const locator = label === 'Áreas de intervención'
-        ? page.getByRole('button', { name: label })
-        : label === 'Infancia y familias' || label === 'Adolescentes' || label === 'Adultos' || label === 'Orientación educativa y formación' || label === 'Trauma y duelo'
-          ? page.locator('#areas-menu').getByRole('link', { name: label, exact: true })
-          : page.getByRole('navigation', { name: 'Navegación principal' }).getByRole('link', { name: label, exact: true }).first();
+    for (const [label, href] of headerLinks) {
+      if (label === 'Áreas de intervención') {
+        await expect(page.getByRole('button', { name: label })).toBeVisible();
+        continue;
+      }
+      const locator = page.getByRole('navigation', { name: 'Navegación principal' }).getByRole('link', { name: label, exact: true }).first();
       await expect(locator).toBeVisible();
-      if (label !== 'Áreas de intervención') await expect(locator).toHaveAttribute('href', href);
+      await expect(locator).toHaveAttribute('href', href);
+    }
+    for (const [label, href] of areaMenuLinks) {
+      const locator = page.locator('#areas-menu').getByRole('link', { name: label, exact: true });
+      await expect(locator).toBeVisible();
+      await expect(locator).toHaveAttribute('href', href);
     }
   });
 

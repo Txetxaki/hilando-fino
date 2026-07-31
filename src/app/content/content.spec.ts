@@ -45,19 +45,20 @@ describe('content architecture', () => {
     expect(contentPages.local.noindex).toBe(true);
   });
 
-  it('renders unique useful summaries for the 29 treatment pages with parent hub links', () => {
+  it('renders unique useful summaries for every treatment page with parent hub links', () => {
     const topicCards = [
       ...(pageContents['childrenFamilies'].cards ?? []),
       ...(pageContents['adolescents'].cards ?? []),
       ...(pageContents['adults'].cards ?? []),
+      ...(pageContents['perinatal'].cards ?? []),
       ...(pageContents['educationTraining'].cards ?? [])
     ];
-    expect(topicCards).toHaveLength(29);
-    expect(new Set(topicCards.map((card) => card.body)).size).toBe(29);
+    expect(topicCards).toHaveLength(REQUIRED_TREATMENT_ROUTE_COUNT);
+    expect(new Set(topicCards.map((card) => card.body)).size).toBe(REQUIRED_TREATMENT_ROUTE_COUNT);
     expect(topicCards.every((card) => card.href?.startsWith('/areas-de-intervencion/'))).toBe(true);
   });
 
-  it('owns the exact 29 dedicated treatment routes by sector', () => {
+  it('owns the exact set of dedicated treatment routes by sector', () => {
     expect(treatmentPages).toHaveLength(REQUIRED_TREATMENT_ROUTE_COUNT);
     expect(treatmentRouteManifest).toHaveLength(REQUIRED_TREATMENT_ROUTE_COUNT);
     expect(treatmentContentPages).toHaveLength(REQUIRED_TREATMENT_ROUTE_COUNT);
@@ -90,7 +91,16 @@ describe('content architecture', () => {
       '/areas-de-intervencion/adultos/duelo',
       '/areas-de-intervencion/adultos/dependencia-emocional',
       '/areas-de-intervencion/adultos/relaciones-de-pareja',
-      '/areas-de-intervencion/adultos/crecimiento-personal'
+      '/areas-de-intervencion/adultos/crecimiento-personal',
+      '/areas-de-intervencion/adultos/estado-de-animo'
+    ]);
+    expect(treatmentsForSector('perinatal').map((page) => page.canonicalPath)).toEqual([
+      '/areas-de-intervencion/psicologia-perinatal/transicion-vital-y-maternidades',
+      '/areas-de-intervencion/psicologia-perinatal/vinculo-temprano-y-apego-seguro',
+      '/areas-de-intervencion/psicologia-perinatal/salud-emocional-posparto',
+      '/areas-de-intervencion/psicologia-perinatal/gestacion-y-preparacion-al-parto',
+      '/areas-de-intervencion/psicologia-perinatal/procesos-de-fertilidad',
+      '/areas-de-intervencion/psicologia-perinatal/duelo-perinatal'
     ]);
     expect(treatmentsForSector('education-training').map((page) => page.canonicalPath)).toEqual([
       '/areas-de-intervencion/orientacion-educativa-y-formacion/dificultades-de-aprendizaje',
@@ -98,7 +108,7 @@ describe('content architecture', () => {
       '/areas-de-intervencion/orientacion-educativa-y-formacion/coordinacion-centros-educativos',
       '/areas-de-intervencion/orientacion-educativa-y-formacion/asesoramiento-familiar'
     ]);
-    expect(publicRouteManifest.filter((route) => route.kind === 'treatment')).toHaveLength(29);
+    expect(publicRouteManifest.filter((route) => route.kind === 'treatment')).toHaveLength(REQUIRED_TREATMENT_ROUTE_COUNT);
   });
 
   it('keeps route page keys constrained to the central manifest and metadata unique', () => {
@@ -128,6 +138,9 @@ describe('content architecture', () => {
     const visiblePayload = Object.values(pageContents).map((content) => ({
       heroNote: content.heroNote,
       sections: content.sections,
+      // `blocks` render visible copy too (credentials, models, workshops, checklists,
+      // highlights, pull quotes), so they must face the same language checks as sections.
+      blocks: content.blocks,
       cards: content.cards,
       related: content.related,
       page: { title: content.page.title, description: content.page.description, h1: content.page.h1 }
@@ -195,6 +208,7 @@ describe('content architecture', () => {
       ['children-families', pageContents.childrenFamilies.cards] as const,
       ['adolescents', pageContents.adolescents.cards] as const,
       ['adults', pageContents.adults.cards] as const,
+      ['perinatal', pageContents.perinatal.cards] as const,
       ['education-training', pageContents.educationTraining.cards] as const
     ];
     for (const [sector, cards] of hubCardsBySector) {
@@ -220,7 +234,7 @@ describe('content architecture', () => {
       // rendered markup: every treatment page uses the shared generic
       // src/app/pages/treatment-page.component.ts template, whose hero-actions and local-cta
       // sections hardcode `routerLink="/contacto"` (see "Orientar mi consulta" and "Escribirme
-      // una primera orientación") independently of the `related` data array, for all 29 pages.
+      // una primera orientación") independently of the `related` data array, on every page.
       addInbound(inbound, '/contacto', page.canonicalPath);
       expect(page.related.some((item) => item.href === parentHref(page.sector)), `${page.canonicalPath} links parent`).toBe(true);
     }
@@ -253,6 +267,7 @@ describe('content architecture', () => {
       '/areas-de-intervencion/infancia-y-familias',
       '/areas-de-intervencion/adolescentes',
       '/areas-de-intervencion/adultos',
+      '/areas-de-intervencion/psicologia-perinatal',
       '/areas-de-intervencion/orientacion-educativa-y-formacion',
       '/psicologia-ciudad-real',
       '/psicologia-trauma-ciudad-real',

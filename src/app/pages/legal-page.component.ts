@@ -21,12 +21,28 @@ import { assertPublicPageKey } from '../content/public-routes';
         <h1>{{ page().h1 }}</h1>
         <p class="hero-copy">{{ page().description }}</p>
       </header>
+      @for (section of sections(); track section.heading ?? section.body[0]) {
+        <section class="content-band legal-section">
+          @if (section.heading) {
+            <h2>{{ section.heading }}</h2>
+          }
+          @for (paragraph of section.body; track paragraph) {
+            <p>{{ paragraph }}</p>
+          }
+          @if (section.items?.length) {
+            <ul class="legal-list">
+              @for (item of section.items; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          }
+        </section>
+      }
+
       <section class="content-band">
-        @for (paragraph of paragraphs(); track paragraph) {
-          <p>{{ paragraph }}</p>
-        }
         <div class="inline-links">
           <a routerLink="/contacto">Ir a contacto</a>
+          <a routerLink="/aviso-legal">Leer aviso legal</a>
           <a routerLink="/privacidad">Leer privacidad</a>
           <a routerLink="/cookies">Leer cookies</a>
         </div>
@@ -38,7 +54,7 @@ export class LegalPageComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly key = signal<'legalNotice' | 'privacy' | 'cookies'>('legalNotice');
   readonly page = computed(() => contentPages[this.key()]);
-  readonly paragraphs = computed(() => legalCopy[this.key()]);
+  readonly sections = computed(() => legalCopy[this.key()]);
 
   constructor() {
     this.route.data.subscribe((data) => {

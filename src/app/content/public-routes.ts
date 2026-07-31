@@ -37,6 +37,15 @@ export const staticPublicRouteManifest = [
   },
   { path: 'areas-de-intervencion/adultos', canonicalPath: '/areas-de-intervencion/adultos', pageKey: 'adults', kind: 'standard', prerender: true, draftNoindex: true, requiredForPagesPreview: true },
   {
+    path: 'areas-de-intervencion/psicologia-perinatal',
+    canonicalPath: '/areas-de-intervencion/psicologia-perinatal',
+    pageKey: 'perinatal',
+    kind: 'standard',
+    prerender: true,
+    draftNoindex: true,
+    requiredForPagesPreview: true
+  },
+  {
     path: 'areas-de-intervencion/orientacion-educativa-y-formacion',
     canonicalPath: '/areas-de-intervencion/orientacion-educativa-y-formacion',
     pageKey: 'educationTraining',

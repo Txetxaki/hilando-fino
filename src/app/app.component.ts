@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { AnalyticsService } from './core/analytics/analytics.service';
 import { SeoService } from './core/seo/seo.service';
 import { hubLabels } from './content/hub-labels';
+import { mailtoHref, practiceIdentity, telHref } from './content/practice-identity';
 import { parentHref, treatmentsForSector } from './content/treatment-index';
 import type { TreatmentSector } from './content/treatment-types';
 
@@ -12,11 +13,13 @@ const areaLinks = [
   { label: hubLabels['children-families'], href: parentHref('children-families') },
   { label: hubLabels.adolescents, href: parentHref('adolescents') },
   { label: hubLabels.adults, href: parentHref('adults') },
+  { label: hubLabels.perinatal, href: parentHref('perinatal') },
   { label: hubLabels['education-training'], href: parentHref('education-training') },
-  { label: 'Trauma y duelo', href: '/psicologia-trauma-ciudad-real' }
+  { label: 'Trauma y duelo', href: '/psicologia-trauma-ciudad-real' },
+  { label: 'Psicología en Ciudad Real', href: '/psicologia-ciudad-real' }
 ] as const;
 
-const treatmentSectors: readonly TreatmentSector[] = ['children-families', 'adolescents', 'adults', 'education-training'];
+const treatmentSectors: readonly TreatmentSector[] = ['children-families', 'adolescents', 'adults', 'perinatal', 'education-training'];
 
 const sectorMenu: readonly { label: string; href: string; sector: TreatmentSector; children: readonly { label: string; href: string }[] }[] = treatmentSectors.map((sector) => ({
   label: hubLabels[sector],
@@ -25,11 +28,16 @@ const sectorMenu: readonly { label: string; href: string; sector: TreatmentSecto
   children: treatmentsForSector(sector).map((page) => ({ label: page.h1, href: page.canonicalPath }))
 }));
 
+// Marta's own nav order (copy document, 2026-07-31): logo, inicio, sobre mí, cómo
+// trabajo, áreas de intervención, talleres, contacto. `/psicologia-ciudad-real` is
+// deliberately not a top-level item any more — it keeps its inbound links from the
+// home, about, hub and treatment pages plus the footer, so the local SEO page loses
+// no internal link equity while the header matches what she asked for.
 const primaryLinks = [
   { label: 'Inicio', href: '/' },
   { label: 'Sobre mí', href: '/sobre-mi' },
   { label: 'Cómo trabajo', href: '/como-trabajo' },
-  { label: 'Psicología Ciudad Real', href: '/psicologia-ciudad-real' },
+  { label: 'Áreas de intervención', href: '/areas-de-intervencion' },
   { label: 'Talleres', href: '/talleres' },
   { label: 'Contacto', href: '/contacto' }
 ] as const;
@@ -83,7 +91,6 @@ const primaryLinks = [
             </div>
           </div>
 
-          <a routerLink="/psicologia-ciudad-real" routerLinkActive="active" (click)="closeMenus()">Psicología Ciudad Real</a>
           <a routerLink="/talleres" routerLinkActive="active" (click)="closeMenus()">Talleres</a>
           <a routerLink="/contacto" class="nav-cta" routerLinkActive="active" (click)="closeMenus()">Contacto</a>
         </div>
@@ -98,6 +105,13 @@ const primaryLinks = [
       <div class="footer-intro">
         <strong>Hilando Fino Psicología</strong>
         <p>Psicología en Ciudad Real con una mirada integradora, cercana y respetuosa con cada proceso.</p>
+        <address class="footer-nap">
+          <span>{{ identity.practitionerName }} · {{ identity.professionalTitle }}</span>
+          <span>{{ identity.address.streetAddress }}, {{ identity.address.addressLocality }}</span>
+          <a [href]="telHref">{{ identity.phone }}</a>
+          <a [href]="mailtoHref">{{ identity.email }}</a>
+          <span class="footer-registry">Col. {{ identity.collegiateNumber }} · Nº de Registro Sanitario {{ identity.healthRegistryNumber }}</span>
+        </address>
       </div>
       <nav class="footer-sitemap" aria-label="Mapa del sitio">
         <div>
@@ -108,7 +122,6 @@ const primaryLinks = [
         </div>
         <div>
           <h2>Áreas</h2>
-          <a routerLink="/areas-de-intervencion">Áreas de intervención</a>
           @for (link of areaLinks; track link.href) {
             <a [routerLink]="link.href">{{ link.label }}</a>
           }
@@ -130,6 +143,9 @@ export class AppComponent {
   readonly areaLinks = areaLinks;
   readonly sectorMenu = sectorMenu;
   readonly primaryLinks = primaryLinks;
+  readonly identity = practiceIdentity;
+  readonly telHref = telHref;
+  readonly mailtoHref = mailtoHref;
   readonly mobileOpen = signal(false);
   readonly areasOpen = signal(false);
   readonly currentUrl = signal('/');

@@ -1,7 +1,11 @@
 import { sectorPath, treatmentPages } from './treatment-pages';
 import type { TreatmentContentPage, TreatmentPage, TreatmentSector } from './treatment-types';
 
-export const REQUIRED_TREATMENT_ROUTE_COUNT = 29;
+/**
+ * 29 original topic routes + 6 perinatal routes + the adult mood/low-energy route
+ * Marta lists among her "motivos de consulta" but that had no page of its own.
+ */
+export const REQUIRED_TREATMENT_ROUTE_COUNT = 36;
 
 export const treatmentPagesByPath = new Map<string, TreatmentPage>(treatmentPages.map((page) => [page.canonicalPath, page]));
 export const treatmentPagesByTopicKey = new Map<string, TreatmentPage>(treatmentPages.map((page) => [page.topicKey, page]));

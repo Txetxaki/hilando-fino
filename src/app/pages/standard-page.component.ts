@@ -2,6 +2,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { assertStandardPageKey, StandardPageKey } from '../content/public-routes';
+import { credentialGroups } from '../content/credentials';
+import { methodModels, methodResources } from '../content/method-models';
+import { fallbackSrc, jpgSrcset, siteImages, webpSrcset, type SiteImage } from '../content/site-images';
+import type { PageBlock, SiteImageKey } from '../content/types';
+import { workshopLines } from '../content/workshops';
 import { pageContents } from './page-data';
 
 @Component({
@@ -21,14 +26,31 @@ import { pageContents } from './page-data';
         }
       </nav>
 
-      <header class="hero woven-hero">
-        <p class="overline-pill">{{ content().heroNote }}</p>
-        <h1>{{ content().page.h1 }}</h1>
-        <p class="hero-copy">{{ content().page.description }}</p>
-        <div class="hero-actions">
-          <a routerLink="/contacto" class="button primary">Orientar mi consulta</a>
-          <a routerLink="/areas-de-intervencion" class="button secondary">Ver áreas de intervención</a>
+      <header class="hero woven-hero" [class.has-media]="heroImage()">
+        <div class="hero-text">
+          <p class="overline-pill">{{ content().heroNote }}</p>
+          <h1>{{ content().page.h1 }}</h1>
+          <p class="hero-copy">{{ content().page.description }}</p>
+          <div class="hero-actions">
+            <a routerLink="/contacto" class="button primary">Pedir cita</a>
+            <a routerLink="/areas-de-intervencion" class="button secondary">Ver áreas</a>
+          </div>
         </div>
+        @if (heroImage(); as media) {
+          <picture class="hero-media">
+            <source type="image/webp" [srcset]="webpSrcset(media)" [sizes]="media.sizes" />
+            <img
+              [src]="fallbackSrc(media)"
+              [srcset]="jpgSrcset(media)"
+              [sizes]="media.sizes"
+              [width]="media.width"
+              [height]="media.height"
+              [alt]="media.alt"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        }
       </header>
 
       @if (content().sections.length > 2) {
@@ -57,6 +79,148 @@ import { pageContents } from './page-data';
             </div>
           }
         </section>
+      }
+
+      @for (block of content().blocks ?? []; track blockKey(block)) {
+        @switch (block.kind) {
+          @case ('quote') {
+            <blockquote class="pull-quote">{{ block.text }}</blockquote>
+          }
+          @case ('figure') {
+            <figure class="content-figure">
+              <picture>
+                <source type="image/webp" [srcset]="webpSrcset(image(block.imageKey))" [sizes]="image(block.imageKey).sizes" />
+                <img
+                  [src]="fallbackSrc(image(block.imageKey))"
+                  [srcset]="jpgSrcset(image(block.imageKey))"
+                  [sizes]="image(block.imageKey).sizes"
+                  [width]="image(block.imageKey).width"
+                  [height]="image(block.imageKey).height"
+                  [alt]="image(block.imageKey).alt"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+              @if (block.caption) {
+                <figcaption>{{ block.caption }}</figcaption>
+              }
+            </figure>
+          }
+          @case ('credentials') {
+            <section class="content-band block-band" [id]="sectionId(block.title)">
+              <p class="eyebrow">{{ block.eyebrow }}</p>
+              <h2>{{ block.title }}</h2>
+              @if (block.intro) { <p>{{ block.intro }}</p> }
+              <div class="credential-grid">
+                @for (group of credentialGroups; track group.title) {
+                  <div class="credential-group">
+                    <h3>{{ group.title }}</h3>
+                    <ul>
+                      @for (item of group.items; track item) { <li>{{ item }}</li> }
+                    </ul>
+                  </div>
+                }
+              </div>
+            </section>
+          }
+          @case ('models') {
+            <section class="content-band block-band wide-band" [id]="sectionId(block.title)">
+              <p class="eyebrow">{{ block.eyebrow }}</p>
+              <h2>{{ block.title }}</h2>
+              @if (block.intro) { <p>{{ block.intro }}</p> }
+              <div class="model-grid">
+                @for (model of methodModels; track model.name) {
+                  <article class="model-card">
+                    <h3>{{ model.name }}</h3>
+                    @if (model.summary) { <p>{{ model.summary }}</p> }
+                    @for (facet of model.facets; track facet.label) {
+                      <p><strong>{{ facet.label }}</strong> {{ facet.text }}</p>
+                    }
+                  </article>
+                }
+              </div>
+            </section>
+          }
+          @case ('resources') {
+            <section class="content-band block-band wide-band" [id]="sectionId(block.title)">
+              <p class="eyebrow">{{ block.eyebrow }}</p>
+              <h2>{{ block.title }}</h2>
+              @if (block.intro) { <p>{{ block.intro }}</p> }
+              <div class="resource-list">
+                @for (resource of methodResources; track resource.name) {
+                  <article class="resource-item">
+                    @if (resource.imageKey; as key) {
+                      <picture>
+                        <source type="image/webp" [srcset]="webpSrcset(image(key))" [sizes]="image(key).sizes" />
+                        <img
+                          [src]="fallbackSrc(image(key))"
+                          [srcset]="jpgSrcset(image(key))"
+                          [sizes]="image(key).sizes"
+                          [width]="image(key).width"
+                          [height]="image(key).height"
+                          [alt]="image(key).alt"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    }
+                    <div>
+                      <h3>{{ resource.name }}</h3>
+                      <p class="resource-qualifier">{{ resource.qualifier }}</p>
+                      <p>{{ resource.body }}</p>
+                    </div>
+                  </article>
+                }
+              </div>
+            </section>
+          }
+          @case ('workshops') {
+            <section class="content-band block-band wide-band" [id]="sectionId(block.title)">
+              <p class="eyebrow">{{ block.eyebrow }}</p>
+              <h2>{{ block.title }}</h2>
+              @if (block.intro) { <p>{{ block.intro }}</p> }
+              <div class="workshop-list">
+                @for (line of workshopLines; track line.name) {
+                  <article class="workshop-item">
+                    <h3>{{ line.name }}</h3>
+                    <p>{{ line.body }}</p>
+                    @if (line.audience) { <p class="workshop-audience">{{ line.audience }}</p> }
+                    @if (line.contents?.length) {
+                      <p class="workshop-contents-title">{{ line.contentsTitle }}</p>
+                      <ul>
+                        @for (item of line.contents; track item) { <li>{{ item }}</li> }
+                      </ul>
+                    }
+                  </article>
+                }
+              </div>
+            </section>
+          }
+          @case ('checklist') {
+            <section class="content-band block-band" [id]="sectionId(block.title)">
+              <p class="eyebrow">{{ block.eyebrow }}</p>
+              <h2>{{ block.title }}</h2>
+              @if (block.intro) { <p>{{ block.intro }}</p> }
+              <ul class="checklist">
+                @for (item of block.items; track item) { <li>{{ item }}</li> }
+              </ul>
+            </section>
+          }
+          @case ('highlight') {
+            <section class="content-band highlight-band" [id]="sectionId(block.title)">
+              <p class="eyebrow">{{ block.eyebrow }}</p>
+              <h2>{{ block.title }}</h2>
+              @for (paragraph of block.body; track paragraph) { <p>{{ paragraph }}</p> }
+              @if (block.links?.length) {
+                <div class="inline-links">
+                  @for (link of block.links; track link.href) {
+                    <a [routerLink]="linkPath(link.href)" [queryParams]="linkQueryParams(link.href)">{{ link.label }}</a>
+                  }
+                </div>
+              }
+            </section>
+          }
+        }
       }
 
       @if (content().cards?.length) {
@@ -99,6 +263,14 @@ export class StandardPageComponent {
   private readonly pageKey = signal<StandardPageKey>('home');
   readonly content = computed(() => pageContents[this.pageKey()]);
   readonly breadcrumbs = computed(() => this.buildBreadcrumbs(this.pageKey()));
+  readonly heroImage = computed(() => {
+    const key = this.content().heroImage;
+    return key ? siteImages[key] : undefined;
+  });
+  readonly credentialGroups = credentialGroups;
+  readonly methodModels = methodModels;
+  readonly methodResources = methodResources;
+  readonly workshopLines = workshopLines;
 
   constructor() {
     this.route.data.subscribe((data) => {
@@ -106,6 +278,29 @@ export class StandardPageComponent {
       assertStandardPageKey(key);
       this.pageKey.set(key);
     });
+  }
+
+  image(key: SiteImageKey): SiteImage {
+    return siteImages[key];
+  }
+
+  webpSrcset(image: SiteImage): string {
+    return webpSrcset(image);
+  }
+
+  jpgSrcset(image: SiteImage): string {
+    return jpgSrcset(image);
+  }
+
+  fallbackSrc(image: SiteImage): string {
+    return fallbackSrc(image);
+  }
+
+  /** Stable @for key: blocks have no id, and two figures can share a kind. */
+  blockKey(block: PageBlock): string {
+    if (block.kind === 'quote') return `quote:${block.text.slice(0, 24)}`;
+    if (block.kind === 'figure') return `figure:${block.imageKey}`;
+    return `${block.kind}:${block.title}`;
   }
 
   linkPath(href: string): string {
@@ -121,7 +316,7 @@ export class StandardPageComponent {
   sectionId(title: string): string {
     return title
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[̀-ͯ]/g, '')
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '');
@@ -129,7 +324,7 @@ export class StandardPageComponent {
 
   private buildBreadcrumbs(key: StandardPageKey): { label: string; href?: string }[] {
     const current = pageContents[key].page.h1;
-    if (['childrenFamilies', 'adolescents', 'adults', 'educationTraining'].includes(key)) {
+    if (['childrenFamilies', 'adolescents', 'adults', 'perinatal', 'educationTraining'].includes(key)) {
       return [{ label: 'Inicio', href: '/' }, { label: 'Áreas de intervención', href: '/areas-de-intervencion' }, { label: current }];
     }
     if (key === 'traumaLocal') return [{ label: 'Inicio', href: '/' }, { label: 'Psicología Ciudad Real', href: '/psicologia-ciudad-real' }, { label: current }];

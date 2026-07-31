@@ -5,6 +5,7 @@ Paquete de identidad de marca y de configuración de un [Claude Project](https:/
 ## Contenido
 
 - `logo.png` — logo original de la marca.
+- `public/images/` — fotografías reales de la consulta entregadas por Marta (2026-07-31), en WebP + JPG a 480/720/960/1280 px, más `og-hilando-fino.jpg` (1200×630) para redes sociales. El manifiesto con dimensiones y textos alternativos vive en `src/app/content/site-images.ts`.
 - `identidad-de-marca/guia-de-marca.md` — paleta de colores (extraída por píxel del logo, con verificación de contraste WCAG), tipografía y uso del logo.
 - `claude-project/` — todo lo necesario para levantar un Project de contenidos en claude.ai / Claude Desktop:
   - `instrucciones-personalizadas.md` — pegar en "Instrucciones del proyecto".
@@ -15,7 +16,16 @@ Paquete de identidad de marca y de configuración de un [Claude Project](https:/
 
 ## Estado
 
-`conocimiento-01-sobre-marta-y-la-consulta.md` tiene campos pendientes de completar con datos reales (colegiatura, especialidades, enfoque terapéutico, contacto). El resto del paquete está listo para usar.
+El copy de todas las rutas procede del documento que Marta entregó el 2026-07-31 (`web (1).docx`). De ahí salen también los datos reales de la consulta, centralizados en `src/app/content/practice-identity.ts`: colegiada CM-03249, Registro Sanitario 1309351/1317777, Calle Ramón y Cajal 2 (Local 2.6) de Ciudad Real y teléfono 623 92 17 07. Esos datos alimentan el pie de página, el schema `Psychologist` y las páginas legales, así que cualquier corrección se hace en ese único fichero.
+
+Faltan cuatro datos que solo puede aportar ella y que bloquean la publicación indexable:
+
+- Dominio de producción (`src/environments/site-config.ts` sigue en `pending-domain.invalid`, y con él canonicals, sitemap y schema).
+- Correo vinculado al dominio: `tirandodelhilo@gmail.com` no encaja con la marca y Gmail es discutible para datos de salud bajo RGPD.
+- NIF, obligatorio en el aviso legal por la LSSI-CE.
+- Proveedor de hosting y encargados de tratamiento, para completar la política de privacidad.
+
+`conocimiento-01-sobre-marta-y-la-consulta.md` conserva campos por completar en el paquete del Claude Project.
 
 ## Website runtime draft
 

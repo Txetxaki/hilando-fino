@@ -7,7 +7,7 @@ export type ApprovalStatus =
 
 export type ModalityPreference = 'in-person-ciudad-real' | 'online' | 'unsure';
 
-export type HubKey = 'children-families' | 'adolescents' | 'adults' | 'education-training' | 'workshops';
+export type HubKey = 'children-families' | 'adolescents' | 'adults' | 'perinatal' | 'education-training' | 'workshops';
 
 export interface SourceFact {
   source: string;
@@ -48,10 +48,31 @@ export interface PageCard {
   status?: ApprovalStatus;
 }
 
+export type SiteImageKey = 'martaDesk' | 'martaWorking' | 'consultingRoom' | 'sandtray' | 'projectiveFigures';
+
+/**
+ * Editorial blocks that only some pages need. Keeping them as a discriminated
+ * union (rather than one page component per layout) lets the shared standard-page
+ * template render Marta's richer sections — her training list, the therapeutic
+ * models, the in-session resources, the workshop catalogue — without every page
+ * paying for markup it does not use.
+ */
+export type PageBlock =
+  | { kind: 'credentials'; eyebrow: string; title: string; intro?: string }
+  | { kind: 'models'; eyebrow: string; title: string; intro?: string }
+  | { kind: 'resources'; eyebrow: string; title: string; intro?: string }
+  | { kind: 'workshops'; eyebrow: string; title: string; intro?: string }
+  | { kind: 'checklist'; eyebrow: string; title: string; intro?: string; items: string[] }
+  | { kind: 'highlight'; eyebrow: string; title: string; body: string[]; links?: { label: string; href: string }[] }
+  | { kind: 'quote'; text: string }
+  | { kind: 'figure'; imageKey: SiteImageKey; caption?: string };
+
 export interface PageContent {
   page: ContentPage;
   heroNote: string;
+  heroImage?: SiteImageKey;
   sections: PageSection[];
+  blocks?: PageBlock[];
   cards?: PageCard[];
   related?: PageCard[];
 }
