@@ -4,7 +4,7 @@ Paquete de identidad de marca y de configuración de un [Claude Project](https:/
 
 ## Contenido
 
-- `logo.png` — logo original de la marca.
+- `logo.png` — logo original de la marca. Es el master: la cabecera sirve las variantes ya escaladas de `public/images/logo-*` (WebP + PNG, 220/440/660 px), porque el original pesa 278 kB y se muestra a 220 px.
 - `public/images/` — fotografías reales de la consulta entregadas por Marta (2026-07-31), en WebP + JPG a 480/720/960/1280 px, más `og-hilando-fino.jpg` (1200×630) para redes sociales. El manifiesto con dimensiones y textos alternativos vive en `src/app/content/site-images.ts`.
 - `identidad-de-marca/guia-de-marca.md` — paleta de colores (extraída por píxel del logo, con verificación de contraste WCAG), tipografía y uso del logo.
 - `claude-project/` — todo lo necesario para levantar un Project de contenidos en claude.ai / Claude Desktop:
@@ -33,7 +33,7 @@ The Angular website draft is static-prerendered and served by Express with a sma
 
 The GitHub Pages preview is static only and deploys from `dist/hilando-fino/browser` after `npm run build:pages`. It uses the repository base URL `/hilando-fino/`, remains `noindex`, and does not deploy the Express server, `/api/contact`, server bundles, `.env` files, source maps, or contact backend code. Contact stays visibly disabled in the preview.
 
-GitHub Pages is public even for a private repository. `noindex` is not access control; do not publish secrets, patient data, private clinical notes, or approved-only production claims in the preview.
+This repository is public, and so is the Pages preview. `noindex` is not access control; do not publish secrets, patient data, private clinical notes, or approved-only production claims in the preview or in the source tree.
 
 Live contact is blocked. `CONTACT_ENABLED=true` alone is not a working activation path: the UI intentionally does not submit, and the provider implementation rejects until a separate legal/provider/retention/HTTPS deployment approval change lands. Multi-instance contact also requires approved shared CSRF replay storage or sticky sessions.
 

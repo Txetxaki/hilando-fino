@@ -30,7 +30,7 @@ Run `npm run verify:inventory` before staging and again after staging. It compar
 
 ## Binary/reference assets intended for review
 
-- `logo.png` — production/public logo asset used by the Angular app and Pages artifact.
+- `logo.png` — brand master logo, kept as the source for the pre-scaled `public/images/logo-*` variants the header actually serves; not shipped in the Pages artifact.
 - `IMG_0742.JPG`, `screen.png` — reference assets for approved-source facts and Stitch visual migration.
 - `code.html`, `DESIGN.md`, `identidad-de-marca/**`, `claude-project/**` — source/reference material, not generated deploy output.
 

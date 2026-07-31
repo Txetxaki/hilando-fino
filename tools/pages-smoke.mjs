@@ -45,7 +45,7 @@ async function checkPage(path, options = {}) {
     }
   }
   if (options.expectLogo) {
-    const logoUrl = new URL('logo.png', baseUrl).toString();
+    const logoUrl = new URL('images/logo-440.png', baseUrl).toString();
     const logo = await fetch(logoUrl, { redirect: 'manual' });
     if (!logo.ok) failures.push(`${logoUrl}: expected logo asset HTTP success, got ${logo.status}`);
   }
@@ -69,8 +69,10 @@ async function checkLocalArtifact(dir) {
     if (!html.includes('<base href="/hilando-fino/">')) localFailures.push(`${file}: missing repository base href`);
     checkCanonicalAndForbiddenOrigins(file, html, localFailures);
   }
-  const logo = join(dir, 'logo.png');
-  if (!existsSync(logo)) localFailures.push('logo.png: missing from local Pages artifact');
+  // The header no longer loads the oversized brand master; it serves pre-scaled
+  // variants, so the smoke check follows the asset visitors actually download.
+  const logo = join(dir, 'images', 'logo-440.png');
+  if (!existsSync(logo)) localFailures.push('images/logo-440.png: missing from local Pages artifact');
   if (localFailures.length > 0) {
     console.error(localFailures.join('\n'));
     process.exit(1);

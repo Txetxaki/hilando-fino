@@ -19,8 +19,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              { "glob": "**/*", "input": "public" },
-              { "glob": "logo.png", "input": "." }
+              { "glob": "**/*", "input": "public" }
             ],
             "styles": ["src/styles.scss"],
             "ssr": { "entry": "server.ts" },

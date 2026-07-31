@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /
 
-Sitemap: https://pending-domain.invalid/sitemap.xml
+Sitemap: https://txetxaki.github.io/hilando-fino/sitemap.xml
