@@ -4,6 +4,10 @@ import { join } from 'node:path';
 const artifactArgIndex = process.argv.indexOf('--artifact-dir');
 const artifactDir = artifactArgIndex >= 0 ? process.argv[artifactArgIndex + 1] : process.env['PAGES_ARTIFACT_DIR'];
 const pageUrl = process.env['PAGES_PAGE_URL'] ?? process.env['PAGE_URL'];
+const baseHref = process.env['PAGES_BASE_HREF'] ?? '/hilando-fino/';
+const pagesSiteUrl = process.env['PAGES_SITE_URL'] ?? 'https://txetxaki.github.io/hilando-fino';
+const pagesUrl = new URL(pagesSiteUrl);
+const pagesPath = pagesUrl.pathname === '/' ? '' : pagesUrl.pathname.replace(/\/$/, '');
 
 if (artifactDir) {
   await checkLocalArtifact(artifactDir);
@@ -39,9 +43,9 @@ async function checkPage(path, options = {}) {
   checkCanonicalAndForbiddenOrigins(url, html);
   if (options.expectHeading && !html.includes(options.expectHeading)) failures.push(`${url}: missing expected content: ${options.expectHeading}`);
   if (path === '') {
-    if (!html.includes('<base href="/hilando-fino/">')) failures.push(`${url}: missing repository base href`);
+    if (!html.includes(`<base href="${baseHref}">`)) failures.push(`${url}: missing expected base href ${baseHref}`);
     for (const asset of collectAssetUrls(html)) {
-      if (asset.startsWith('/') && !asset.startsWith('/hilando-fino/')) failures.push(`${url}: root-absolute asset outside repository base: ${asset}`);
+      if (asset.startsWith('/') && baseHref !== '/' && !asset.startsWith(baseHref)) failures.push(`${url}: root-absolute asset outside deployment base: ${asset}`);
     }
   }
   if (options.expectLogo) {
@@ -66,7 +70,7 @@ async function checkLocalArtifact(dir) {
     const html = readFileSync(path, 'utf8');
     if (!html.includes(heading)) localFailures.push(`${file}: missing expected content: ${heading}`);
     if (!html.includes('name="robots" content="noindex, nofollow"')) localFailures.push(`${file}: missing noindex robots metadata`);
-    if (!html.includes('<base href="/hilando-fino/">')) localFailures.push(`${file}: missing repository base href`);
+    if (!html.includes(`<base href="${baseHref}">`)) localFailures.push(`${file}: missing expected base href ${baseHref}`);
     checkCanonicalAndForbiddenOrigins(file, html, localFailures);
   }
   // The header no longer loads the oversized brand master; it serves pre-scaled
@@ -89,7 +93,7 @@ function checkCanonicalAndForbiddenOrigins(label, html, targetFailures = failure
   }
   try {
     const url = new URL(canonical);
-    if (url.origin !== 'https://txetxaki.github.io' || (url.pathname !== '/hilando-fino' && !url.pathname.startsWith('/hilando-fino/'))) targetFailures.push(`${label}: malformed Pages canonical URL ${canonical}`);
+    if (url.origin !== pagesUrl.origin || (url.pathname !== pagesPath && !url.pathname.startsWith(`${pagesPath}/`))) targetFailures.push(`${label}: malformed Pages canonical URL ${canonical}`);
   } catch {
     targetFailures.push(`${label}: malformed canonical URL ${canonical}`);
   }

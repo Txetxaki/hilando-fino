@@ -114,9 +114,9 @@ a:hover { color: var(--color-plum-dark); }
    more specific selector) would otherwise win and put muted gray text on
    the solid terracotta background - measured 2.47:1 by axe, a real failure,
    not the 5.81:1 ink combination this rule intends everywhere it's used. */
-.overline-pill, .eyebrow { display: inline-flex; width: fit-content; border-radius: 999px; padding: .45rem .75rem; font-weight: 700; font-size: 1rem; letter-spacing: .02em; }
+.overline-pill, .eyebrow { display: inline-flex; width: fit-content; border-radius: 999px; font-weight: 700; font-size: 1rem; letter-spacing: .02em; }
 .overline-pill { margin: 0;background: transparent; color: var(--color-terracotta) !important; }
-.eyebrow { background: var(--color-terracotta); color: var(--color-ink) !important; }
+.eyebrow { color: var(--color-terracotta) !important; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 500; color: var(--color-plum-dark); line-height: 1.04; letter-spacing: -.03em; }
 /* No max-width cap: 14ch forced ordinary titles onto 2-3 cramped lines and,
    combined with margin-left/right:0 (not auto), kept the box flush-left even
@@ -125,7 +125,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; color: var(--co
 h1 { margin: 1rem 0; font-size: clamp(3rem, 8vw, 4.5rem); }
 h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
 .hero-copy { max-width: 100%; font-size: clamp(1.15rem, 2vw, 1.35rem); line-height: 1.7; color: var(--color-muted); }
-.hero-actions, .inline-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; display: inline-flex;}
+.hero-actions, .inline-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; justify-content: center;}
 .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; border-radius: 999px; padding: .8rem 1.2rem; font-weight: 600; text-decoration: none; border: 1px solid var(--color-plum); cursor: pointer; }
 .button.primary { background: var(--color-plum); color: white; }
 .button.secondary { background: transparent; color: var(--color-plum); }
@@ -203,7 +203,7 @@ h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
    `:nth-of-type(even) { margin-left: auto }` pushed alternate sections to the
    right, so the page read as a zigzag of shifting margins - dropped for a
    single, uniform column. */
-.content-band { margin: clamp(3rem, 8vw, 6rem) 0; max-width: 55rem; scroll-margin-top: 7rem; }
+.content-band { margin: clamp(3rem, 8vw, 6rem) 0; scroll-margin-top: 7rem; }
 .content-band p { font-size: 1.08rem; line-height: 1.82; color: var(--color-muted); }
 .inline-links a { padding: .55rem .8rem; border-bottom: 2px solid var(--color-terracotta-safe); text-decoration: none; font-weight: 600; }
 

@@ -4,8 +4,10 @@ import { join, relative, sep } from 'node:path';
 import { publicRouteManifest, requiredPagesArtifactFiles } from '../src/app/content/public-routes.ts';
 
 const browserDir = join(process.cwd(), 'dist', 'hilando-fino', 'browser');
-const baseHref = '/hilando-fino/';
-const pagesSiteUrl = 'https://txetxaki.github.io/hilando-fino';
+const baseHref = process.env['PAGES_BASE_HREF'] ?? '/hilando-fino/';
+const pagesSiteUrl = process.env['PAGES_SITE_URL'] ?? 'https://txetxaki.github.io/hilando-fino';
+const pagesUrl = new URL(pagesSiteUrl);
+const pagesPath = pagesUrl.pathname === '/' ? '' : pagesUrl.pathname.replace(/\/$/, '');
 const requiredRoutes = requiredPagesArtifactFiles;
 const failures = [];
 
@@ -41,7 +43,7 @@ if (!existsSync(notFound)) {
   failures.push('404.html is missing from the Pages artifact');
 } else {
   const html = readFileSync(notFound, 'utf8');
-  if (!html.includes('<base href="/hilando-fino/">')) failures.push('404.html does not use the GitHub Pages base href');
+  if (!html.includes(`<base href="${baseHref}">`)) failures.push(`404.html does not use the expected base href ${baseHref}`);
   if (!html.includes('name="robots" content="noindex, nofollow"')) failures.push('404.html is not noindex');
   if (/<h1[^>]*>\s*Hilando Fino Psicología\s*<\/h1>/i.test(html)) failures.push('404.html masquerades as the home page');
   verifyUrlContracts('404.html', html);
@@ -74,7 +76,7 @@ if (failures.length > 0) {
 console.log('GitHub Pages artifact verification passed: base href, routes, noindex metadata, contact fallback, 404, and sensitive-file checks are safe.');
 
 function verifyHtml(route, html) {
-  if (!html.includes('<base href="/hilando-fino/">')) failures.push(`${route} does not use the GitHub Pages base href`);
+  if (!html.includes(`<base href="${baseHref}">`)) failures.push(`${route} does not use the expected base href ${baseHref}`);
   if (!html.includes('name="robots" content="noindex, nofollow"')) failures.push(`${route} is not draft-safe noindex`);
   if (html.includes('@type":"LocalBusiness') || html.includes('@type":"HealthAndBeautyBusiness')) failures.push(`${route} contains local business schema before NAP approval`);
   if (route === 'contacto/index.html' && !html.includes('Un primer mensaje breve, práctico y respetuoso con tu privacidad')) failures.push('contact route does not render final-facing contact guidance');
@@ -108,9 +110,9 @@ function verifyUrlContracts(route, html) {
 }
 
 function expectedCanonicalPath(route) {
-  if (route === '404.html') return '/hilando-fino/404';
+  if (route === '404.html') return `${pagesPath}/404`;
   const manifestRoute = publicRouteManifest.find((entry) => (entry.path === '' ? 'index.html' : `${entry.path}/index.html`) === route);
-  return manifestRoute ? `/hilando-fino${manifestRoute.canonicalPath}` : null;
+  return manifestRoute ? `${pagesPath}${manifestRoute.canonicalPath}` : null;
 }
 
 function assertPagesUrl(route, raw, label) {
@@ -121,8 +123,8 @@ function assertPagesUrl(route, raw, label) {
     failures.push(`${route} has malformed ${label} URL: ${raw}`);
     return;
   }
-  if (url.origin !== 'https://txetxaki.github.io') failures.push(`${route} has wrong ${label} origin: ${raw}`);
-  if (url.pathname !== '/hilando-fino' && !url.pathname.startsWith('/hilando-fino/')) failures.push(`${route} has wrong ${label} base path: ${raw}`);
+  if (url.origin !== pagesUrl.origin) failures.push(`${route} has wrong ${label} origin: ${raw}`);
+  if (url.pathname !== pagesPath && !url.pathname.startsWith(`${pagesPath}/`)) failures.push(`${route} has wrong ${label} base path: ${raw}`);
   if (!raw.startsWith(pagesSiteUrl)) failures.push(`${route} has wrong ${label} site URL: ${raw}`);
 }
 

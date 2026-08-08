@@ -55,6 +55,14 @@ export async function buildPrerenderedApp({ baseHref = '/', siteUrl = 'https://p
   });
 
   const buildArgs = ['node_modules/@angular/cli/bin/ng.js', 'build', '--configuration', configuration];
+  if (configuration === 'pages') {
+    buildArgs.push(
+      '--define',
+      `__HILANDO_FINO_SITE_URL__=${JSON.stringify(siteUrl)}`,
+      '--define',
+      `__HILANDO_FINO_BASE_HREF__=${JSON.stringify(baseHref)}`
+    );
+  }
   if (baseHref !== '/') {
     buildArgs.push('--base-href', baseHref, '--deploy-url', baseHref);
   }
