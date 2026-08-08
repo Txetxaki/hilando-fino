@@ -115,8 +115,8 @@ a:hover { color: var(--color-plum-dark); }
    the solid terracotta background - measured 2.47:1 by axe, a real failure,
    not the 5.81:1 ink combination this rule intends everywhere it's used. */
  .overline-pill, .eyebrow { display: inline-flex; width: fit-content; border-radius: 999px; padding: .45rem .75rem; font-weight: 700; font-size: .82rem; letter-spacing: .02em; }
- .overline-pill { margin: 0; background: transparent; color: var(--color-terracotta) !important; }
- .eyebrow { margin: 0; background: var(--color-terracotta); color: var(--color-ink) !important; }
+  .overline-pill { margin: 0; background: transparent; color: var(--color-terracotta-safe) !important; }
+  .eyebrow { margin: 0; background: var(--color-terracotta-safe); color: white !important; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 500; color: var(--color-plum-dark); line-height: 1.04; letter-spacing: -.03em; }
 /* No max-width cap: 14ch forced ordinary titles onto 2-3 cramped lines and,
    combined with margin-left/right:0 (not auto), kept the box flush-left even
