@@ -1,0 +1,187 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - generic [ref=f3e3]:
+      - link "Skip to content" [ref=f3e4] [cursor=pointer]:
+        - /url: "#start-of-content"
+      - banner "Global navigation menu" [ref=f3e8]:
+        - generic [ref=f3e9]:
+          - generic [ref=f3e10]:
+            - button "Open menu" [ref=f3e12] [cursor=pointer]
+            - link "Homepage (g then d)" [ref=f3e15] [cursor=pointer]:
+              - /url: /
+          - generic [ref=f3e18]:
+            - navigation "Breadcrumbs" [ref=f3e19]:
+              - list [ref=f3e20]:
+                - listitem [ref=f3e21]:
+                  - link "Txetxaki" [ref=f3e22] [cursor=pointer]:
+                    - /url: /Txetxaki
+                - listitem [ref=f3e24]:
+                  - link "hilando-fino" [ref=f3e25] [cursor=pointer]:
+                    - /url: /Txetxaki/hilando-fino
+                  - button "Switch repository (alt shift r)" [ref=f3e26] [cursor=pointer]
+            - button "Open quick search dialog, type / to search" [ref=f3e31] [cursor=pointer]:
+              - generic [ref=f3e33]:
+                - generic:
+                  - text: Type
+                  - generic: /
+                  - text: to search
+          - generic [ref=f3e34]:
+            - generic [ref=f3e35]:
+              - generic [ref=f3e38]:
+                - link "Chat with Copilot" [ref=f3e40] [cursor=pointer]:
+                  - /url: /copilot
+                - button "Open Copilot…" [ref=f3e45] [cursor=pointer]
+              - button "Create new..." [ref=f3e47] [cursor=pointer]
+              - generic [ref=f3e49]:
+                - link "All issues" [ref=f3e50] [cursor=pointer]:
+                  - /url: /issues
+                - link "All pull requests" [ref=f3e54] [cursor=pointer]:
+                  - /url: /pulls
+                - link "All repositories" [ref=f3e57] [cursor=pointer]:
+                  - /url: /repos
+            - link "You have unread notifications (g then n)" [ref=f3e553] [cursor=pointer]:
+              - /url: /notifications
+            - button "Open user navigation menu" [ref=f3e64] [cursor=pointer]:
+              - img "User avatar" [ref=f3e65]
+        - heading "Repository navigation" [level=2] [ref=f3e66]
+        - navigation "Repository" [ref=f3e67]:
+          - list [ref=f3e68]:
+            - listitem [ref=f3e69]:
+              - link "Code" [ref=f3e70] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino
+            - listitem [ref=f3e75]:
+              - link "Issues" [ref=f3e76] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/issues
+            - listitem [ref=f3e82]:
+              - link "Pull requests" [ref=f3e83] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/pulls
+            - listitem [ref=f3e88]:
+              - link "Agents" [ref=f3e89] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/agents?author=Txetxaki
+            - listitem [ref=f3e95]:
+              - link "Actions" [ref=f3e96] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/actions
+            - listitem [ref=f3e101]:
+              - link "Projects" [ref=f3e102] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/projects
+            - listitem [ref=f3e107]:
+              - link "Wiki" [ref=f3e108] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/wiki
+            - listitem [ref=f3e113]:
+              - link "Security and quality" [ref=f3e114] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/security
+            - listitem [ref=f3e119]:
+              - link "Insights" [ref=f3e120] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/pulse
+            - listitem [ref=f3e125]:
+              - link "Settings" [ref=f3e126] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/settings
+    - main [ref=f3e134]:
+      - generic [ref=f3e8888]:
+        - generic [ref=f3e8891]:
+          - link "Website CI and Pages preview" [ref=f3e8894] [cursor=pointer]:
+            - /url: /Txetxaki/hilando-fino/actions/workflows/ci.yml
+          - generic [ref=f3e8898]:
+            - generic [ref=f3e8899]:
+              - img "failed:" [ref=f3e8903]
+              - 'heading "ready #8" [level=1] [ref=f3e8905]'
+            - generic [ref=f3e8908]:
+              - button "Re-run jobs" [ref=f3e8912] [cursor=pointer]
+              - button "Workflow run options" [ref=f3e8918] [cursor=pointer]
+        - region "Check run summary" [ref=f3e8922]:
+          - generic [ref=f3e8923]:
+            - region "Annotations" [ref=f3e8925]:
+              - generic [ref=f3e8929]:
+                - button "Open job annotations" [ref=f3e8931] [cursor=pointer]
+                - generic [ref=f3e8936]:
+                  - heading "Annotations" [level=2] [ref=f3e8937]
+                  - generic [ref=f3e8938]: 1 error and 1 warning
+            - generic [ref=f3e8940]:
+              - generic [ref=f3e8941]:
+                - generic [ref=f3e8942]:
+                  - link "quality" [ref=f3e8945] [cursor=pointer]:
+                    - /url: "#logs"
+                  - generic [ref=f3e8947]: failed Aug 8, 20268 minutes ago in 1m 25s
+                - generic [ref=f3e8948]:
+                  - textbox "Search" [ref=f3e8952]:
+                    - /placeholder: Search logs
+                  - button "Explain error" [ref=f3e8957] [cursor=pointer]
+                  - button "Re-run this job" [ref=f3e8961] [cursor=pointer]
+                  - group [ref=f3e8962]:
+                    - button [ref=f3e8963] [cursor=pointer]:
+                      - img "Show options" [ref=f3e8964]
+              - generic [ref=f3e8967]:
+                - group [ref=f3e8969]:
+                  - generic "Set up job" [ref=f3e8970] [cursor=pointer]
+                - group [ref=f3e8978]:
+                  - generic "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262" [ref=f3e8979] [cursor=pointer]
+                - group [ref=f3e8987]:
+                  - generic "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020" [ref=f3e8988] [cursor=pointer]
+                - group [ref=f3e8996]:
+                  - generic "Run npm ci" [ref=f3e8997] [cursor=pointer]
+                - group [ref=f3e9005]:
+                  - generic "Run npx playwright install --with-deps chromium" [ref=f3e9006] [cursor=pointer]
+                - group [ref=f3e9014]:
+                  - generic "Run npm run lint" [ref=f3e9015] [cursor=pointer]
+                - group [ref=f3e9023]:
+                  - generic "Run npm run typecheck" [ref=f3e9024] [cursor=pointer]
+                - group [ref=f3e9032]:
+                  - generic "Run npm test" [ref=f3e9033] [cursor=pointer]
+                - group [ref=f3e9041]:
+                  - generic "Run npm run build" [ref=f3e9042] [cursor=pointer]
+                - group [ref=f3e9050]:
+                  - generic "Run npm run verify:prerender" [ref=f3e9051] [cursor=pointer]
+                - group [ref=f3e9059]:
+                  - generic "Run npm run e2e:ci" [ref=f3e9060] [cursor=pointer]
+                - generic [ref=f3e9071]:
+                  - group:
+                    - generic "Run npm run a11y:ci"
+                - generic [ref=f3e9072]:
+                  - group:
+                    - generic "Run npm run performance:smoke:ci"
+                - generic [ref=f3e9073]:
+                  - group:
+                    - generic "Run npm run lighthouse:ci"
+                - generic [ref=f3e9074]:
+                  - group:
+                    - generic "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020"
+                - group [ref=f3e9076]:
+                  - generic "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262" [ref=f3e9077] [cursor=pointer]
+                - group [ref=f3e9085]:
+                  - generic "Complete job" [ref=f3e9086] [cursor=pointer]
+    - contentinfo [ref=f3e520]:
+      - heading "Footer" [level=2] [ref=f3e521]
+      - generic [ref=f3e522]:
+        - generic [ref=f3e523]:
+          - link "GitHub Homepage" [ref=f3e524] [cursor=pointer]:
+            - /url: https://github.com
+          - generic [ref=f3e527]: © 2026 GitHub, Inc.
+        - navigation "Footer" [ref=f3e528]:
+          - heading "Footer navigation" [level=3] [ref=f3e529]
+          - list "Footer navigation" [ref=f3e530]:
+            - listitem [ref=f3e531]:
+              - link "Terms" [ref=f3e532] [cursor=pointer]:
+                - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+            - listitem [ref=f3e533]:
+              - link "Privacy" [ref=f3e534] [cursor=pointer]:
+                - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+            - listitem [ref=f3e535]:
+              - link "Security" [ref=f3e536] [cursor=pointer]:
+                - /url: https://github.com/security
+            - listitem [ref=f3e537]:
+              - link "Status" [ref=f3e538] [cursor=pointer]:
+                - /url: https://www.githubstatus.com/
+            - listitem [ref=f3e539]:
+              - link "Community" [ref=f3e540] [cursor=pointer]:
+                - /url: https://github.community/
+            - listitem [ref=f3e541]:
+              - link "Docs" [ref=f3e542] [cursor=pointer]:
+                - /url: https://docs.github.com/
+            - listitem [ref=f3e543]:
+              - link "Contact" [ref=f3e544] [cursor=pointer]:
+                - /url: https://support.github.com?tags=dotcom-footer
+            - listitem [ref=f3e545]:
+              - button "Manage cookies" [ref=f3e547] [cursor=pointer]
+            - listitem [ref=f3e548]:
+              - button "Do not share my personal information" [ref=f3e550] [cursor=pointer]
+  - alert [ref=f3e8853]: 15 files remain

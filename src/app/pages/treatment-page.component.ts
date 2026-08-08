@@ -20,6 +20,13 @@ import type { TreatmentPage } from '../content/treatment-types';
         </div>
       </header>
 
+      <nav aria-label="Migas de pan">
+        <ol>
+          <li><a routerLink="/areas-de-intervencion">Áreas de intervención</a></li>
+          <li aria-current="page">{{ page().h1 }}</li>
+        </ol>
+      </nav>
+
       <nav class="toc" aria-label="Índice de la página">
         <p>En esta página</p>
         <a [routerLink]="[]" fragment="situaciones">Señales</a>

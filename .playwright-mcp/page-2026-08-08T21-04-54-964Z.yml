@@ -1,0 +1,2432 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - link "Skip to content" [ref=f3e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner "Global navigation menu" [ref=f3e8]:
+      - generic [ref=f3e9]:
+        - generic [ref=f3e10]:
+          - button "Open menu" [ref=f3e12] [cursor=pointer]
+          - link "Homepage (g then d)" [ref=f3e15] [cursor=pointer]:
+            - /url: /
+        - generic [ref=f3e18]:
+          - navigation "Breadcrumbs" [ref=f3e19]:
+            - list [ref=f3e20]:
+              - listitem [ref=f3e21]:
+                - link "Txetxaki" [ref=f3e22] [cursor=pointer]:
+                  - /url: /Txetxaki
+              - listitem [ref=f3e24]:
+                - link "hilando-fino" [ref=f3e25] [cursor=pointer]:
+                  - /url: /Txetxaki/hilando-fino
+                - button "Switch repository (alt shift r)" [ref=f3e26] [cursor=pointer]
+          - button "Open quick search dialog, type / to search" [ref=f3e31] [cursor=pointer]:
+            - generic [ref=f3e33]:
+              - generic:
+                - text: Type
+                - generic: /
+                - text: to search
+        - generic [ref=f3e34]:
+          - generic [ref=f3e35]:
+            - generic [ref=f3e38]:
+              - link "Chat with Copilot" [ref=f3e40] [cursor=pointer]:
+                - /url: /copilot
+              - button "Open Copilot…" [ref=f3e45] [cursor=pointer]
+            - button "Create new..." [ref=f3e47] [cursor=pointer]
+            - generic [ref=f3e49]:
+              - link "All issues" [ref=f3e50] [cursor=pointer]:
+                - /url: /issues
+              - link "All pull requests" [ref=f3e54] [cursor=pointer]:
+                - /url: /pulls
+              - link "All repositories" [ref=f3e57] [cursor=pointer]:
+                - /url: /repos
+          - link "You have unread notifications (g then n)" [ref=f3e553] [cursor=pointer]:
+            - /url: /notifications
+          - button "Open user navigation menu" [ref=f3e64] [cursor=pointer]:
+            - img "User avatar" [ref=f3e65]
+      - heading "Repository navigation" [level=2] [ref=f3e66]
+      - navigation "Repository" [ref=f3e67]:
+        - list [ref=f3e68]:
+          - listitem [ref=f3e69]:
+            - link "Code" [ref=f3e70] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino
+          - listitem [ref=f3e75]:
+            - link "Issues" [ref=f3e76] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/issues
+          - listitem [ref=f3e82]:
+            - link "Pull requests" [ref=f3e83] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/pulls
+          - listitem [ref=f3e88]:
+            - link "Agents" [ref=f3e89] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/agents?author=Txetxaki
+          - listitem [ref=f3e95]:
+            - link "Actions" [ref=f3e96] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/actions
+          - listitem [ref=f3e101]:
+            - link "Projects" [ref=f3e102] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/projects
+          - listitem [ref=f3e107]:
+            - link "Wiki" [ref=f3e108] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/wiki
+          - listitem [ref=f3e113]:
+            - link "Security and quality" [ref=f3e114] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/security
+          - listitem [ref=f3e119]:
+            - link "Insights" [ref=f3e120] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/pulse
+          - listitem [ref=f3e125]:
+            - link "Settings" [ref=f3e126] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/settings
+  - main [ref=f3e134]:
+    - generic [ref=f3e673]:
+      - generic [ref=f3e676]:
+        - heading "Commit 3d329fc" [level=1] [ref=f3e678]
+        - link "Browse files" [ref=f3e681] [cursor=pointer]:
+          - /url: /Txetxaki/hilando-fino/tree/3d329fc95ca7b8881c5d61b9e0bc93ac1d1c1a10
+        - generic [ref=f3e685]:
+          - generic [ref=f3e686]:
+            - generic [ref=f3e687]:
+              - link [ref=f3e688] [cursor=pointer]:
+                - /url: /Txetxaki
+                - img "Txetxaki" [ref=f3e689]
+              - link "commits by Txetxaki" [ref=f3e690] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                - text: Txetxaki
+            - generic [ref=f3e691]: committed
+          - generic [ref=f3e694]:
+            - generic [ref=f3e695]: ready
+            - generic [ref=f3e704]:
+              - text: 1 parent
+              - link "d50a6ae" [ref=f3e705] [cursor=pointer]:
+                - /url: /Txetxaki/hilando-fino/commit/d50a6ae1bb98653b7996ca1e90514ad1e84ce477
+              - text: commit
+              - generic [ref=f3e706]: 3d329fc
+              - button "Copy full SHA for 3d329fc" [ref=f3e708] [cursor=pointer]
+            - generic [ref=f3e712]:
+              - paragraph [ref=f3e714]: 19 files changed
+              - generic [ref=f3e715]:
+                - generic [ref=f3e716]: "+320"
+                - generic [ref=f3e717]: "-189"
+                - generic [ref=f3e718]: "Lines changed: 320 additions & 189 deletions"
+      - generic [ref=f3e726]:
+        - generic [ref=f3e727]:
+          - generic [ref=f3e729]:
+            - heading "File tree" [level=2] [ref=f3e730]
+            - generic [ref=f3e731]:
+              - textbox "Filter files…" [ref=f3e736]
+              - button "Filter options" [ref=f3e738] [cursor=pointer]
+            - tree "File Tree" [ref=f3e742]:
+              - treeitem "public/fonts" [expanded] [level=1] [ref=f3e743]:
+                - group [ref=f3e755]:
+                  - treeitem "barlow-400.woff2" [level=2] [ref=f3e756]:
+                    - link "barlow-400.woff2" [ref=f3e767] [cursor=pointer]:
+                      - /url: "#diff-82a4015a1b577e326ebedbabf7260f9bbf951c24c2537b2bd0720c2803556ca7"
+                  - treeitem "barlow-500.woff2" [level=2] [ref=f3e768]:
+                    - link "barlow-500.woff2" [ref=f3e779] [cursor=pointer]:
+                      - /url: "#diff-cd84babbc4e785ff56fb087ed05b04b47c0d39944310631ce98fbe13986f5dd7"
+                  - treeitem "barlow-600.woff2" [level=2] [ref=f3e780]:
+                    - link "barlow-600.woff2" [ref=f3e791] [cursor=pointer]:
+                      - /url: "#diff-e6bfb82f58d29fe76d256162177d74b0a3c17ae0032548c0e7049c9a9eb24821"
+                  - treeitem "barlow-700.woff2" [level=2] [ref=f3e792]:
+                    - link "barlow-700.woff2" [ref=f3e803] [cursor=pointer]:
+                      - /url: "#diff-b25c3a70aff03bfe81fd202fcf0c68cc58ef6fc4ae6e967647eae9eede7ec771"
+                  - treeitem "barlow-800.woff2" [level=2] [ref=f3e804]:
+                    - link "barlow-800.woff2" [ref=f3e815] [cursor=pointer]:
+                      - /url: "#diff-da42569bf70c62c72c6e50545809021de8f99a491be238659bed19196c028a6f"
+                  - treeitem "barlow-900.woff2" [level=2] [ref=f3e816]:
+                    - link "barlow-900.woff2" [ref=f3e827] [cursor=pointer]:
+                      - /url: "#diff-8f550783cdbde937569964bde41815a8ad7f816beb46f305f4c88221cb9dc1a5"
+              - treeitem "src" [expanded] [level=1] [ref=f3e828]:
+                - group [ref=f3e840]:
+                  - treeitem "app" [expanded] [level=2] [ref=f3e841]:
+                    - group [ref=f3e856]:
+                      - treeitem "app.component.ts" [level=3] [ref=f3e857]:
+                        - link "app.component.ts" [ref=f3e869] [cursor=pointer]:
+                          - /url: "#diff-884f7f49640e5923f6bcac4c51d90340330a178f662defbe61e5f5aac1c512de"
+                      - treeitem "contact" [expanded] [level=3] [ref=f3e870]:
+                        - group [ref=f3e886]:
+                          - treeitem "contact-page.component.ts" [level=4] [ref=f3e887]:
+                            - link "contact-page.component.ts" [ref=f3e900] [cursor=pointer]:
+                              - /url: "#diff-a4ac00b62873989ef684980c35db5c49c49999aa0675f62b540e91fab3d245d7"
+                      - treeitem "content" [expanded] [level=3] [ref=f3e901]:
+                        - group [ref=f3e917]:
+                          - treeitem "content-matrix.ts" [level=4] [ref=f3e918]:
+                            - link "content-matrix.ts" [ref=f3e931] [cursor=pointer]:
+                              - /url: "#diff-28b655896fad1927709a730ba95670084dab8797abcc0d6acd734e9a8db78d88"
+                          - treeitem "legal-copy.ts" [level=4] [ref=f3e932]:
+                            - link "legal-copy.ts" [ref=f3e945] [cursor=pointer]:
+                              - /url: "#diff-1ee42d4dfff0d6ea2754357764e8a77076b607ff75ae079104391ca09b928ce2"
+                          - treeitem "method-models.ts" [level=4] [ref=f3e946]:
+                            - link "method-models.ts" [ref=f3e959] [cursor=pointer]:
+                              - /url: "#diff-9f3c621983084f6154540985b8cc25b7edd026b0fd7961b8174c5de1c7a3e3d7"
+                          - treeitem "practice-identity.ts" [level=4] [ref=f3e960]:
+                            - link "practice-identity.ts" [ref=f3e973] [cursor=pointer]:
+                              - /url: "#diff-d05649f7fbed3f9b89b0aa7b4a8e1d2e8b33026548577a0bf56743903b49c6ac"
+                          - treeitem "treatment-pages.ts" [level=4] [ref=f3e974]:
+                            - link "treatment-pages.ts" [ref=f3e987] [cursor=pointer]:
+                              - /url: "#diff-25b3b4a82d73150b37859c34d687e184dd22bab6fee04810ffee14bab28ceeff"
+                          - treeitem "types.ts" [level=4] [ref=f3e988]:
+                            - link "types.ts" [ref=f3e1001] [cursor=pointer]:
+                              - /url: "#diff-78aa359c116960171450af2dc290ce39eeb8341824c6a085fc6beb40cdbf08cc"
+                      - treeitem "pages" [expanded] [level=3] [ref=f3e1002]:
+                        - group [ref=f3e1018]:
+                          - treeitem "legal-page.component.ts" [level=4] [ref=f3e1019]:
+                            - link "legal-page.component.ts" [ref=f3e1032] [cursor=pointer]:
+                              - /url: "#diff-9c938110598db9a28c9843723bf967487917652ff5502357f9c4ead0a2f54e6d"
+                          - treeitem "page-data.ts" [level=4] [ref=f3e1033]:
+                            - link "page-data.ts" [ref=f3e1046] [cursor=pointer]:
+                              - /url: "#diff-a63578f6641ded8e9336ff389fb2a5ec25a7c4a99972efbd71ae788c7c5a7d81"
+                          - treeitem "standard-page.component.ts" [level=4] [ref=f3e1047]:
+                            - link "standard-page.component.ts" [ref=f3e1060] [cursor=pointer]:
+                              - /url: "#diff-5d00a7f66375f0ac51c2000f2a9340509e7442c06ce1797382ecacb19ae7ca43"
+                          - treeitem "treatment-page.component.ts" [level=4] [ref=f3e1061]:
+                            - link "treatment-page.component.ts" [ref=f3e1074] [cursor=pointer]:
+                              - /url: "#diff-bb39d56148ed44d8bce4476afefd9088de9bef26e626b5468594984922737e0a"
+                  - treeitem "styles.scss" [level=2] [ref=f3e1075]:
+                    - link "styles.scss" [ref=f3e1086] [cursor=pointer]:
+                      - /url: "#diff-23fad3928bf3e71585eb4a6e3b2ff72dae02c3ed5a44d2f0deb1d49f0cb3b1a3"
+          - slider "Draggable pane splitter" [ref=f3e1088]
+        - generic [ref=f3e1091]:
+          - generic [ref=f3e1092]:
+            - generic [ref=f3e1093]:
+              - button "Collapse file tree" [expanded] [ref=f3e1095] [cursor=pointer]
+              - generic [ref=f3e1099]:
+                - button "Open diff view settings" [ref=f3e1100] [cursor=pointer]
+                - generic [ref=f3e1104]:
+                  - heading "Customizable line height" [level=2] [ref=f3e1105]
+                  - paragraph [ref=f3e1106]: The default line height has been increased for improved accessibility. You can choose to enable a more compact line height from the view settings menu.
+                  - generic [ref=f3e1107]:
+                    - button "Enable compact line height" [ref=f3e1108] [cursor=pointer]
+                    - button "Dismiss" [ref=f3e1111] [cursor=pointer]
+            - region [ref=f3e1115]:
+              - generic [ref=f3e1117]:
+                - button "Collapse file" [ref=f3e1119] [cursor=pointer]
+                - generic [ref=f3e1122]:
+                  - heading [level=3] [ref=f3e1123]:
+                    - link [ref=f3e1124] [cursor=pointer]:
+                      - /url: "#diff-82a4015a1b577e326ebedbabf7260f9bbf951c24c2537b2bd0720c2803556ca7"
+                      - code [ref=f3e1125]: ‎public/fonts/barlow-400.woff2‎
+                  - button "Copy file name to clipboard" [ref=f3e1126] [cursor=pointer]
+                - generic [ref=f3e1130]:
+                  - code [ref=f3e1132]: 21.7 KB
+                  - button "More options" [ref=f3e1133] [cursor=pointer]
+              - generic [ref=f3e1136]: Binary file not shown.
+            - region [ref=f3e1139]:
+              - generic [ref=f3e1141]:
+                - button "Collapse file" [ref=f3e1143] [cursor=pointer]
+                - generic [ref=f3e1146]:
+                  - heading [level=3] [ref=f3e1147]:
+                    - link [ref=f3e1148] [cursor=pointer]:
+                      - /url: "#diff-cd84babbc4e785ff56fb087ed05b04b47c0d39944310631ce98fbe13986f5dd7"
+                      - code [ref=f3e1149]: ‎public/fonts/barlow-500.woff2‎
+                  - button "Copy file name to clipboard" [ref=f3e1150] [cursor=pointer]
+                - generic [ref=f3e1154]:
+                  - code [ref=f3e1156]: 21.5 KB
+                  - button "More options" [ref=f3e1157] [cursor=pointer]
+              - generic [ref=f3e1160]: Binary file not shown.
+            - region [ref=f3e1163]:
+              - generic [ref=f3e1165]:
+                - button "Collapse file" [ref=f3e1167] [cursor=pointer]
+                - generic [ref=f3e1170]:
+                  - heading [level=3] [ref=f3e1171]:
+                    - link [ref=f3e1172] [cursor=pointer]:
+                      - /url: "#diff-e6bfb82f58d29fe76d256162177d74b0a3c17ae0032548c0e7049c9a9eb24821"
+                      - code [ref=f3e1173]: ‎public/fonts/barlow-600.woff2‎
+                  - button "Copy file name to clipboard" [ref=f3e1174] [cursor=pointer]
+                - generic [ref=f3e1178]:
+                  - code [ref=f3e1180]: 22.2 KB
+                  - button "More options" [ref=f3e1181] [cursor=pointer]
+              - generic [ref=f3e1184]: Binary file not shown.
+            - region [ref=f3e1187]:
+              - generic [ref=f3e1189]:
+                - button "Collapse file" [ref=f3e1191] [cursor=pointer]
+                - generic [ref=f3e1194]:
+                  - heading [level=3] [ref=f3e1195]:
+                    - link [ref=f3e1196] [cursor=pointer]:
+                      - /url: "#diff-b25c3a70aff03bfe81fd202fcf0c68cc58ef6fc4ae6e967647eae9eede7ec771"
+                      - code [ref=f3e1197]: ‎public/fonts/barlow-700.woff2‎
+                  - button "Copy file name to clipboard" [ref=f3e1198] [cursor=pointer]
+                - generic [ref=f3e1202]:
+                  - code [ref=f3e1204]: 22.3 KB
+                  - button "More options" [ref=f3e1205] [cursor=pointer]
+              - generic [ref=f3e1208]: Binary file not shown.
+            - region [ref=f3e1211]:
+              - generic [ref=f3e1213]:
+                - button "Collapse file" [ref=f3e1215] [cursor=pointer]
+                - generic [ref=f3e1218]:
+                  - heading [level=3] [ref=f3e1219]:
+                    - link [ref=f3e1220] [cursor=pointer]:
+                      - /url: "#diff-da42569bf70c62c72c6e50545809021de8f99a491be238659bed19196c028a6f"
+                      - code [ref=f3e1221]: ‎public/fonts/barlow-800.woff2‎
+                  - button "Copy file name to clipboard" [ref=f3e1222] [cursor=pointer]
+                - generic [ref=f3e1226]:
+                  - code [ref=f3e1228]: 22.4 KB
+                  - button "More options" [ref=f3e1229] [cursor=pointer]
+              - generic [ref=f3e1232]: Binary file not shown.
+            - region [ref=f3e1235]:
+              - generic [ref=f3e1237]:
+                - button "Collapse file" [ref=f3e1239] [cursor=pointer]
+                - generic [ref=f3e1242]:
+                  - heading [level=3] [ref=f3e1243]:
+                    - link [ref=f3e1244] [cursor=pointer]:
+                      - /url: "#diff-8f550783cdbde937569964bde41815a8ad7f816beb46f305f4c88221cb9dc1a5"
+                      - code [ref=f3e1245]: ‎public/fonts/barlow-900.woff2‎
+                  - button "Copy file name to clipboard" [ref=f3e1246] [cursor=pointer]
+                - generic [ref=f3e1250]:
+                  - code [ref=f3e1252]: 21.8 KB
+                  - button "More options" [ref=f3e1253] [cursor=pointer]
+              - generic [ref=f3e1256]: Binary file not shown.
+            - region [ref=f3e1259]:
+              - generic [ref=f3e1261]:
+                - button "Collapse file" [ref=f3e1263] [cursor=pointer]
+                - generic [ref=f3e1266]:
+                  - heading [level=3] [ref=f3e1267]:
+                    - link [ref=f3e1268] [cursor=pointer]:
+                      - /url: "#diff-884f7f49640e5923f6bcac4c51d90340330a178f662defbe61e5f5aac1c512de"
+                      - code [ref=f3e1269]: ‎src/app/app.component.ts‎
+                  - button "Copy file name to clipboard" [ref=f3e1270] [cursor=pointer]
+                  - 'button "Expand all lines: src/app/app.component.ts" [ref=f3e1274] [cursor=pointer]'
+                - generic [ref=f3e1277]:
+                  - generic [ref=f3e1280]:
+                    - generic [ref=f3e1281]: "+83"
+                    - generic [ref=f3e1282]: "-41"
+                    - generic [ref=f3e1283]: "Lines changed: 83 additions & 41 deletions"
+                  - button "More options" [ref=f3e1290] [cursor=pointer]
+              - 'grid "Diff for: src/app/app.component.ts" [ref=f3e1294]':
+                - rowgroup [ref=f3e1295]:
+                  - row [ref=f3e1296]:
+                    - columnheader "Original file line number" [ref=f3e1297]
+                    - columnheader "Diff line number" [ref=f3e1298]
+                    - columnheader "Diff line change" [ref=f3e1299]
+                - rowgroup [ref=f3e1304]:
+                  - row [ref=f3e1305]:
+                    - gridcell "@@ -56,20 +56,22 @@ const primaryLinks = [" [ref=f3e1306]:
+                      - generic [ref=f3e1307]:
+                        - button [ref=f3e1308] [cursor=pointer]
+                        - code [ref=f3e1311]:
+                          - generic [ref=f3e1312]: "@@ -56,20 +56,22 @@ const primaryLinks = ["
+                  - row [ref=f3e1313]:
+                    - gridcell [ref=f3e1314] [cursor=pointer]:
+                      - code [ref=f3e1315]: "56"
+                    - gridcell [ref=f3e1316] [cursor=pointer]:
+                      - code [ref=f3e1317]: "56"
+                    - gridcell "~214kB from every route. The sizes attribute mirrors the .brand img rule" [ref=f3e1318]:
+                      - code [ref=f3e1319]:
+                        - generic [ref=f3e1320]: ~214kB from every route. The sizes attribute mirrors the .brand img rule
+                  - row [ref=f3e1321]:
+                    - gridcell [ref=f3e1322] [cursor=pointer]:
+                      - code [ref=f3e1323]: "57"
+                    - gridcell [ref=f3e1324] [cursor=pointer]:
+                      - code [ref=f3e1325]: "57"
+                    - 'gridcell "(width: min(13rem, 42vw)): 42vw wins below a 495px viewport, which is exactly" [ref=f3e1326]':
+                      - code [ref=f3e1327]:
+                        - generic [ref=f3e1328]: "(width: min(13rem, 42vw)): 42vw wins below a 495px viewport, which is exactly"
+                  - row [ref=f3e1329]:
+                    - gridcell [ref=f3e1330] [cursor=pointer]:
+                      - code [ref=f3e1331]: "58"
+                    - gridcell [ref=f3e1332] [cursor=pointer]:
+                      - code [ref=f3e1333]: "58"
+                    - gridcell "where 42vw equals 13rem. -->" [ref=f3e1334]:
+                      - code [ref=f3e1335]:
+                        - generic [ref=f3e1336]: where 42vw equals 13rem. -->
+                  - row [ref=f3e1337]:
+                    - gridcell [ref=f3e1338] [cursor=pointer]:
+                      - code [ref=f3e1339]: "59"
+                    - gridcell [ref=f3e1340] [cursor=pointer]:
+                      - code
+                    - gridcell "- <picture>" [ref=f3e1341]:
+                      - code [ref=f3e1342]:
+                        - generic [ref=f3e1343]: "-"
+                        - generic [ref=f3e1344]: <picture>
+                  - row [ref=f3e1345]:
+                    - gridcell [ref=f3e1346] [cursor=pointer]:
+                      - code [ref=f3e1347]: "60"
+                    - gridcell [ref=f3e1348] [cursor=pointer]:
+                      - code
+                    - gridcell "- <source" [ref=f3e1349]:
+                      - code [ref=f3e1350]:
+                        - generic [ref=f3e1351]: "-"
+                        - generic [ref=f3e1352]: <source
+                  - row [ref=f3e1353]:
+                    - gridcell [ref=f3e1354] [cursor=pointer]:
+                      - code [ref=f3e1355]: "61"
+                    - gridcell [ref=f3e1356] [cursor=pointer]:
+                      - code
+                    - gridcell "- type=\"image/webp\"" [ref=f3e1357]:
+                      - code [ref=f3e1358]:
+                        - generic [ref=f3e1359]: "-"
+                        - generic [ref=f3e1360]: type="image/webp"
+                  - row [ref=f3e1361]:
+                    - gridcell [ref=f3e1362] [cursor=pointer]:
+                      - code [ref=f3e1363]: "62"
+                    - gridcell [ref=f3e1364] [cursor=pointer]:
+                      - code
+                    - gridcell "- srcset=\"images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w\"" [ref=f3e1365]:
+                      - code [ref=f3e1366]:
+                        - generic [ref=f3e1367]: "-"
+                        - generic [ref=f3e1368]: srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w"
+                  - row [ref=f3e1369]:
+                    - gridcell [ref=f3e1370] [cursor=pointer]:
+                      - code [ref=f3e1371]: "63"
+                    - gridcell [ref=f3e1372] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- sizes=\"(max-width: 495px) 42vw, 208px\"" [ref=f3e1373]':
+                      - code [ref=f3e1374]:
+                        - generic [ref=f3e1375]: "-"
+                        - generic [ref=f3e1376]: "sizes=\"(max-width: 495px) 42vw, 208px\""
+                  - row [ref=f3e1377]:
+                    - gridcell [ref=f3e1378] [cursor=pointer]:
+                      - code [ref=f3e1379]: "64"
+                    - gridcell [ref=f3e1380] [cursor=pointer]:
+                      - code
+                    - gridcell "- />" [ref=f3e1381]:
+                      - code [ref=f3e1382]:
+                        - generic [ref=f3e1383]: "-"
+                        - generic [ref=f3e1384]: />
+                  - row [ref=f3e1385]:
+                    - gridcell [ref=f3e1386] [cursor=pointer]:
+                      - code [ref=f3e1387]: "65"
+                    - gridcell [ref=f3e1388] [cursor=pointer]:
+                      - code
+                    - gridcell "- <img" [ref=f3e1389]:
+                      - code [ref=f3e1390]:
+                        - generic [ref=f3e1391]: "-"
+                        - generic [ref=f3e1392]: <img
+                  - row [ref=f3e1393]:
+                    - gridcell [ref=f3e1394] [cursor=pointer]:
+                      - code [ref=f3e1395]: "66"
+                    - gridcell [ref=f3e1396] [cursor=pointer]:
+                      - code
+                    - gridcell "- src=\"images/logo-440.png\"" [ref=f3e1397]:
+                      - code [ref=f3e1398]:
+                        - generic [ref=f3e1399]: "-"
+                        - generic [ref=f3e1400]: src="images/logo-440.png"
+                  - row [ref=f3e1401]:
+                    - gridcell [ref=f3e1402] [cursor=pointer]:
+                      - code [ref=f3e1403]: "67"
+                    - gridcell [ref=f3e1404] [cursor=pointer]:
+                      - code
+                    - gridcell "- srcset=\"images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w\"" [ref=f3e1405]:
+                      - code [ref=f3e1406]:
+                        - generic [ref=f3e1407]: "-"
+                        - generic [ref=f3e1408]: srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w"
+                  - row [ref=f3e1409]:
+                    - gridcell [ref=f3e1410] [cursor=pointer]:
+                      - code [ref=f3e1411]: "68"
+                    - gridcell [ref=f3e1412] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- sizes=\"(max-width: 495px) 42vw, 208px\"" [ref=f3e1413]':
+                      - code [ref=f3e1414]:
+                        - generic [ref=f3e1415]: "-"
+                        - generic [ref=f3e1416]: "sizes=\"(max-width: 495px) 42vw, 208px\""
+                  - row [ref=f3e1417]:
+                    - gridcell [ref=f3e1418] [cursor=pointer]:
+                      - code [ref=f3e1419]: "69"
+                    - gridcell [ref=f3e1420] [cursor=pointer]:
+                      - code
+                    - gridcell "- width=\"220\"" [ref=f3e1421]:
+                      - code [ref=f3e1422]:
+                        - generic [ref=f3e1423]: "-"
+                        - generic [ref=f3e1424]: width="220"
+                  - row [ref=f3e1425]:
+                    - gridcell [ref=f3e1426] [cursor=pointer]:
+                      - code [ref=f3e1427]: "70"
+                    - gridcell [ref=f3e1428] [cursor=pointer]:
+                      - code
+                    - gridcell "- height=\"86\"" [ref=f3e1429]:
+                      - code [ref=f3e1430]:
+                        - generic [ref=f3e1431]: "-"
+                        - generic [ref=f3e1432]: height="86"
+                  - row [ref=f3e1433]:
+                    - gridcell [ref=f3e1434] [cursor=pointer]:
+                      - code [ref=f3e1435]: "71"
+                    - gridcell [ref=f3e1436] [cursor=pointer]:
+                      - code
+                    - gridcell "- alt=\"Marta Martín · Hilando Fino Psicología\"" [ref=f3e1437]:
+                      - code [ref=f3e1438]:
+                        - generic [ref=f3e1439]: "-"
+                        - generic [ref=f3e1440]: alt="Marta Martín · Hilando Fino Psicología"
+                  - row [ref=f3e1441]:
+                    - gridcell [ref=f3e1442] [cursor=pointer]:
+                      - code [ref=f3e1443]: "72"
+                    - gridcell [ref=f3e1444] [cursor=pointer]:
+                      - code
+                    - gridcell "- /></picture>" [ref=f3e1445]:
+                      - code [ref=f3e1446]:
+                        - generic [ref=f3e1447]: "-"
+                        - generic [ref=f3e1448]: /></picture>
+                  - row [ref=f3e1449]:
+                    - gridcell [ref=f3e1450] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1451] [cursor=pointer]:
+                      - code [ref=f3e1452]: "59"
+                    - gridcell "+ <span class=\"brand-mark\">" [ref=f3e1453]:
+                      - code [ref=f3e1454]:
+                        - generic [ref=f3e1455]: +
+                        - generic [ref=f3e1456]: <span class="brand-mark">
+                  - row [ref=f3e1457]:
+                    - gridcell [ref=f3e1458] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1459] [cursor=pointer]:
+                      - code [ref=f3e1460]: "60"
+                    - gridcell "+ <picture>" [ref=f3e1461]:
+                      - code [ref=f3e1462]:
+                        - generic [ref=f3e1463]: +
+                        - generic [ref=f3e1464]: <picture>
+                  - row [ref=f3e1465]:
+                    - gridcell [ref=f3e1466] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1467] [cursor=pointer]:
+                      - code [ref=f3e1468]: "61"
+                    - gridcell "+ <source" [ref=f3e1469]:
+                      - code [ref=f3e1470]:
+                        - generic [ref=f3e1471]: +
+                        - generic [ref=f3e1472]: <source
+                  - row [ref=f3e1473]:
+                    - gridcell [ref=f3e1474] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1475] [cursor=pointer]:
+                      - code [ref=f3e1476]: "62"
+                    - gridcell "+ type=\"image/webp\"" [ref=f3e1477]:
+                      - code [ref=f3e1478]:
+                        - generic [ref=f3e1479]: +
+                        - generic [ref=f3e1480]: type="image/webp"
+                  - row [ref=f3e1481]:
+                    - gridcell [ref=f3e1482] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1483] [cursor=pointer]:
+                      - code [ref=f3e1484]: "63"
+                    - gridcell "+ srcset=\"images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w\"" [ref=f3e1485]:
+                      - code [ref=f3e1486]:
+                        - generic [ref=f3e1487]: +
+                        - generic [ref=f3e1488]: srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w"
+                  - row [ref=f3e1489]:
+                    - gridcell [ref=f3e1490] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1491] [cursor=pointer]:
+                      - code [ref=f3e1492]: "64"
+                    - 'gridcell "+ sizes=\"(max-width: 495px) 42vw, 208px\"" [ref=f3e1493]':
+                      - code [ref=f3e1494]:
+                        - generic [ref=f3e1495]: +
+                        - generic [ref=f3e1496]: "sizes=\"(max-width: 495px) 42vw, 208px\""
+                  - row [ref=f3e1497]:
+                    - gridcell [ref=f3e1498] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1499] [cursor=pointer]:
+                      - code [ref=f3e1500]: "65"
+                    - gridcell "+ />" [ref=f3e1501]:
+                      - code [ref=f3e1502]:
+                        - generic [ref=f3e1503]: +
+                        - generic [ref=f3e1504]: />
+                  - row [ref=f3e1505]:
+                    - gridcell [ref=f3e1506] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1507] [cursor=pointer]:
+                      - code [ref=f3e1508]: "66"
+                    - gridcell "+ <img" [ref=f3e1509]:
+                      - code [ref=f3e1510]:
+                        - generic [ref=f3e1511]: +
+                        - generic [ref=f3e1512]: <img
+                  - row [ref=f3e1513]:
+                    - gridcell [ref=f3e1514] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1515] [cursor=pointer]:
+                      - code [ref=f3e1516]: "67"
+                    - gridcell "+ src=\"images/logo-440.png\"" [ref=f3e1517]:
+                      - code [ref=f3e1518]:
+                        - generic [ref=f3e1519]: +
+                        - generic [ref=f3e1520]: src="images/logo-440.png"
+                  - row [ref=f3e1521]:
+                    - gridcell [ref=f3e1522] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1523] [cursor=pointer]:
+                      - code [ref=f3e1524]: "68"
+                    - gridcell "+ srcset=\"images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w\"" [ref=f3e1525]:
+                      - code [ref=f3e1526]:
+                        - generic [ref=f3e1527]: +
+                        - generic [ref=f3e1528]: srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w"
+                  - row [ref=f3e1529]:
+                    - gridcell [ref=f3e1530] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1531] [cursor=pointer]:
+                      - code [ref=f3e1532]: "69"
+                    - 'gridcell "+ sizes=\"(max-width: 495px) 42vw, 208px\"" [ref=f3e1533]':
+                      - code [ref=f3e1534]:
+                        - generic [ref=f3e1535]: +
+                        - generic [ref=f3e1536]: "sizes=\"(max-width: 495px) 42vw, 208px\""
+                  - row [ref=f3e1537]:
+                    - gridcell [ref=f3e1538] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1539] [cursor=pointer]:
+                      - code [ref=f3e1540]: "70"
+                    - gridcell "+ width=\"220\"" [ref=f3e1541]:
+                      - code [ref=f3e1542]:
+                        - generic [ref=f3e1543]: +
+                        - generic [ref=f3e1544]: width="220"
+                  - row [ref=f3e1545]:
+                    - gridcell [ref=f3e1546] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1547] [cursor=pointer]:
+                      - code [ref=f3e1548]: "71"
+                    - gridcell "+ height=\"86\"" [ref=f3e1549]:
+                      - code [ref=f3e1550]:
+                        - generic [ref=f3e1551]: +
+                        - generic [ref=f3e1552]: height="86"
+                  - row [ref=f3e1553]:
+                    - gridcell [ref=f3e1554] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1555] [cursor=pointer]:
+                      - code [ref=f3e1556]: "72"
+                    - gridcell "+ alt=\"Marta Martín · Hilando Fino Psicología\"" [ref=f3e1557]:
+                      - code [ref=f3e1558]:
+                        - generic [ref=f3e1559]: +
+                        - generic [ref=f3e1560]: alt="Marta Martín · Hilando Fino Psicología"
+                  - row [ref=f3e1561]:
+                    - gridcell [ref=f3e1562] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1563] [cursor=pointer]:
+                      - code [ref=f3e1564]: "73"
+                    - gridcell "+ /></picture>" [ref=f3e1565]:
+                      - code [ref=f3e1566]:
+                        - generic [ref=f3e1567]: +
+                        - generic [ref=f3e1568]: /></picture>
+                  - row [ref=f3e1569]:
+                    - gridcell [ref=f3e1570] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1571] [cursor=pointer]:
+                      - code [ref=f3e1572]: "74"
+                    - gridcell "+ </span>" [ref=f3e1573]:
+                      - code [ref=f3e1574]:
+                        - generic [ref=f3e1575]: +
+                        - generic [ref=f3e1576]: </span>
+                  - row [ref=f3e1577]:
+                    - gridcell [ref=f3e1578] [cursor=pointer]:
+                      - code [ref=f3e1579]: "73"
+                    - gridcell [ref=f3e1580] [cursor=pointer]:
+                      - code [ref=f3e1581]: "75"
+                    - gridcell "</a>" [ref=f3e1582]:
+                      - code [ref=f3e1583]:
+                        - generic [ref=f3e1584]: </a>
+                  - row [ref=f3e1585]:
+                    - gridcell [ref=f3e1586] [cursor=pointer]:
+                      - code [ref=f3e1587]: "74"
+                    - gridcell [ref=f3e1588] [cursor=pointer]:
+                      - code [ref=f3e1589]: "76"
+                    - gridcell [ref=f3e1590]:
+                      - code
+                  - row [ref=f3e1591]:
+                    - gridcell [ref=f3e1592] [cursor=pointer]:
+                      - code [ref=f3e1593]: "75"
+                    - gridcell [ref=f3e1594] [cursor=pointer]:
+                      - code [ref=f3e1595]: "77"
+                    - gridcell "<button class=\"menu-toggle\" type=\"button\" [attr.aria-expanded]=\"mobileOpen()\" aria-controls=\"primary-navigation\" (click)=\"toggleMobile($event)\">" [ref=f3e1596]:
+                      - code [ref=f3e1597]:
+                        - generic [ref=f3e1598]: <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileOpen()" aria-controls="primary-navigation" (click)="toggleMobile($event)">
+                  - row [ref=f3e1599]:
+                    - gridcell "@@ -110,8 +112,9 @@ const primaryLinks = [" [ref=f3e1600]:
+                      - generic [ref=f3e1601]:
+                        - generic [ref=f3e1602]:
+                          - button [ref=f3e1603] [cursor=pointer]
+                          - button [ref=f3e1606] [cursor=pointer]
+                        - code [ref=f3e1609]:
+                          - generic [ref=f3e1610]: "@@ -110,8 +112,9 @@ const primaryLinks = ["
+                  - row [ref=f3e1611]:
+                    - gridcell [ref=f3e1612] [cursor=pointer]:
+                      - code [ref=f3e1613]: "110"
+                    - gridcell [ref=f3e1614] [cursor=pointer]:
+                      - code [ref=f3e1615]: "112"
+                    - gridcell "</div>" [ref=f3e1616]:
+                      - code [ref=f3e1617]:
+                        - generic [ref=f3e1618]: </div>
+                  - row [ref=f3e1619]:
+                    - gridcell [ref=f3e1620] [cursor=pointer]:
+                      - code [ref=f3e1621]: "111"
+                    - gridcell [ref=f3e1622] [cursor=pointer]:
+                      - code [ref=f3e1623]: "113"
+                    - gridcell [ref=f3e1624]:
+                      - code
+                  - row [ref=f3e1625]:
+                    - gridcell [ref=f3e1626] [cursor=pointer]:
+                      - code [ref=f3e1627]: "112"
+                    - gridcell [ref=f3e1628] [cursor=pointer]:
+                      - code [ref=f3e1629]: "114"
+                    - gridcell "<a routerLink=\"/talleres\" routerLinkActive=\"active\" (click)=\"closeMenus()\">Talleres</a>" [ref=f3e1630]:
+                      - code [ref=f3e1631]:
+                        - generic [ref=f3e1632]: <a routerLink="/talleres" routerLinkActive="active" (click)="closeMenus()">Talleres</a>
+                  - row [ref=f3e1633]:
+                    - gridcell [ref=f3e1634] [cursor=pointer]:
+                      - code [ref=f3e1635]: "113"
+                    - gridcell [ref=f3e1636] [cursor=pointer]:
+                      - code
+                    - gridcell "- <a routerLink=\"/contacto\" class=\"nav-cta\" routerLinkActive=\"active\" (click)=\"closeMenus()\">Contacto</a>" [ref=f3e1637]:
+                      - code [ref=f3e1638]:
+                        - generic [ref=f3e1639]: "-"
+                        - generic [ref=f3e1640]: <a routerLink="/contacto" class="nav-cta" routerLinkActive="active" (click)="closeMenus()">Contacto</a>
+                  - row [ref=f3e1641]:
+                    - gridcell [ref=f3e1642] [cursor=pointer]:
+                      - code [ref=f3e1643]: "114"
+                    - gridcell [ref=f3e1644] [cursor=pointer]:
+                      - code [ref=f3e1645]: "115"
+                    - gridcell "</div>" [ref=f3e1646]:
+                      - code [ref=f3e1647]:
+                        - generic [ref=f3e1648]: </div>
+                  - row [ref=f3e1649]:
+                    - gridcell [ref=f3e1650] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1651] [cursor=pointer]:
+                      - code [ref=f3e1652]: "116"
+                    - gridcell "+" [ref=f3e1653]:
+                      - code:
+                        - generic [ref=f3e1654]: +
+                  - row [ref=f3e1655]:
+                    - gridcell [ref=f3e1656] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1657] [cursor=pointer]:
+                      - code [ref=f3e1658]: "117"
+                    - gridcell "+ <a routerLink=\"/contacto\" class=\"nav-cta\" routerLinkActive=\"active\" (click)=\"closeMenus()\">Contacto</a>" [ref=f3e1659]:
+                      - code [ref=f3e1660]:
+                        - generic [ref=f3e1661]: +
+                        - generic [ref=f3e1662]: <a routerLink="/contacto" class="nav-cta" routerLinkActive="active" (click)="closeMenus()">Contacto</a>
+                  - row [ref=f3e1663]:
+                    - gridcell [ref=f3e1664] [cursor=pointer]:
+                      - code [ref=f3e1665]: "115"
+                    - gridcell [ref=f3e1666] [cursor=pointer]:
+                      - code [ref=f3e1667]: "118"
+                    - gridcell "</nav>" [ref=f3e1668]:
+                      - code [ref=f3e1669]:
+                        - generic [ref=f3e1670]: </nav>
+                  - row [ref=f3e1671]:
+                    - gridcell [ref=f3e1672] [cursor=pointer]:
+                      - code [ref=f3e1673]: "116"
+                    - gridcell [ref=f3e1674] [cursor=pointer]:
+                      - code [ref=f3e1675]: "119"
+                    - gridcell "</header>" [ref=f3e1676]:
+                      - code [ref=f3e1677]:
+                        - generic [ref=f3e1678]: </header>
+                  - row [ref=f3e1679]:
+                    - gridcell [ref=f3e1680] [cursor=pointer]:
+                      - code [ref=f3e1681]: "117"
+                    - gridcell [ref=f3e1682] [cursor=pointer]:
+                      - code [ref=f3e1683]: "120"
+                    - gridcell [ref=f3e1684]:
+                      - code
+                  - row [ref=f3e1685]:
+                    - gridcell "@@ -120,37 +123,75 @@ const primaryLinks = [" [ref=f3e1686]:
+                      - generic [ref=f3e1687]:
+                        - button [ref=f3e1688] [cursor=pointer]
+                        - code [ref=f3e1691]:
+                          - generic [ref=f3e1692]: "@@ -120,37 +123,75 @@ const primaryLinks = ["
+                  - row [ref=f3e1693]:
+                    - gridcell [ref=f3e1694] [cursor=pointer]:
+                      - code [ref=f3e1695]: "120"
+                    - gridcell [ref=f3e1696] [cursor=pointer]:
+                      - code [ref=f3e1697]: "123"
+                    - gridcell "</main>" [ref=f3e1698]:
+                      - code [ref=f3e1699]:
+                        - generic [ref=f3e1700]: </main>
+                  - row [ref=f3e1701]:
+                    - gridcell [ref=f3e1702] [cursor=pointer]:
+                      - code [ref=f3e1703]: "121"
+                    - gridcell [ref=f3e1704] [cursor=pointer]:
+                      - code [ref=f3e1705]: "124"
+                    - gridcell [ref=f3e1706]:
+                      - code
+                  - row [ref=f3e1707]:
+                    - gridcell [ref=f3e1708] [cursor=pointer]:
+                      - code [ref=f3e1709]: "122"
+                    - gridcell [ref=f3e1710] [cursor=pointer]:
+                      - code [ref=f3e1711]: "125"
+                    - gridcell "<footer class=\"site-footer\">" [ref=f3e1712]:
+                      - code [ref=f3e1713]:
+                        - generic [ref=f3e1714]: <footer class="site-footer">
+                  - row [ref=f3e1715]:
+                    - gridcell [ref=f3e1716] [cursor=pointer]:
+                      - code [ref=f3e1717]: "123"
+                    - gridcell [ref=f3e1718] [cursor=pointer]:
+                      - code
+                    - gridcell "- <div class=\"footer-intro\">" [ref=f3e1719]:
+                      - code [ref=f3e1720]:
+                        - generic [ref=f3e1721]: "-"
+                        - generic [ref=f3e1722]: <div class="footer-intro">
+                  - row [ref=f3e1723]:
+                    - gridcell [ref=f3e1724] [cursor=pointer]:
+                      - code [ref=f3e1725]: "124"
+                    - gridcell [ref=f3e1726] [cursor=pointer]:
+                      - code
+                    - gridcell "- <strong>Hilando Fino Psicología</strong>" [ref=f3e1727]:
+                      - code [ref=f3e1728]:
+                        - generic [ref=f3e1729]: "-"
+                        - generic [ref=f3e1730]: <strong>Hilando Fino Psicología</strong>
+                  - row [ref=f3e1731]:
+                    - gridcell [ref=f3e1732] [cursor=pointer]:
+                      - code [ref=f3e1733]: "125"
+                    - gridcell [ref=f3e1734] [cursor=pointer]:
+                      - code
+                    - gridcell "- <p>Psicología en Ciudad Real con una mirada integradora, cercana y respetuosa con cada proceso.</p>" [ref=f3e1735]:
+                      - code [ref=f3e1736]:
+                        - generic [ref=f3e1737]: "-"
+                        - generic [ref=f3e1738]: <p>Psicología en Ciudad Real con una mirada integradora, cercana y respetuosa con cada proceso.</p>
+                  - row [ref=f3e1739]:
+                    - gridcell [ref=f3e1740] [cursor=pointer]:
+                      - code [ref=f3e1741]: "126"
+                    - gridcell [ref=f3e1742] [cursor=pointer]:
+                      - code
+                    - gridcell "- <address class=\"footer-nap\">" [ref=f3e1743]:
+                      - code [ref=f3e1744]:
+                        - generic [ref=f3e1745]: "-"
+                        - generic [ref=f3e1746]: <address class="footer-nap">
+                  - row [ref=f3e1747]:
+                    - gridcell [ref=f3e1748] [cursor=pointer]:
+                      - code [ref=f3e1749]: "127"
+                    - gridcell [ref=f3e1750] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- <span>{{ identity.practitionerName }} · {{ identity.professionalTitle }}</span>" [ref=f3e1751]':
+                      - code [ref=f3e1752]:
+                        - generic [ref=f3e1753]: "-"
+                        - generic [ref=f3e1754]: "<span>{{ identity.practitionerName }} · {{ identity.professionalTitle }}</span>"
+                  - row [ref=f3e1755]:
+                    - gridcell [ref=f3e1756] [cursor=pointer]:
+                      - code [ref=f3e1757]: "128"
+                    - gridcell [ref=f3e1758] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- <span>{{ identity.address.streetAddress }}, {{ identity.address.addressLocality }}</span>" [ref=f3e1759]':
+                      - code [ref=f3e1760]:
+                        - generic [ref=f3e1761]: "-"
+                        - generic [ref=f3e1762]: "<span>{{ identity.address.streetAddress }}, {{ identity.address.addressLocality }}</span>"
+                  - row [ref=f3e1763]:
+                    - gridcell [ref=f3e1764] [cursor=pointer]:
+                      - code [ref=f3e1765]: "129"
+                    - gridcell [ref=f3e1766] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- <a [href]=\"telHref\">{{ identity.phone }}</a>" [ref=f3e1767]':
+                      - code [ref=f3e1768]:
+                        - generic [ref=f3e1769]: "-"
+                        - generic [ref=f3e1770]: "<a [href]=\"telHref\">{{ identity.phone }}</a>"
+                  - row [ref=f3e1771]:
+                    - gridcell [ref=f3e1772] [cursor=pointer]:
+                      - code [ref=f3e1773]: "130"
+                    - gridcell [ref=f3e1774] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- <a [href]=\"mailtoHref\">{{ identity.email }}</a>" [ref=f3e1775]':
+                      - code [ref=f3e1776]:
+                        - generic [ref=f3e1777]: "-"
+                        - generic [ref=f3e1778]: "<a [href]=\"mailtoHref\">{{ identity.email }}</a>"
+                  - row [ref=f3e1779]:
+                    - gridcell [ref=f3e1780] [cursor=pointer]:
+                      - code [ref=f3e1781]: "131"
+                    - gridcell [ref=f3e1782] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- <span class=\"footer-registry\">Col. {{ identity.collegiateNumber }} · Nº de Registro Sanitario {{ identity.healthRegistryNumber }}</span>" [ref=f3e1783]':
+                      - code [ref=f3e1784]:
+                        - generic [ref=f3e1785]: "-"
+                        - generic [ref=f3e1786]: "<span class=\"footer-registry\">Col. {{ identity.collegiateNumber }} · Nº de Registro Sanitario {{ identity.healthRegistryNumber }}</span>"
+                  - row [ref=f3e1787]:
+                    - gridcell [ref=f3e1788] [cursor=pointer]:
+                      - code [ref=f3e1789]: "132"
+                    - gridcell [ref=f3e1790] [cursor=pointer]:
+                      - code
+                    - gridcell "- </address>" [ref=f3e1791]:
+                      - code [ref=f3e1792]:
+                        - generic [ref=f3e1793]: "-"
+                        - generic [ref=f3e1794]: </address>
+                  - row [ref=f3e1795]:
+                    - gridcell [ref=f3e1796] [cursor=pointer]:
+                      - code [ref=f3e1797]: "133"
+                    - gridcell [ref=f3e1798] [cursor=pointer]:
+                      - code
+                    - gridcell "- </div>" [ref=f3e1799]:
+                      - code [ref=f3e1800]:
+                        - generic [ref=f3e1801]: "-"
+                        - generic [ref=f3e1802]: </div>
+                  - row [ref=f3e1803]:
+                    - gridcell [ref=f3e1804] [cursor=pointer]:
+                      - code [ref=f3e1805]: "134"
+                    - gridcell [ref=f3e1806] [cursor=pointer]:
+                      - code
+                    - gridcell "- <nav class=\"footer-sitemap\" aria-label=\"Mapa del sitio\">" [ref=f3e1807]:
+                      - code [ref=f3e1808]:
+                        - generic [ref=f3e1809]: "-"
+                        - generic [ref=f3e1810]: <nav class="footer-sitemap" aria-label="Mapa del sitio">
+                  - row [ref=f3e1811]:
+                    - gridcell [ref=f3e1812] [cursor=pointer]:
+                      - code [ref=f3e1813]: "135"
+                    - gridcell [ref=f3e1814] [cursor=pointer]:
+                      - code
+                    - gridcell "- <div>" [ref=f3e1815]:
+                      - code [ref=f3e1816]:
+                        - generic [ref=f3e1817]: "-"
+                        - generic [ref=f3e1818]: <div>
+                  - row [ref=f3e1819]:
+                    - gridcell [ref=f3e1820] [cursor=pointer]:
+                      - code [ref=f3e1821]: "136"
+                    - gridcell [ref=f3e1822] [cursor=pointer]:
+                      - code
+                    - gridcell "- <h2>Web</h2>" [ref=f3e1823]:
+                      - code [ref=f3e1824]:
+                        - generic [ref=f3e1825]: "-"
+                        - generic [ref=f3e1826]: <h2>Web</h2>
+                  - row [ref=f3e1827]:
+                    - gridcell [ref=f3e1828] [cursor=pointer]:
+                      - code [ref=f3e1829]: "137"
+                    - gridcell [ref=f3e1830] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- @for (link of primaryLinks; track link.href) {" [ref=f3e1831]':
+                      - code [ref=f3e1832]:
+                        - generic [ref=f3e1833]: "-"
+                        - generic [ref=f3e1834]: "@for (link of primaryLinks; track link.href) {"
+                  - row [ref=f3e1835]:
+                    - gridcell [ref=f3e1836] [cursor=pointer]:
+                      - code [ref=f3e1837]: "138"
+                    - gridcell [ref=f3e1838] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- <a [routerLink]=\"link.href\">{{ link.label }}</a>" [ref=f3e1839]':
+                      - code [ref=f3e1840]:
+                        - generic [ref=f3e1841]: "-"
+                        - generic [ref=f3e1842]: "<a [routerLink]=\"link.href\">{{ link.label }}</a>"
+                  - row [ref=f3e1843]:
+                    - gridcell [ref=f3e1844] [cursor=pointer]:
+                      - code [ref=f3e1845]: "139"
+                    - gridcell [ref=f3e1846] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- }" [ref=f3e1847]':
+                      - code [ref=f3e1848]:
+                        - generic [ref=f3e1849]: "-"
+                        - generic [ref=f3e1850]: "}"
+                  - row [ref=f3e1851]:
+                    - gridcell [ref=f3e1852] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1853] [cursor=pointer]:
+                      - code [ref=f3e1854]: "126"
+                    - gridcell "+ <div class=\"footer-grid\">" [ref=f3e1855]:
+                      - code [ref=f3e1856]:
+                        - generic [ref=f3e1857]: +
+                        - generic [ref=f3e1858]: <div class="footer-grid">
+                  - row [ref=f3e1859]:
+                    - gridcell [ref=f3e1860] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1861] [cursor=pointer]:
+                      - code [ref=f3e1862]: "127"
+                    - gridcell "+ <div class=\"footer-intro\">" [ref=f3e1863]:
+                      - code [ref=f3e1864]:
+                        - generic [ref=f3e1865]: +
+                        - generic [ref=f3e1866]: <div class="footer-intro">
+                  - row [ref=f3e1867]:
+                    - gridcell [ref=f3e1868] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1869] [cursor=pointer]:
+                      - code [ref=f3e1870]: "128"
+                    - gridcell "+ <span class=\"footer-mark\">" [ref=f3e1871]:
+                      - code [ref=f3e1872]:
+                        - generic [ref=f3e1873]: +
+                        - generic [ref=f3e1874]: <span class="footer-mark">
+                  - row [ref=f3e1875]:
+                    - gridcell [ref=f3e1876] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1877] [cursor=pointer]:
+                      - code [ref=f3e1878]: "129"
+                    - gridcell "+ <picture>" [ref=f3e1879]:
+                      - code [ref=f3e1880]:
+                        - generic [ref=f3e1881]: +
+                        - generic [ref=f3e1882]: <picture>
+                  - row [ref=f3e1883]:
+                    - gridcell [ref=f3e1884] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1885] [cursor=pointer]:
+                      - code [ref=f3e1886]: "130"
+                    - gridcell "+ <source" [ref=f3e1887]:
+                      - code [ref=f3e1888]:
+                        - generic [ref=f3e1889]: +
+                        - generic [ref=f3e1890]: <source
+                  - row [ref=f3e1891]:
+                    - gridcell [ref=f3e1892] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1893] [cursor=pointer]:
+                      - code [ref=f3e1894]: "131"
+                    - gridcell "+ type=\"image/webp\"" [ref=f3e1895]:
+                      - code [ref=f3e1896]:
+                        - generic [ref=f3e1897]: +
+                        - generic [ref=f3e1898]: type="image/webp"
+                  - row [ref=f3e1899]:
+                    - gridcell [ref=f3e1900] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1901] [cursor=pointer]:
+                      - code [ref=f3e1902]: "132"
+                    - gridcell "+ srcset=\"images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w\"" [ref=f3e1903]:
+                      - code [ref=f3e1904]:
+                        - generic [ref=f3e1905]: +
+                        - generic [ref=f3e1906]: srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w"
+                  - row [ref=f3e1907]:
+                    - gridcell [ref=f3e1908] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1909] [cursor=pointer]:
+                      - code [ref=f3e1910]: "133"
+                    - gridcell "+ sizes=\"72px\"" [ref=f3e1911]:
+                      - code [ref=f3e1912]:
+                        - generic [ref=f3e1913]: +
+                        - generic [ref=f3e1914]: sizes="72px"
+                  - row [ref=f3e1915]:
+                    - gridcell [ref=f3e1916] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1917] [cursor=pointer]:
+                      - code [ref=f3e1918]: "134"
+                    - gridcell "+ />" [ref=f3e1919]:
+                      - code [ref=f3e1920]:
+                        - generic [ref=f3e1921]: +
+                        - generic [ref=f3e1922]: />
+                  - row [ref=f3e1923]:
+                    - gridcell [ref=f3e1924] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1925] [cursor=pointer]:
+                      - code [ref=f3e1926]: "135"
+                    - gridcell "+ <img" [ref=f3e1927]:
+                      - code [ref=f3e1928]:
+                        - generic [ref=f3e1929]: +
+                        - generic [ref=f3e1930]: <img
+                  - row [ref=f3e1931]:
+                    - gridcell [ref=f3e1932] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1933] [cursor=pointer]:
+                      - code [ref=f3e1934]: "136"
+                    - gridcell "+ src=\"images/logo-440.png\"" [ref=f3e1935]:
+                      - code [ref=f3e1936]:
+                        - generic [ref=f3e1937]: +
+                        - generic [ref=f3e1938]: src="images/logo-440.png"
+                  - row [ref=f3e1939]:
+                    - gridcell [ref=f3e1940] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1941] [cursor=pointer]:
+                      - code [ref=f3e1942]: "137"
+                    - gridcell "+ srcset=\"images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w\"" [ref=f3e1943]:
+                      - code [ref=f3e1944]:
+                        - generic [ref=f3e1945]: +
+                        - generic [ref=f3e1946]: srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w"
+                  - row [ref=f3e1947]:
+                    - gridcell [ref=f3e1948] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1949] [cursor=pointer]:
+                      - code [ref=f3e1950]: "138"
+                    - gridcell "+ sizes=\"72px\"" [ref=f3e1951]:
+                      - code [ref=f3e1952]:
+                        - generic [ref=f3e1953]: +
+                        - generic [ref=f3e1954]: sizes="72px"
+                  - row [ref=f3e1955]:
+                    - gridcell [ref=f3e1956] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1957] [cursor=pointer]:
+                      - code [ref=f3e1958]: "139"
+                    - gridcell "+ width=\"220\"" [ref=f3e1959]:
+                      - code [ref=f3e1960]:
+                        - generic [ref=f3e1961]: +
+                        - generic [ref=f3e1962]: width="220"
+                  - row [ref=f3e1963]:
+                    - gridcell [ref=f3e1964] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1965] [cursor=pointer]:
+                      - code [ref=f3e1966]: "140"
+                    - gridcell "+ height=\"86\"" [ref=f3e1967]:
+                      - code [ref=f3e1968]:
+                        - generic [ref=f3e1969]: +
+                        - generic [ref=f3e1970]: height="86"
+                  - row [ref=f3e1971]:
+                    - gridcell [ref=f3e1972] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1973] [cursor=pointer]:
+                      - code [ref=f3e1974]: "141"
+                    - gridcell "+ alt=\"Marta Martín · Hilando Fino Psicología\"" [ref=f3e1975]:
+                      - code [ref=f3e1976]:
+                        - generic [ref=f3e1977]: +
+                        - generic [ref=f3e1978]: alt="Marta Martín · Hilando Fino Psicología"
+                  - row [ref=f3e1979]:
+                    - gridcell [ref=f3e1980] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1981] [cursor=pointer]:
+                      - code [ref=f3e1982]: "142"
+                    - gridcell "+ /></picture>" [ref=f3e1983]:
+                      - code [ref=f3e1984]:
+                        - generic [ref=f3e1985]: +
+                        - generic [ref=f3e1986]: /></picture>
+                  - row [ref=f3e1987]:
+                    - gridcell [ref=f3e1988] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1989] [cursor=pointer]:
+                      - code [ref=f3e1990]: "143"
+                    - gridcell "+ </span>" [ref=f3e1991]:
+                      - code [ref=f3e1992]:
+                        - generic [ref=f3e1993]: +
+                        - generic [ref=f3e1994]: </span>
+                  - row [ref=f3e1995]:
+                    - gridcell [ref=f3e1996] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e1997] [cursor=pointer]:
+                      - code [ref=f3e1998]: "144"
+                    - 'gridcell "+ <p class=\"footer-signature\">{{ identity.practitionerName }} · {{ identity.professionalTitle }}</p>" [ref=f3e1999]':
+                      - code [ref=f3e2000]:
+                        - generic [ref=f3e2001]: +
+                        - generic [ref=f3e2002]: "<p class=\"footer-signature\">{{ identity.practitionerName }} · {{ identity.professionalTitle }}</p>"
+                  - row [ref=f3e2003]:
+                    - gridcell [ref=f3e2004] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2005] [cursor=pointer]:
+                      - code [ref=f3e2006]: "145"
+                    - gridcell "+ <p>Psicología en Ciudad Real con una mirada integradora, cercana y respetuosa con cada proceso.</p>" [ref=f3e2007]:
+                      - code [ref=f3e2008]:
+                        - generic [ref=f3e2009]: +
+                        - generic [ref=f3e2010]: <p>Psicología en Ciudad Real con una mirada integradora, cercana y respetuosa con cada proceso.</p>
+                  - row [ref=f3e2011]:
+                    - gridcell [ref=f3e2012] [cursor=pointer]:
+                      - code [ref=f3e2013]: "140"
+                    - gridcell [ref=f3e2014] [cursor=pointer]:
+                      - code [ref=f3e2015]: "146"
+                    - gridcell "</div>" [ref=f3e2016]:
+                      - code [ref=f3e2017]:
+                        - generic [ref=f3e2018]: </div>
+                  - row [ref=f3e2019]:
+                    - gridcell [ref=f3e2020] [cursor=pointer]:
+                      - code [ref=f3e2021]: "141"
+                    - gridcell [ref=f3e2022] [cursor=pointer]:
+                      - code
+                    - gridcell "- <div>" [ref=f3e2023]:
+                      - code [ref=f3e2024]:
+                        - generic [ref=f3e2025]: "-"
+                        - generic [ref=f3e2026]: <div>
+                  - row [ref=f3e2027]:
+                    - gridcell [ref=f3e2028] [cursor=pointer]:
+                      - code [ref=f3e2029]: "142"
+                    - gridcell [ref=f3e2030] [cursor=pointer]:
+                      - code
+                    - gridcell "- <h2>Áreas</h2>" [ref=f3e2031]:
+                      - code [ref=f3e2032]:
+                        - generic [ref=f3e2033]: "-"
+                        - generic [ref=f3e2034]: <h2>Áreas</h2>
+                  - row [ref=f3e2035]:
+                    - gridcell [ref=f3e2036] [cursor=pointer]:
+                      - code [ref=f3e2037]: "143"
+                    - gridcell [ref=f3e2038] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- @for (link of areaLinks; track link.href) {" [ref=f3e2039]':
+                      - code [ref=f3e2040]:
+                        - generic [ref=f3e2041]: "-"
+                        - generic [ref=f3e2042]: "@for (link of areaLinks; track link.href) {"
+                  - row [ref=f3e2043]:
+                    - gridcell [ref=f3e2044] [cursor=pointer]:
+                      - code [ref=f3e2045]: "144"
+                    - gridcell [ref=f3e2046] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- <a [routerLink]=\"link.href\">{{ link.label }}</a>" [ref=f3e2047]':
+                      - code [ref=f3e2048]:
+                        - generic [ref=f3e2049]: "-"
+                        - generic [ref=f3e2050]: "<a [routerLink]=\"link.href\">{{ link.label }}</a>"
+                  - row [ref=f3e2051]:
+                    - gridcell [ref=f3e2052] [cursor=pointer]:
+                      - code [ref=f3e2053]: "145"
+                    - gridcell [ref=f3e2054] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- }" [ref=f3e2055]':
+                      - code [ref=f3e2056]:
+                        - generic [ref=f3e2057]: "-"
+                        - generic [ref=f3e2058]: "}"
+                  - row [ref=f3e2059]:
+                    - gridcell [ref=f3e2060] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2061] [cursor=pointer]:
+                      - code [ref=f3e2062]: "147"
+                    - gridcell "+" [ref=f3e2063]:
+                      - code:
+                        - generic [ref=f3e2064]: +
+                  - row [ref=f3e2065]:
+                    - gridcell [ref=f3e2066] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2067] [cursor=pointer]:
+                      - code [ref=f3e2068]: "148"
+                    - gridcell "+ <div class=\"footer-contact\">" [ref=f3e2069]:
+                      - code [ref=f3e2070]:
+                        - generic [ref=f3e2071]: +
+                        - generic [ref=f3e2072]: <div class="footer-contact">
+                  - row [ref=f3e2073]:
+                    - gridcell [ref=f3e2074] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2075] [cursor=pointer]:
+                      - code [ref=f3e2076]: "149"
+                    - gridcell "+ <h2>Contacto</h2>" [ref=f3e2077]:
+                      - code [ref=f3e2078]:
+                        - generic [ref=f3e2079]: +
+                        - generic [ref=f3e2080]: <h2>Contacto</h2>
+                  - row [ref=f3e2081]:
+                    - gridcell [ref=f3e2082] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2083] [cursor=pointer]:
+                      - code [ref=f3e2084]: "150"
+                    - gridcell "+ <address class=\"footer-nap\">" [ref=f3e2085]:
+                      - code [ref=f3e2086]:
+                        - generic [ref=f3e2087]: +
+                        - generic [ref=f3e2088]: <address class="footer-nap">
+                  - row [ref=f3e2089]:
+                    - gridcell [ref=f3e2090] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2091] [cursor=pointer]:
+                      - code [ref=f3e2092]: "151"
+                    - gridcell "+ <a class=\"footer-contact-link\" [href]=\"telHref\">" [ref=f3e2093]:
+                      - code [ref=f3e2094]:
+                        - generic [ref=f3e2095]: +
+                        - generic [ref=f3e2096]: <a class="footer-contact-link" [href]="telHref">
+                  - row [ref=f3e2097]:
+                    - gridcell [ref=f3e2098] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2099] [cursor=pointer]:
+                      - code [ref=f3e2100]: "152"
+                    - gridcell "+ <svg class=\"footer-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\">" [ref=f3e2101]:
+                      - code [ref=f3e2102]:
+                        - generic [ref=f3e2103]: +
+                        - generic [ref=f3e2104]: <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  - row [ref=f3e2105]:
+                    - gridcell [ref=f3e2106] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2107] [cursor=pointer]:
+                      - code [ref=f3e2108]: "153"
+                    - gridcell "+ <path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z\" />" [ref=f3e2109]:
+                      - code [ref=f3e2110]:
+                        - generic [ref=f3e2111]: +
+                        - generic [ref=f3e2112]: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z" />
+                  - row [ref=f3e2113]:
+                    - gridcell [ref=f3e2114] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2115] [cursor=pointer]:
+                      - code [ref=f3e2116]: "154"
+                    - gridcell "+ </svg>" [ref=f3e2117]:
+                      - code [ref=f3e2118]:
+                        - generic [ref=f3e2119]: +
+                        - generic [ref=f3e2120]: </svg>
+                  - row [ref=f3e2121]:
+                    - gridcell [ref=f3e2122] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2123] [cursor=pointer]:
+                      - code [ref=f3e2124]: "155"
+                    - 'gridcell "+ {{ identity.phone }}" [ref=f3e2125]':
+                      - code [ref=f3e2126]:
+                        - generic [ref=f3e2127]: +
+                        - generic [ref=f3e2128]: "{{ identity.phone }}"
+                  - row [ref=f3e2129]:
+                    - gridcell [ref=f3e2130] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2131] [cursor=pointer]:
+                      - code [ref=f3e2132]: "156"
+                    - gridcell "+ </a>" [ref=f3e2133]:
+                      - code [ref=f3e2134]:
+                        - generic [ref=f3e2135]: +
+                        - generic [ref=f3e2136]: </a>
+                  - row [ref=f3e2137]:
+                    - gridcell [ref=f3e2138] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2139] [cursor=pointer]:
+                      - code [ref=f3e2140]: "157"
+                    - gridcell "+ <a class=\"footer-contact-link\" [href]=\"mailtoHref\">" [ref=f3e2141]:
+                      - code [ref=f3e2142]:
+                        - generic [ref=f3e2143]: +
+                        - generic [ref=f3e2144]: <a class="footer-contact-link" [href]="mailtoHref">
+                  - row [ref=f3e2145]:
+                    - gridcell [ref=f3e2146] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2147] [cursor=pointer]:
+                      - code [ref=f3e2148]: "158"
+                    - gridcell "+ <svg class=\"footer-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\">" [ref=f3e2149]:
+                      - code [ref=f3e2150]:
+                        - generic [ref=f3e2151]: +
+                        - generic [ref=f3e2152]: <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  - row [ref=f3e2153]:
+                    - gridcell [ref=f3e2154] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2155] [cursor=pointer]:
+                      - code [ref=f3e2156]: "159"
+                    - gridcell "+ <rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"2\" />" [ref=f3e2157]:
+                      - code [ref=f3e2158]:
+                        - generic [ref=f3e2159]: +
+                        - generic [ref=f3e2160]: <rect x="2" y="4" width="20" height="16" rx="2" />
+                  - row [ref=f3e2161]:
+                    - gridcell [ref=f3e2162] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2163] [cursor=pointer]:
+                      - code [ref=f3e2164]: "160"
+                    - gridcell "+ <path d=\"m22 6-10 7L2 6\" />" [ref=f3e2165]:
+                      - code [ref=f3e2166]:
+                        - generic [ref=f3e2167]: +
+                        - generic [ref=f3e2168]: <path d="m22 6-10 7L2 6" />
+                  - row [ref=f3e2169]:
+                    - gridcell [ref=f3e2170] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2171] [cursor=pointer]:
+                      - code [ref=f3e2172]: "161"
+                    - gridcell "+ </svg>" [ref=f3e2173]:
+                      - code [ref=f3e2174]:
+                        - generic [ref=f3e2175]: +
+                        - generic [ref=f3e2176]: </svg>
+                  - row [ref=f3e2177]:
+                    - gridcell [ref=f3e2178] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2179] [cursor=pointer]:
+                      - code [ref=f3e2180]: "162"
+                    - 'gridcell "+ {{ identity.email }}" [ref=f3e2181]':
+                      - code [ref=f3e2182]:
+                        - generic [ref=f3e2183]: +
+                        - generic [ref=f3e2184]: "{{ identity.email }}"
+                  - row [ref=f3e2185]:
+                    - gridcell [ref=f3e2186] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2187] [cursor=pointer]:
+                      - code [ref=f3e2188]: "163"
+                    - gridcell "+ </a>" [ref=f3e2189]:
+                      - code [ref=f3e2190]:
+                        - generic [ref=f3e2191]: +
+                        - generic [ref=f3e2192]: </a>
+                  - row [ref=f3e2193]:
+                    - gridcell [ref=f3e2194] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2195] [cursor=pointer]:
+                      - code [ref=f3e2196]: "164"
+                    - gridcell "+ <span class=\"footer-subhead\">Consulta</span>" [ref=f3e2197]:
+                      - code [ref=f3e2198]:
+                        - generic [ref=f3e2199]: +
+                        - generic [ref=f3e2200]: <span class="footer-subhead">Consulta</span>
+                  - row [ref=f3e2201]:
+                    - gridcell [ref=f3e2202] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2203] [cursor=pointer]:
+                      - code [ref=f3e2204]: "165"
+                    - 'gridcell "+ <span>{{ identity.address.streetAddress }}, {{ identity.address.addressLocality }}</span>" [ref=f3e2205]':
+                      - code [ref=f3e2206]:
+                        - generic [ref=f3e2207]: +
+                        - generic [ref=f3e2208]: "<span>{{ identity.address.streetAddress }}, {{ identity.address.addressLocality }}</span>"
+                  - row [ref=f3e2209]:
+                    - gridcell [ref=f3e2210] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2211] [cursor=pointer]:
+                      - code [ref=f3e2212]: "166"
+                    - gridcell "+ <span class=\"footer-subhead\">Acreditaciones</span>" [ref=f3e2213]:
+                      - code [ref=f3e2214]:
+                        - generic [ref=f3e2215]: +
+                        - generic [ref=f3e2216]: <span class="footer-subhead">Acreditaciones</span>
+                  - row [ref=f3e2217]:
+                    - gridcell [ref=f3e2218] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2219] [cursor=pointer]:
+                      - code [ref=f3e2220]: "167"
+                    - 'gridcell "+ <span class=\"footer-registry\">Col. {{ identity.collegiateNumber }} · Nº de Registro Sanitario {{ identity.healthRegistryNumber }}</span>" [ref=f3e2221]':
+                      - code [ref=f3e2222]:
+                        - generic [ref=f3e2223]: +
+                        - generic [ref=f3e2224]: "<span class=\"footer-registry\">Col. {{ identity.collegiateNumber }} · Nº de Registro Sanitario {{ identity.healthRegistryNumber }}</span>"
+                  - row [ref=f3e2225]:
+                    - gridcell [ref=f3e2226] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2227] [cursor=pointer]:
+                      - code [ref=f3e2228]: "168"
+                    - gridcell "+ </address>" [ref=f3e2229]:
+                      - code [ref=f3e2230]:
+                        - generic [ref=f3e2231]: +
+                        - generic [ref=f3e2232]: </address>
+                  - row [ref=f3e2233]:
+                    - gridcell [ref=f3e2234] [cursor=pointer]:
+                      - code [ref=f3e2235]: "146"
+                    - gridcell [ref=f3e2236] [cursor=pointer]:
+                      - code [ref=f3e2237]: "169"
+                    - gridcell "</div>" [ref=f3e2238]:
+                      - code [ref=f3e2239]:
+                        - generic [ref=f3e2240]: </div>
+                  - row [ref=f3e2241]:
+                    - gridcell [ref=f3e2242] [cursor=pointer]:
+                      - code [ref=f3e2243]: "147"
+                    - gridcell [ref=f3e2244] [cursor=pointer]:
+                      - code
+                    - gridcell "- <div>" [ref=f3e2245]:
+                      - code [ref=f3e2246]:
+                        - generic [ref=f3e2247]: "-"
+                        - generic [ref=f3e2248]: <div>
+                  - row [ref=f3e2249]:
+                    - gridcell [ref=f3e2250] [cursor=pointer]:
+                      - code [ref=f3e2251]: "148"
+                    - gridcell [ref=f3e2252] [cursor=pointer]:
+                      - code
+                    - gridcell "- <h2>Legal</h2>" [ref=f3e2253]:
+                      - code [ref=f3e2254]:
+                        - generic [ref=f3e2255]: "-"
+                        - generic [ref=f3e2256]: <h2>Legal</h2>
+                  - row [ref=f3e2257]:
+                    - gridcell [ref=f3e2258] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2259] [cursor=pointer]:
+                      - code [ref=f3e2260]: "170"
+                    - gridcell "+" [ref=f3e2261]:
+                      - code:
+                        - generic [ref=f3e2262]: +
+                  - row [ref=f3e2263]:
+                    - gridcell [ref=f3e2264] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2265] [cursor=pointer]:
+                      - code [ref=f3e2266]: "171"
+                    - gridcell "+ <nav class=\"footer-nav\" aria-label=\"Mapa del sitio\">" [ref=f3e2267]:
+                      - code [ref=f3e2268]:
+                        - generic [ref=f3e2269]: +
+                        - generic [ref=f3e2270]: <nav class="footer-nav" aria-label="Mapa del sitio">
+                  - row [ref=f3e2271]:
+                    - gridcell [ref=f3e2272] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2273] [cursor=pointer]:
+                      - code [ref=f3e2274]: "172"
+                    - gridcell "+ <div class=\"footer-nav-col\">" [ref=f3e2275]:
+                      - code [ref=f3e2276]:
+                        - generic [ref=f3e2277]: +
+                        - generic [ref=f3e2278]: <div class="footer-nav-col">
+                  - row [ref=f3e2279]:
+                    - gridcell [ref=f3e2280] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2281] [cursor=pointer]:
+                      - code [ref=f3e2282]: "173"
+                    - gridcell "+ <h2>Web</h2>" [ref=f3e2283]:
+                      - code [ref=f3e2284]:
+                        - generic [ref=f3e2285]: +
+                        - generic [ref=f3e2286]: <h2>Web</h2>
+                  - row [ref=f3e2287]:
+                    - gridcell [ref=f3e2288] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2289] [cursor=pointer]:
+                      - code [ref=f3e2290]: "174"
+                    - 'gridcell "+ @for (link of primaryLinks; track link.href) {" [ref=f3e2291]':
+                      - code [ref=f3e2292]:
+                        - generic [ref=f3e2293]: +
+                        - generic [ref=f3e2294]: "@for (link of primaryLinks; track link.href) {"
+                  - row [ref=f3e2295]:
+                    - gridcell [ref=f3e2296] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2297] [cursor=pointer]:
+                      - code [ref=f3e2298]: "175"
+                    - 'gridcell "+ <a [routerLink]=\"link.href\">{{ link.label }}</a>" [ref=f3e2299]':
+                      - code [ref=f3e2300]:
+                        - generic [ref=f3e2301]: +
+                        - generic [ref=f3e2302]: "<a [routerLink]=\"link.href\">{{ link.label }}</a>"
+                  - row [ref=f3e2303]:
+                    - gridcell [ref=f3e2304] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2305] [cursor=pointer]:
+                      - code [ref=f3e2306]: "176"
+                    - 'gridcell "+ }" [ref=f3e2307]':
+                      - code [ref=f3e2308]:
+                        - generic [ref=f3e2309]: +
+                        - generic [ref=f3e2310]: "}"
+                  - row [ref=f3e2311]:
+                    - gridcell [ref=f3e2312] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2313] [cursor=pointer]:
+                      - code [ref=f3e2314]: "177"
+                    - gridcell "+ </div>" [ref=f3e2315]:
+                      - code [ref=f3e2316]:
+                        - generic [ref=f3e2317]: +
+                        - generic [ref=f3e2318]: </div>
+                  - row [ref=f3e2319]:
+                    - gridcell [ref=f3e2320] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2321] [cursor=pointer]:
+                      - code [ref=f3e2322]: "178"
+                    - gridcell "+ <div class=\"footer-nav-col\">" [ref=f3e2323]:
+                      - code [ref=f3e2324]:
+                        - generic [ref=f3e2325]: +
+                        - generic [ref=f3e2326]: <div class="footer-nav-col">
+                  - row [ref=f3e2327]:
+                    - gridcell [ref=f3e2328] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2329] [cursor=pointer]:
+                      - code [ref=f3e2330]: "179"
+                    - gridcell "+ <h2>Áreas</h2>" [ref=f3e2331]:
+                      - code [ref=f3e2332]:
+                        - generic [ref=f3e2333]: +
+                        - generic [ref=f3e2334]: <h2>Áreas</h2>
+                  - row [ref=f3e2335]:
+                    - gridcell [ref=f3e2336] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2337] [cursor=pointer]:
+                      - code [ref=f3e2338]: "180"
+                    - 'gridcell "+ @for (link of areaLinks; track link.href) {" [ref=f3e2339]':
+                      - code [ref=f3e2340]:
+                        - generic [ref=f3e2341]: +
+                        - generic [ref=f3e2342]: "@for (link of areaLinks; track link.href) {"
+                  - row [ref=f3e2343]:
+                    - gridcell [ref=f3e2344] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2345] [cursor=pointer]:
+                      - code [ref=f3e2346]: "181"
+                    - 'gridcell "+ <a [routerLink]=\"link.href\">{{ link.label }}</a>" [ref=f3e2347]':
+                      - code [ref=f3e2348]:
+                        - generic [ref=f3e2349]: +
+                        - generic [ref=f3e2350]: "<a [routerLink]=\"link.href\">{{ link.label }}</a>"
+                  - row [ref=f3e2351]:
+                    - gridcell [ref=f3e2352] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2353] [cursor=pointer]:
+                      - code [ref=f3e2354]: "182"
+                    - 'gridcell "+ }" [ref=f3e2355]':
+                      - code [ref=f3e2356]:
+                        - generic [ref=f3e2357]: +
+                        - generic [ref=f3e2358]: "}"
+                  - row [ref=f3e2359]:
+                    - gridcell [ref=f3e2360] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2361] [cursor=pointer]:
+                      - code [ref=f3e2362]: "183"
+                    - gridcell "+ </div>" [ref=f3e2363]:
+                      - code [ref=f3e2364]:
+                        - generic [ref=f3e2365]: +
+                        - generic [ref=f3e2366]: </div>
+                  - row [ref=f3e2367]:
+                    - gridcell [ref=f3e2368] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2369] [cursor=pointer]:
+                      - code [ref=f3e2370]: "184"
+                    - gridcell "+ </nav>" [ref=f3e2371]:
+                      - code [ref=f3e2372]:
+                        - generic [ref=f3e2373]: +
+                        - generic [ref=f3e2374]: </nav>
+                  - row [ref=f3e2375]:
+                    - gridcell [ref=f3e2376] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2377] [cursor=pointer]:
+                      - code [ref=f3e2378]: "185"
+                    - gridcell "+ </div>" [ref=f3e2379]:
+                      - code [ref=f3e2380]:
+                        - generic [ref=f3e2381]: +
+                        - generic [ref=f3e2382]: </div>
+                  - row [ref=f3e2383]:
+                    - gridcell [ref=f3e2384] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2385] [cursor=pointer]:
+                      - code [ref=f3e2386]: "186"
+                    - gridcell "+" [ref=f3e2387]:
+                      - code:
+                        - generic [ref=f3e2388]: +
+                  - row [ref=f3e2389]:
+                    - gridcell [ref=f3e2390] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2391] [cursor=pointer]:
+                      - code [ref=f3e2392]: "187"
+                    - gridcell "+ <div class=\"footer-bottom\">" [ref=f3e2393]:
+                      - code [ref=f3e2394]:
+                        - generic [ref=f3e2395]: +
+                        - generic [ref=f3e2396]: <div class="footer-bottom">
+                  - row [ref=f3e2397]:
+                    - gridcell [ref=f3e2398] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2399] [cursor=pointer]:
+                      - code [ref=f3e2400]: "188"
+                    - 'gridcell "+ <span>© {{ currentYear }} {{ identity.practitionerName }} - {{ identity.brandName }}. Todos los derechos reservados.</span>" [ref=f3e2401]':
+                      - code [ref=f3e2402]:
+                        - generic [ref=f3e2403]: +
+                        - generic [ref=f3e2404]: "<span>© {{ currentYear }} {{ identity.practitionerName }} - {{ identity.brandName }}. Todos los derechos reservados.</span>"
+                  - row [ref=f3e2405]:
+                    - gridcell [ref=f3e2406] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2407] [cursor=pointer]:
+                      - code [ref=f3e2408]: "189"
+                    - gridcell "+ <nav class=\"footer-legal\" aria-label=\"Legal\">" [ref=f3e2409]:
+                      - code [ref=f3e2410]:
+                        - generic [ref=f3e2411]: +
+                        - generic [ref=f3e2412]: <nav class="footer-legal" aria-label="Legal">
+                  - row [ref=f3e2413]:
+                    - gridcell [ref=f3e2414] [cursor=pointer]:
+                      - code [ref=f3e2415]: "149"
+                    - gridcell [ref=f3e2416] [cursor=pointer]:
+                      - code [ref=f3e2417]: "190"
+                    - gridcell "<a routerLink=\"/aviso-legal\">Aviso legal</a>" [ref=f3e2418]:
+                      - code [ref=f3e2419]:
+                        - generic [ref=f3e2420]: <a routerLink="/aviso-legal">Aviso legal</a>
+                  - row [ref=f3e2421]:
+                    - gridcell [ref=f3e2422] [cursor=pointer]:
+                      - code [ref=f3e2423]: "150"
+                    - gridcell [ref=f3e2424] [cursor=pointer]:
+                      - code [ref=f3e2425]: "191"
+                    - gridcell "<a routerLink=\"/privacidad\">Privacidad</a>" [ref=f3e2426]:
+                      - code [ref=f3e2427]:
+                        - generic [ref=f3e2428]: <a routerLink="/privacidad">Privacidad</a>
+                  - row [ref=f3e2429]:
+                    - gridcell [ref=f3e2430] [cursor=pointer]:
+                      - code [ref=f3e2431]: "151"
+                    - gridcell [ref=f3e2432] [cursor=pointer]:
+                      - code [ref=f3e2433]: "192"
+                    - gridcell "<a routerLink=\"/cookies\">Cookies</a>" [ref=f3e2434]:
+                      - code [ref=f3e2435]:
+                        - generic [ref=f3e2436]: <a routerLink="/cookies">Cookies</a>
+                  - row [ref=f3e2437]:
+                    - gridcell [ref=f3e2438] [cursor=pointer]:
+                      - code [ref=f3e2439]: "152"
+                    - gridcell [ref=f3e2440] [cursor=pointer]:
+                      - code
+                    - gridcell "- </div>" [ref=f3e2441]:
+                      - code [ref=f3e2442]:
+                        - generic [ref=f3e2443]: "-"
+                        - generic [ref=f3e2444]: </div>
+                  - row [ref=f3e2446]:
+                    - gridcell [ref=f3e2447] [cursor=pointer]:
+                      - code [ref=f3e2448]: "153"
+                    - gridcell [ref=f3e2449] [cursor=pointer]:
+                      - code
+                    - gridcell "- </nav>" [ref=f3e2450]:
+                      - code [ref=f3e2451]:
+                        - generic [ref=f3e2452]: "-"
+                        - generic [ref=f3e2453]: </nav>
+                  - row [ref=f3e2455]:
+                    - gridcell [ref=f3e2456] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2457] [cursor=pointer]:
+                      - code [ref=f3e2458]: "193"
+                    - gridcell "+ </nav>" [ref=f3e2459]:
+                      - code [ref=f3e2460]:
+                        - generic [ref=f3e2461]: +
+                        - generic [ref=f3e2462]: </nav>
+                  - row [ref=f3e2464]:
+                    - gridcell [ref=f3e2465] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2466] [cursor=pointer]:
+                      - code [ref=f3e2467]: "194"
+                    - gridcell "+ </div>" [ref=f3e2468]:
+                      - code [ref=f3e2469]:
+                        - generic [ref=f3e2470]: +
+                        - generic [ref=f3e2471]: </div>
+                  - row [ref=f3e2473]:
+                    - gridcell [ref=f3e2474] [cursor=pointer]:
+                      - code [ref=f3e2475]: "154"
+                    - gridcell [ref=f3e2476] [cursor=pointer]:
+                      - code [ref=f3e2477]: "195"
+                    - gridcell "</footer>" [ref=f3e2478]:
+                      - code [ref=f3e2479]:
+                        - generic [ref=f3e2480]: </footer>
+                  - row [ref=f3e2481]:
+                    - gridcell [ref=f3e2482] [cursor=pointer]:
+                      - code [ref=f3e2483]: "155"
+                    - gridcell [ref=f3e2484] [cursor=pointer]:
+                      - code [ref=f3e2485]: "196"
+                    - 'gridcell "`" [ref=f3e2486]':
+                      - code [ref=f3e2487]:
+                        - generic [ref=f3e2488]: "`"
+                  - row [ref=f3e2489]:
+                    - gridcell [ref=f3e2490] [cursor=pointer]:
+                      - code [ref=f3e2491]: "156"
+                    - gridcell [ref=f3e2492] [cursor=pointer]:
+                      - code [ref=f3e2493]: "197"
+                    - 'gridcell "})" [ref=f3e2494]':
+                      - code [ref=f3e2495]:
+                        - generic [ref=f3e2496]: "})"
+                  - row [ref=f3e2497]:
+                    - 'gridcell "@@ -164,6 +205,7 @@ export class AppComponent {" [ref=f3e2498]':
+                      - generic [ref=f3e2499]:
+                        - button [ref=f3e2500] [cursor=pointer]
+                        - code [ref=f3e2503]:
+                          - generic [ref=f3e2504]: "@@ -164,6 +205,7 @@ export class AppComponent {"
+                  - row [ref=f3e2505]:
+                    - gridcell [ref=f3e2506] [cursor=pointer]:
+                      - code [ref=f3e2507]: "164"
+                    - gridcell [ref=f3e2508] [cursor=pointer]:
+                      - code [ref=f3e2509]: "205"
+                    - gridcell "readonly identity = practiceIdentity;" [ref=f3e2510]:
+                      - code [ref=f3e2511]:
+                        - generic [ref=f3e2512]: readonly identity = practiceIdentity;
+                  - row [ref=f3e2513]:
+                    - gridcell [ref=f3e2514] [cursor=pointer]:
+                      - code [ref=f3e2515]: "165"
+                    - gridcell [ref=f3e2516] [cursor=pointer]:
+                      - code [ref=f3e2517]: "206"
+                    - gridcell "readonly telHref = telHref;" [ref=f3e2518]:
+                      - code [ref=f3e2519]:
+                        - generic [ref=f3e2520]: readonly telHref = telHref;
+                  - row [ref=f3e2521]:
+                    - gridcell [ref=f3e2522] [cursor=pointer]:
+                      - code [ref=f3e2523]: "166"
+                    - gridcell [ref=f3e2524] [cursor=pointer]:
+                      - code [ref=f3e2525]: "207"
+                    - gridcell "readonly mailtoHref = mailtoHref;" [ref=f3e2526]:
+                      - code [ref=f3e2527]:
+                        - generic [ref=f3e2528]: readonly mailtoHref = mailtoHref;
+                  - row [ref=f3e2529]:
+                    - gridcell [ref=f3e2530] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2531] [cursor=pointer]:
+                      - code [ref=f3e2532]: "208"
+                    - gridcell "+ readonly currentYear = new Date().getFullYear();" [ref=f3e2533]:
+                      - code [ref=f3e2534]:
+                        - generic [ref=f3e2535]: +
+                        - generic [ref=f3e2536]: readonly currentYear = new Date().getFullYear();
+                  - row [ref=f3e2537]:
+                    - gridcell [ref=f3e2538] [cursor=pointer]:
+                      - code [ref=f3e2539]: "167"
+                    - gridcell [ref=f3e2540] [cursor=pointer]:
+                      - code [ref=f3e2541]: "209"
+                    - gridcell "readonly mobileOpen = signal(false);" [ref=f3e2542]:
+                      - code [ref=f3e2543]:
+                        - generic [ref=f3e2544]: readonly mobileOpen = signal(false);
+                  - row [ref=f3e2545]:
+                    - gridcell [ref=f3e2546] [cursor=pointer]:
+                      - code [ref=f3e2547]: "168"
+                    - gridcell [ref=f3e2548] [cursor=pointer]:
+                      - code [ref=f3e2549]: "210"
+                    - gridcell "readonly areasOpen = signal(false);" [ref=f3e2550]:
+                      - code [ref=f3e2551]:
+                        - generic [ref=f3e2552]: readonly areasOpen = signal(false);
+                  - row [ref=f3e2553]:
+                    - gridcell [ref=f3e2554] [cursor=pointer]:
+                      - code [ref=f3e2555]: "169"
+                    - gridcell [ref=f3e2556] [cursor=pointer]:
+                      - code [ref=f3e2557]: "211"
+                    - gridcell "readonly currentUrl = signal('/');" [ref=f3e2558]:
+                      - code [ref=f3e2559]:
+                        - generic [ref=f3e2560]: readonly currentUrl = signal('/');
+                  - row [ref=f3e2561]:
+                    - gridcell [ref=f3e2562]:
+                      - generic [ref=f3e2563]:
+                        - button [ref=f3e2564] [cursor=pointer]
+                        - code [ref=f3e2567]
+            - region [ref=f3e2569]:
+              - generic [ref=f3e2571]:
+                - button "Collapse file" [ref=f3e2573] [cursor=pointer]
+                - generic [ref=f3e2576]:
+                  - heading [level=3] [ref=f3e2577]:
+                    - link [ref=f3e2578] [cursor=pointer]:
+                      - /url: "#diff-a4ac00b62873989ef684980c35db5c49c49999aa0675f62b540e91fab3d245d7"
+                      - code [ref=f3e2579]: ‎src/app/contact/contact-page.component.ts‎
+                  - button "Copy file name to clipboard" [ref=f3e2580] [cursor=pointer]
+                  - 'button "Expand all lines: src/app/contact/contact-page.component.ts" [ref=f3e2584] [cursor=pointer]'
+                - generic [ref=f3e2587]:
+                  - generic [ref=f3e2590]:
+                    - generic [ref=f3e2591]: "-3"
+                    - generic [ref=f3e2592]: "Lines changed: 0 additions & 3 deletions"
+                  - button "More options" [ref=f3e2599] [cursor=pointer]
+              - 'grid "Diff for: src/app/contact/contact-page.component.ts" [ref=f3e2603]':
+                - rowgroup [ref=f3e2604]:
+                  - row [ref=f3e2605]:
+                    - columnheader "Original file line number" [ref=f3e2606]
+                    - columnheader "Diff line number" [ref=f3e2607]
+                    - columnheader "Diff line change" [ref=f3e2608]
+                - rowgroup [ref=f3e2613]:
+                  - row [ref=f3e2614]:
+                    - 'gridcell "@@ -12,9 +12,6 @@ import { contactFieldLimits, reasonCategoryLabels } from ''./contact.constants'';" [ref=f3e2615]':
+                      - generic [ref=f3e2616]:
+                        - button [ref=f3e2617] [cursor=pointer]
+                        - code [ref=f3e2620]:
+                          - generic [ref=f3e2621]: "@@ -12,9 +12,6 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';"
+                  - row [ref=f3e2622]:
+                    - gridcell [ref=f3e2623] [cursor=pointer]:
+                      - code [ref=f3e2624]: "12"
+                    - gridcell [ref=f3e2625] [cursor=pointer]:
+                      - code [ref=f3e2626]: "12"
+                    - 'gridcell "imports: [ReactiveFormsModule, RouterLink]," [ref=f3e2627]':
+                      - code [ref=f3e2628]:
+                        - generic [ref=f3e2629]: "imports: [ReactiveFormsModule, RouterLink],"
+                  - row [ref=f3e2630]:
+                    - gridcell [ref=f3e2631] [cursor=pointer]:
+                      - code [ref=f3e2632]: "13"
+                    - gridcell [ref=f3e2633] [cursor=pointer]:
+                      - code [ref=f3e2634]: "13"
+                    - 'gridcell "template: `" [ref=f3e2635]':
+                      - code [ref=f3e2636]:
+                        - generic [ref=f3e2637]: "template: `"
+                  - row [ref=f3e2638]:
+                    - gridcell [ref=f3e2639] [cursor=pointer]:
+                      - code [ref=f3e2640]: "14"
+                    - gridcell [ref=f3e2641] [cursor=pointer]:
+                      - code [ref=f3e2642]: "14"
+                    - gridcell "<article class=\"page-shell contact-page\">" [ref=f3e2643]:
+                      - code [ref=f3e2644]:
+                        - generic [ref=f3e2645]: <article class="page-shell contact-page">
+                  - row [ref=f3e2646]:
+                    - gridcell [ref=f3e2647] [cursor=pointer]:
+                      - code [ref=f3e2648]: "15"
+                    - gridcell [ref=f3e2649] [cursor=pointer]:
+                      - code
+                    - gridcell "- <nav class=\"breadcrumbs\" aria-label=\"Migas de pan\">" [ref=f3e2650]:
+                      - code [ref=f3e2651]:
+                        - generic [ref=f3e2652]: "-"
+                        - generic [ref=f3e2653]: <nav class="breadcrumbs" aria-label="Migas de pan">
+                  - row [ref=f3e2654]:
+                    - gridcell [ref=f3e2655] [cursor=pointer]:
+                      - code [ref=f3e2656]: "16"
+                    - gridcell [ref=f3e2657] [cursor=pointer]:
+                      - code
+                    - gridcell "- <a routerLink=\"/\">Inicio</a><span aria-hidden=\"true\">/</span><span>Contacto</span>" [ref=f3e2658]:
+                      - code [ref=f3e2659]:
+                        - generic [ref=f3e2660]: "-"
+                        - generic [ref=f3e2661]: <a routerLink="/">Inicio</a><span aria-hidden="true">/</span><span>Contacto</span>
+                  - row [ref=f3e2662]:
+                    - gridcell [ref=f3e2663] [cursor=pointer]:
+                      - code [ref=f3e2664]: "17"
+                    - gridcell [ref=f3e2665] [cursor=pointer]:
+                      - code
+                    - gridcell "- </nav>" [ref=f3e2666]:
+                      - code [ref=f3e2667]:
+                        - generic [ref=f3e2668]: "-"
+                        - generic [ref=f3e2669]: </nav>
+                  - row [ref=f3e2670]:
+                    - gridcell [ref=f3e2671] [cursor=pointer]:
+                      - code [ref=f3e2672]: "18"
+                    - gridcell [ref=f3e2673] [cursor=pointer]:
+                      - code [ref=f3e2674]: "15"
+                    - gridcell "<header class=\"hero compact-hero\">" [ref=f3e2675]:
+                      - code [ref=f3e2676]:
+                        - generic [ref=f3e2677]: <header class="hero compact-hero">
+                  - row [ref=f3e2678]:
+                    - gridcell [ref=f3e2679] [cursor=pointer]:
+                      - code [ref=f3e2680]: "19"
+                    - gridcell [ref=f3e2681] [cursor=pointer]:
+                      - code [ref=f3e2682]: "16"
+                    - gridcell "<p class=\"overline-pill\">Un primer mensaje breve, práctico y respetuoso con tu privacidad</p>" [ref=f3e2683]:
+                      - code [ref=f3e2684]:
+                        - generic [ref=f3e2685]: <p class="overline-pill">Un primer mensaje breve, práctico y respetuoso con tu privacidad</p>
+                  - row [ref=f3e2686]:
+                    - gridcell [ref=f3e2687] [cursor=pointer]:
+                      - code [ref=f3e2688]: "20"
+                    - gridcell [ref=f3e2689] [cursor=pointer]:
+                      - code [ref=f3e2690]: "17"
+                    - gridcell "<h1>Contacto</h1>" [ref=f3e2691]:
+                      - code [ref=f3e2692]:
+                        - generic [ref=f3e2693]: <h1>Contacto</h1>
+                  - row [ref=f3e2694]:
+                    - gridcell [ref=f3e2695]:
+                      - generic [ref=f3e2696]:
+                        - button [ref=f3e2697] [cursor=pointer]
+                        - code [ref=f3e2700]
+            - region [ref=f3e2702]:
+              - generic [ref=f3e2704]:
+                - button "Collapse file" [ref=f3e2706] [cursor=pointer]
+                - generic [ref=f3e2709]:
+                  - heading [level=3] [ref=f3e2710]:
+                    - link [ref=f3e2711] [cursor=pointer]:
+                      - /url: "#diff-28b655896fad1927709a730ba95670084dab8797abcc0d6acd734e9a8db78d88"
+                      - code [ref=f3e2712]: ‎src/app/content/content-matrix.ts‎
+                  - button "Copy file name to clipboard" [ref=f3e2713] [cursor=pointer]
+                  - 'button "Expand all lines: src/app/content/content-matrix.ts" [ref=f3e2717] [cursor=pointer]'
+                - generic [ref=f3e2720]:
+                  - generic [ref=f3e2723]:
+                    - generic [ref=f3e2724]: "+1"
+                    - generic [ref=f3e2725]: "-1"
+                    - generic [ref=f3e2726]: "Lines changed: 1 addition & 1 deletion"
+                  - button "More options" [ref=f3e2733] [cursor=pointer]
+              - 'grid "Diff for: src/app/content/content-matrix.ts" [ref=f3e2737]':
+                - rowgroup [ref=f3e2738]:
+                  - row [ref=f3e2739]:
+                    - columnheader "Original file line number" [ref=f3e2740]
+                    - columnheader "Diff line number" [ref=f3e2741]
+                    - columnheader "Diff line change" [ref=f3e2742]
+                - rowgroup [ref=f3e2747]:
+                  - row [ref=f3e2748]:
+                    - 'gridcell "@@ -79,7 +79,7 @@ export const contentPages = {" [ref=f3e2749]':
+                      - generic [ref=f3e2750]:
+                        - button [ref=f3e2751] [cursor=pointer]
+                        - code [ref=f3e2754]:
+                          - generic [ref=f3e2755]: "@@ -79,7 +79,7 @@ export const contentPages = {"
+                  - row [ref=f3e2756]:
+                    - gridcell [ref=f3e2757] [cursor=pointer]:
+                      - code [ref=f3e2758]: "79"
+                    - gridcell [ref=f3e2759] [cursor=pointer]:
+                      - code [ref=f3e2760]: "79"
+                    - 'gridcell "canonicalPath: ''/areas-de-intervencion''," [ref=f3e2761]':
+                      - code [ref=f3e2762]:
+                        - generic [ref=f3e2763]: "canonicalPath: '/areas-de-intervencion',"
+                  - row [ref=f3e2764]:
+                    - gridcell [ref=f3e2765] [cursor=pointer]:
+                      - code [ref=f3e2766]: "80"
+                    - gridcell [ref=f3e2767] [cursor=pointer]:
+                      - code [ref=f3e2768]: "80"
+                    - 'gridcell "primaryIntent: ''service discovery hub with four substantial parent areas''," [ref=f3e2769]':
+                      - code [ref=f3e2770]:
+                        - generic [ref=f3e2771]: "primaryIntent: 'service discovery hub with four substantial parent areas',"
+                  - row [ref=f3e2772]:
+                    - gridcell [ref=f3e2773] [cursor=pointer]:
+                      - code [ref=f3e2774]: "81"
+                    - gridcell [ref=f3e2775] [cursor=pointer]:
+                      - code [ref=f3e2776]: "81"
+                    - 'gridcell "title: ''Áreas de intervención psicológica | Hilando Fino Psicología''," [ref=f3e2777]':
+                      - code [ref=f3e2778]:
+                        - generic [ref=f3e2779]: "title: 'Áreas de intervención psicológica | Hilando Fino Psicología',"
+                  - row [ref=f3e2780]:
+                    - gridcell [ref=f3e2781] [cursor=pointer]:
+                      - code [ref=f3e2782]: "82"
+                    - gridcell [ref=f3e2783] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- description: ''Infancia y familias, adolescentes, adultos, orientación educativa, talleres y acompañamiento en trauma y duelo desde una mirada cuidadosa.''," [ref=f3e2784]':
+                      - code [ref=f3e2785]:
+                        - generic [ref=f3e2786]: "-"
+                        - generic [ref=f3e2787]:
+                          - text: "description:"
+                          - generic [ref=f3e2788]: "'Infancia y familias, adolescentes, adultos, orientación educativa, talleres y acompañamiento en trauma y duelo desde una mirada cuidadosa.'"
+                          - text: ","
+                  - row [ref=f3e2789]:
+                    - gridcell [ref=f3e2790] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2791] [cursor=pointer]:
+                      - code [ref=f3e2792]: "82"
+                    - 'gridcell "+ description: ''''," [ref=f3e2793]':
+                      - code [ref=f3e2794]:
+                        - generic [ref=f3e2795]: +
+                        - generic [ref=f3e2796]: "description: '',"
+                  - row [ref=f3e2797]:
+                    - gridcell [ref=f3e2798] [cursor=pointer]:
+                      - code [ref=f3e2799]: "83"
+                    - gridcell [ref=f3e2800] [cursor=pointer]:
+                      - code [ref=f3e2801]: "83"
+                    - 'gridcell "h1: ''Áreas de intervención''," [ref=f3e2802]':
+                      - code [ref=f3e2803]:
+                        - generic [ref=f3e2804]: "h1: 'Áreas de intervención',"
+                  - row [ref=f3e2805]:
+                    - gridcell [ref=f3e2806] [cursor=pointer]:
+                      - code [ref=f3e2807]: "84"
+                    - gridcell [ref=f3e2808] [cursor=pointer]:
+                      - code [ref=f3e2809]: "84"
+                    - 'gridcell "sourceFacts: verifiedBrandFacts" [ref=f3e2810]':
+                      - code [ref=f3e2811]:
+                        - generic [ref=f3e2812]: "sourceFacts: verifiedBrandFacts"
+                  - row [ref=f3e2813]:
+                    - gridcell [ref=f3e2814] [cursor=pointer]:
+                      - code [ref=f3e2815]: "85"
+                    - gridcell [ref=f3e2816] [cursor=pointer]:
+                      - code [ref=f3e2817]: "85"
+                    - 'gridcell "})," [ref=f3e2818]':
+                      - code [ref=f3e2819]:
+                        - generic [ref=f3e2820]: "}),"
+                  - row [ref=f3e2821]:
+                    - gridcell [ref=f3e2822]:
+                      - generic [ref=f3e2823]:
+                        - button [ref=f3e2824] [cursor=pointer]
+                        - code [ref=f3e2827]
+            - region [ref=f3e2829]:
+              - generic [ref=f3e2831]:
+                - button "Collapse file" [ref=f3e2833] [cursor=pointer]
+                - generic [ref=f3e2836]:
+                  - heading [level=3] [ref=f3e2837]:
+                    - link [ref=f3e2838] [cursor=pointer]:
+                      - /url: "#diff-1ee42d4dfff0d6ea2754357764e8a77076b607ff75ae079104391ca09b928ce2"
+                      - code [ref=f3e2839]: ‎src/app/content/legal-copy.ts‎
+                  - button "Copy file name to clipboard" [ref=f3e2840] [cursor=pointer]
+                  - 'button "Expand all lines: src/app/content/legal-copy.ts" [ref=f3e2844] [cursor=pointer]'
+                - generic [ref=f3e2847]:
+                  - generic [ref=f3e2850]:
+                    - generic [ref=f3e2851]: "+15"
+                    - generic [ref=f3e2852]: "-7"
+                    - generic [ref=f3e2853]: "Lines changed: 15 additions & 7 deletions"
+                  - button "More options" [ref=f3e2860] [cursor=pointer]
+              - 'grid "Diff for: src/app/content/legal-copy.ts" [ref=f3e2864]':
+                - rowgroup [ref=f3e2865]:
+                  - row [ref=f3e2866]:
+                    - columnheader "Original file line number" [ref=f3e2867]
+                    - columnheader "Diff line number" [ref=f3e2868]
+                    - columnheader "Diff line change" [ref=f3e2869]
+                - rowgroup [ref=f3e2874]:
+                  - row [ref=f3e2875]:
+                    - 'gridcell "@@ -8,25 +8,33 @@ export interface LegalSection {" [ref=f3e2876]':
+                      - generic [ref=f3e2877]:
+                        - button [ref=f3e2878] [cursor=pointer]
+                        - code [ref=f3e2881]:
+                          - generic [ref=f3e2882]: "@@ -8,25 +8,33 @@ export interface LegalSection {"
+                  - row [ref=f3e2883]:
+                    - gridcell [ref=f3e2884] [cursor=pointer]:
+                      - code [ref=f3e2885]: "8"
+                    - gridcell [ref=f3e2886] [cursor=pointer]:
+                      - code [ref=f3e2887]: "8"
+                    - gridcell [ref=f3e2888]:
+                      - code [ref=f3e2889]
+                  - row [ref=f3e2891]:
+                    - gridcell [ref=f3e2892] [cursor=pointer]:
+                      - code [ref=f3e2893]: "9"
+                    - gridcell [ref=f3e2894] [cursor=pointer]:
+                      - code [ref=f3e2895]: "9"
+                    - gridcell "const identityLines = [" [ref=f3e2896]:
+                      - code [ref=f3e2897]:
+                        - generic [ref=f3e2898]: const identityLines = [
+                  - row [ref=f3e2899]:
+                    - gridcell [ref=f3e2900] [cursor=pointer]:
+                      - code [ref=f3e2901]: "10"
+                    - gridcell [ref=f3e2902] [cursor=pointer]:
+                      - code [ref=f3e2903]: "10"
+                    - 'gridcell "`Titular: ${practiceIdentity.practitionerName} (${practiceIdentity.brandName}).`," [ref=f3e2904]':
+                      - code [ref=f3e2905]:
+                        - generic [ref=f3e2906]:
+                          - generic [ref=f3e2907]:
+                            - text: "`Titular:"
+                            - generic [ref=f3e2908]: "${practiceIdentity.practitionerName}"
+                            - text: (
+                            - generic [ref=f3e2909]: "${practiceIdentity.brandName}"
+                            - text: ").`"
+                          - text: ","
+                  - row [ref=f3e2910]:
+                    - gridcell [ref=f3e2911] [cursor=pointer]:
+                      - code [ref=f3e2912]: "11"
+                    - gridcell [ref=f3e2913] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- `${practiceIdentity.professionalTitle}, colegiada nº ${practiceIdentity.collegiateNumber}.`," [ref=f3e2914]':
+                      - code [ref=f3e2915]:
+                        - generic [ref=f3e2916]: "-"
+                        - generic [ref=f3e2917]:
+                          - generic [ref=f3e2918]:
+                            - text: "`"
+                            - generic [ref=f3e2919]: "${practiceIdentity.professionalTitle}"
+                            - text: ", colegiada nº"
+                            - generic [ref=f3e2920]: "${practiceIdentity.collegiateNumber}"
+                            - text: ".`"
+                          - text: ","
+                  - row [ref=f3e2921]:
+                    - gridcell [ref=f3e2922] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2923] [cursor=pointer]:
+                      - code [ref=f3e2924]: "11"
+                    - 'gridcell "+ `NIF: ${practiceIdentity.nif}.`," [ref=f3e2925]':
+                      - code [ref=f3e2926]:
+                        - generic [ref=f3e2927]: +
+                        - generic [ref=f3e2928]:
+                          - generic [ref=f3e2929]:
+                            - text: "`NIF:"
+                            - generic [ref=f3e2930]: "${practiceIdentity.nif}"
+                            - text: ".`"
+                          - text: ","
+                  - row [ref=f3e2931]:
+                    - gridcell [ref=f3e2932] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2933] [cursor=pointer]:
+                      - code [ref=f3e2934]: "12"
+                    - 'gridcell "+ `${practiceIdentity.professionalTitle}, colegiada nº ${practiceIdentity.collegiateNumber} en el ${practiceIdentity.professionalCollegeName} (${practiceIdentity.professionalCollegeUrl}).`," [ref=f3e2935]':
+                      - code [ref=f3e2936]:
+                        - generic [ref=f3e2937]: +
+                        - generic [ref=f3e2938]:
+                          - generic [ref=f3e2939]:
+                            - text: "`"
+                            - generic [ref=f3e2940]: "${practiceIdentity.professionalTitle}"
+                            - text: ", colegiada nº"
+                            - generic [ref=f3e2941]: "${practiceIdentity.collegiateNumber}"
+                            - text: en el
+                            - generic [ref=f3e2942]: "${practiceIdentity.professionalCollegeName}"
+                            - text: (
+                            - generic [ref=f3e2943]: "${practiceIdentity.professionalCollegeUrl}"
+                            - text: ").`"
+                          - text: ","
+                  - row [ref=f3e2944]:
+                    - gridcell [ref=f3e2945] [cursor=pointer]:
+                      - code [ref=f3e2946]: "12"
+                    - gridcell [ref=f3e2947] [cursor=pointer]:
+                      - code [ref=f3e2948]: "13"
+                    - 'gridcell "`Nº de Registro Sanitario: ${practiceIdentity.healthRegistryNumber}.`," [ref=f3e2949]':
+                      - code [ref=f3e2950]:
+                        - generic [ref=f3e2951]:
+                          - generic [ref=f3e2952]:
+                            - text: "`Nº de Registro Sanitario:"
+                            - generic [ref=f3e2953]: "${practiceIdentity.healthRegistryNumber}"
+                            - text: ".`"
+                          - text: ","
+                  - row [ref=f3e2954]:
+                    - gridcell [ref=f3e2955] [cursor=pointer]:
+                      - code [ref=f3e2956]: "13"
+                    - gridcell [ref=f3e2957] [cursor=pointer]:
+                      - code [ref=f3e2958]: "14"
+                    - 'gridcell "`Domicilio profesional: ${practiceIdentity.address.streetAddress}, ${practiceIdentity.address.addressLocality}.`," [ref=f3e2959]':
+                      - code [ref=f3e2960]:
+                        - generic [ref=f3e2961]:
+                          - generic [ref=f3e2962]:
+                            - text: "`Domicilio profesional:"
+                            - generic [ref=f3e2963]: "${practiceIdentity.address.streetAddress}"
+                            - text: ","
+                            - generic [ref=f3e2964]: "${practiceIdentity.address.addressLocality}"
+                            - text: ".`"
+                          - text: ","
+                  - row [ref=f3e2965]:
+                    - gridcell [ref=f3e2966] [cursor=pointer]:
+                      - code [ref=f3e2967]: "14"
+                    - gridcell [ref=f3e2968] [cursor=pointer]:
+                      - code [ref=f3e2969]: "15"
+                    - 'gridcell "`Teléfono: ${practiceIdentity.phone}.`," [ref=f3e2970]':
+                      - code [ref=f3e2971]:
+                        - generic [ref=f3e2972]:
+                          - generic [ref=f3e2973]:
+                            - text: "`Teléfono:"
+                            - generic [ref=f3e2974]: "${practiceIdentity.phone}"
+                            - text: ".`"
+                          - text: ","
+                  - row [ref=f3e2975]:
+                    - gridcell [ref=f3e2976] [cursor=pointer]:
+                      - code [ref=f3e2977]: "15"
+                    - gridcell [ref=f3e2978] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- `Correo electrónico: ${practiceIdentity.email}.`" [ref=f3e2979]':
+                      - code [ref=f3e2980]:
+                        - generic [ref=f3e2981]: "-"
+                        - generic [ref=f3e2983]:
+                          - text: "`Correo electrónico:"
+                          - generic [ref=f3e2984]: "${practiceIdentity.email}"
+                          - text: ".`"
+                  - row [ref=f3e2985]:
+                    - gridcell [ref=f3e2986] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2987] [cursor=pointer]:
+                      - code [ref=f3e2988]: "16"
+                    - 'gridcell "+ `Correo electrónico: ${practiceIdentity.email}.`," [ref=f3e2989]':
+                      - code [ref=f3e2990]:
+                        - generic [ref=f3e2991]: +
+                        - generic [ref=f3e2992]:
+                          - generic [ref=f3e2993]:
+                            - text: "`Correo electrónico:"
+                            - generic [ref=f3e2994]: "${practiceIdentity.email}"
+                            - text: ".`"
+                          - text: ","
+                  - row [ref=f3e2995]:
+                    - gridcell [ref=f3e2996] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e2997] [cursor=pointer]:
+                      - code [ref=f3e2998]: "17"
+                    - 'gridcell "+ `Normas profesionales aplicables: Código Deontológico del Psicólogo, accesible a través del ${practiceIdentity.professionalCollegeName} (${practiceIdentity.professionalCollegeUrl}).`" [ref=f3e2999]':
+                      - code [ref=f3e3000]:
+                        - generic [ref=f3e3001]: +
+                        - generic [ref=f3e3003]:
+                          - text: "`Normas profesionales aplicables: Código Deontológico del Psicólogo, accesible a través del"
+                          - generic [ref=f3e3004]: "${practiceIdentity.professionalCollegeName}"
+                          - text: (
+                          - generic [ref=f3e3005]: "${practiceIdentity.professionalCollegeUrl}"
+                          - text: ").`"
+                  - row [ref=f3e3006]:
+                    - gridcell [ref=f3e3007] [cursor=pointer]:
+                      - code [ref=f3e3008]: "16"
+                    - gridcell [ref=f3e3009] [cursor=pointer]:
+                      - code [ref=f3e3010]: "18"
+                    - gridcell "];" [ref=f3e3011]:
+                      - code [ref=f3e3012]:
+                        - generic [ref=f3e3013]: "];"
+                  - row [ref=f3e3014]:
+                    - gridcell [ref=f3e3015] [cursor=pointer]:
+                      - code [ref=f3e3016]: "17"
+                    - gridcell [ref=f3e3017] [cursor=pointer]:
+                      - code [ref=f3e3018]: "19"
+                    - gridcell [ref=f3e3019]:
+                      - code [ref=f3e3020]
+                  - row [ref=f3e3022]:
+                    - gridcell [ref=f3e3023] [cursor=pointer]:
+                      - code [ref=f3e3024]: "18"
+                    - gridcell [ref=f3e3025] [cursor=pointer]:
+                      - code [ref=f3e3026]: "20"
+                    - gridcell "/**" [ref=f3e3027]:
+                      - code [ref=f3e3028]:
+                        - generic [ref=f3e3029]: /**
+                  - row [ref=f3e3030]:
+                    - gridcell [ref=f3e3031] [cursor=pointer]:
+                      - code [ref=f3e3032]: "19"
+                    - gridcell [ref=f3e3033] [cursor=pointer]:
+                      - code [ref=f3e3034]: "21"
+                    - gridcell "* Adapted from the template Marta supplied, with her real identity in place of the" [ref=f3e3035]:
+                      - code [ref=f3e3036]:
+                        - generic [ref=f3e3037]: "* Adapted from the template Marta supplied, with her real identity in place of the"
+                  - row [ref=f3e3038]:
+                    - gridcell [ref=f3e3039] [cursor=pointer]:
+                      - code [ref=f3e3040]: "20"
+                    - gridcell [ref=f3e3041] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- * `xxxxxx` markers. Two obligations still need data only she can give before this" [ref=f3e3042]':
+                      - code [ref=f3e3043]:
+                        - generic [ref=f3e3044]: "-"
+                        - generic [ref=f3e3045]: "* `xxxxxx` markers. Two obligations still need data only she can give before this"
+                  - row [ref=f3e3046]:
+                    - gridcell [ref=f3e3047] [cursor=pointer]:
+                      - code [ref=f3e3048]: "21"
+                    - gridcell [ref=f3e3049] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- * page goes live: the fiscal identifier (NIF) required by the LSSI-CE and the" [ref=f3e3050]':
+                      - code [ref=f3e3051]:
+                        - generic [ref=f3e3052]: "-"
+                        - generic [ref=f3e3053]: "* page goes live: the fiscal identifier (NIF) required by the LSSI-CE and the"
+                  - row [ref=f3e3054]:
+                    - gridcell [ref=f3e3055] [cursor=pointer]:
+                      - code [ref=f3e3056]: "22"
+                    - gridcell [ref=f3e3057] [cursor=pointer]:
+                      - code
+                    - gridcell "- * identity of the hosting provider. They are absent rather than invented." [ref=f3e3058]:
+                      - code [ref=f3e3059]:
+                        - generic [ref=f3e3060]: "-"
+                        - generic [ref=f3e3061]: "* identity of the hosting provider. They are absent rather than invented."
+                  - row [ref=f3e3062]:
+                    - gridcell [ref=f3e3063] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3064] [cursor=pointer]:
+                      - code [ref=f3e3065]: "22"
+                    - 'gridcell "+ * `xxxxxx` markers, plus the professional-college data the LSSI-CE requires for a" [ref=f3e3066]':
+                      - code [ref=f3e3067]:
+                        - generic [ref=f3e3068]: +
+                        - generic [ref=f3e3069]: "* `xxxxxx` markers, plus the professional-college data the LSSI-CE requires for a"
+                  - row [ref=f3e3070]:
+                    - gridcell [ref=f3e3071] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3072] [cursor=pointer]:
+                      - code [ref=f3e3073]: "23"
+                    - gridcell "+ * regulated profession (Art. 10.1.g) and the NIF it requires in Art. 10.1.b." [ref=f3e3074]:
+                      - code [ref=f3e3075]:
+                        - generic [ref=f3e3076]: +
+                        - generic [ref=f3e3077]: "* regulated profession (Art. 10.1.g) and the NIF it requires in Art. 10.1.b."
+                  - row [ref=f3e3078]:
+                    - gridcell [ref=f3e3079] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3080] [cursor=pointer]:
+                      - code [ref=f3e3081]: "24"
+                    - gridcell "+ * All LSSI-CE-mandated identification fields are now present. Naming the hosting" [ref=f3e3082]:
+                      - code [ref=f3e3083]:
+                        - generic [ref=f3e3084]: +
+                        - generic [ref=f3e3085]: "* All LSSI-CE-mandated identification fields are now present. Naming the hosting"
+                  - row [ref=f3e3086]:
+                    - gridcell [ref=f3e3087] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3088] [cursor=pointer]:
+                      - code [ref=f3e3089]: "25"
+                    - gridcell "+ * provider, despite appearing in many templates, is not itself an LSSI-CE" [ref=f3e3090]:
+                      - code [ref=f3e3091]:
+                        - generic [ref=f3e3092]: +
+                        - generic [ref=f3e3093]: "* provider, despite appearing in many templates, is not itself an LSSI-CE"
+                  - row [ref=f3e3094]:
+                    - gridcell [ref=f3e3095] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3096] [cursor=pointer]:
+                      - code [ref=f3e3097]: "26"
+                    - gridcell "+ * requirement for a site like this and has been left out." [ref=f3e3098]:
+                      - code [ref=f3e3099]:
+                        - generic [ref=f3e3100]: +
+                        - generic [ref=f3e3101]: "* requirement for a site like this and has been left out."
+                  - row [ref=f3e3102]:
+                    - gridcell [ref=f3e3103] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3104] [cursor=pointer]:
+                      - code [ref=f3e3105]: "27"
+                    - gridcell "+ *" [ref=f3e3106]:
+                      - code [ref=f3e3107]:
+                        - generic [ref=f3e3108]: +
+                        - generic [ref=f3e3109]: "*"
+                  - row [ref=f3e3110]:
+                    - gridcell [ref=f3e3111] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3112] [cursor=pointer]:
+                      - code [ref=f3e3113]: "28"
+                    - gridcell "+ * The email above is the domain-bound corporate address Marta is setting up; do" [ref=f3e3114]:
+                      - code [ref=f3e3115]:
+                        - generic [ref=f3e3116]: +
+                        - generic [ref=f3e3117]: "* The email above is the domain-bound corporate address Marta is setting up; do"
+                  - row [ref=f3e3118]:
+                    - gridcell [ref=f3e3119] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3120] [cursor=pointer]:
+                      - code [ref=f3e3121]: "29"
+                    - gridcell "+ * not deploy to production until she confirms the mailbox is actually live (see" [ref=f3e3122]:
+                      - code [ref=f3e3123]:
+                        - generic [ref=f3e3124]: +
+                        - generic [ref=f3e3125]: "* not deploy to production until she confirms the mailbox is actually live (see"
+                  - row [ref=f3e3126]:
+                    - gridcell [ref=f3e3127] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3128] [cursor=pointer]:
+                      - code [ref=f3e3129]: "30"
+                    - 'gridcell "+ * the note on `practiceIdentity`)." [ref=f3e3130]':
+                      - code [ref=f3e3131]:
+                        - generic [ref=f3e3132]: +
+                        - generic [ref=f3e3133]: "* the note on `practiceIdentity`)."
+                  - row [ref=f3e3134]:
+                    - gridcell [ref=f3e3135] [cursor=pointer]:
+                      - code [ref=f3e3136]: "23"
+                    - gridcell [ref=f3e3137] [cursor=pointer]:
+                      - code [ref=f3e3138]: "31"
+                    - gridcell "*/" [ref=f3e3139]:
+                      - code [ref=f3e3140]:
+                        - generic [ref=f3e3141]: "*/"
+                  - row [ref=f3e3142]:
+                    - gridcell [ref=f3e3143] [cursor=pointer]:
+                      - code [ref=f3e3144]: "24"
+                    - gridcell [ref=f3e3145] [cursor=pointer]:
+                      - code [ref=f3e3146]: "32"
+                    - 'gridcell "export const legalCopy: Record<''legalNotice'' | ''privacy'' | ''cookies'', LegalSection[]> = {" [ref=f3e3147]':
+                      - code [ref=f3e3148]:
+                        - generic [ref=f3e3149]: "export const legalCopy: Record<'legalNotice' | 'privacy' | 'cookies', LegalSection[]> = {"
+                  - row [ref=f3e3150]:
+                    - gridcell [ref=f3e3151] [cursor=pointer]:
+                      - code [ref=f3e3152]: "25"
+                    - gridcell [ref=f3e3153] [cursor=pointer]:
+                      - code [ref=f3e3154]: "33"
+                    - 'gridcell "legalNotice: [" [ref=f3e3155]':
+                      - code [ref=f3e3156]:
+                        - generic [ref=f3e3157]: "legalNotice: ["
+                  - row [ref=f3e3158]:
+                    - gridcell [ref=f3e3159] [cursor=pointer]:
+                      - code [ref=f3e3160]: "26"
+                    - gridcell [ref=f3e3161] [cursor=pointer]:
+                      - code [ref=f3e3162]: "34"
+                    - 'gridcell "{" [ref=f3e3163]':
+                      - code [ref=f3e3164]:
+                        - generic [ref=f3e3165]: "{"
+                  - row [ref=f3e3166]:
+                    - gridcell [ref=f3e3167] [cursor=pointer]:
+                      - code [ref=f3e3168]: "27"
+                    - gridcell [ref=f3e3169] [cursor=pointer]:
+                      - code [ref=f3e3170]: "35"
+                    - 'gridcell "body: [" [ref=f3e3171]':
+                      - code [ref=f3e3172]:
+                        - generic [ref=f3e3173]: "body: ["
+                  - row [ref=f3e3174]:
+                    - gridcell [ref=f3e3175] [cursor=pointer]:
+                      - code [ref=f3e3176]: "28"
+                    - gridcell [ref=f3e3177] [cursor=pointer]:
+                      - code [ref=f3e3178]: "36"
+                    - gridcell "'En este espacio encontrarás la información relativa a los términos y condiciones legales que definen la relación entre las personas usuarias y esta web. Conviene que los conozcas antes de continuar tu navegación.'," [ref=f3e3179]:
+                      - code [ref=f3e3180]:
+                        - generic [ref=f3e3181]: "'En este espacio encontrarás la información relativa a los términos y condiciones legales que definen la relación entre las personas usuarias y esta web. Conviene que los conozcas antes de continuar tu navegación.',"
+                  - row [ref=f3e3182]:
+                    - gridcell [ref=f3e3183] [cursor=pointer]:
+                      - code [ref=f3e3184]: "29"
+                    - gridcell [ref=f3e3185] [cursor=pointer]:
+                      - code
+                    - gridcell "- 'Esta web cumple con el Reglamento (UE) 2016/679 General de Protección de Datos y con la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE).'" [ref=f3e3186]:
+                      - code [ref=f3e3187]:
+                        - generic [ref=f3e3188]: "-"
+                        - generic [ref=f3e3189]: "'Esta web cumple con el Reglamento (UE) 2016/679 General de Protección de Datos y con la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE).'"
+                  - row [ref=f3e3190]:
+                    - gridcell [ref=f3e3191] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3192] [cursor=pointer]:
+                      - code [ref=f3e3193]: "37"
+                    - gridcell "+ 'Esta web cumple con el Reglamento (UE) 2016/679 General de Protección de Datos (RGPD), con la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD), y con la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE).'" [ref=f3e3194]:
+                      - code [ref=f3e3195]:
+                        - generic [ref=f3e3196]: +
+                        - generic [ref=f3e3197]: "'Esta web cumple con el Reglamento (UE) 2016/679 General de Protección de Datos (RGPD), con la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD), y con la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE).'"
+                  - row [ref=f3e3199]:
+                    - gridcell [ref=f3e3200] [cursor=pointer]:
+                      - code [ref=f3e3201]: "30"
+                    - gridcell [ref=f3e3202] [cursor=pointer]:
+                      - code [ref=f3e3203]: "38"
+                    - gridcell "]" [ref=f3e3204]:
+                      - code [ref=f3e3205]:
+                        - generic [ref=f3e3206]: "]"
+                  - row [ref=f3e3207]:
+                    - gridcell [ref=f3e3208] [cursor=pointer]:
+                      - code [ref=f3e3209]: "31"
+                    - gridcell [ref=f3e3210] [cursor=pointer]:
+                      - code [ref=f3e3211]: "39"
+                    - 'gridcell "}," [ref=f3e3212]':
+                      - code [ref=f3e3213]:
+                        - generic [ref=f3e3214]: "},"
+                  - row [ref=f3e3215]:
+                    - gridcell [ref=f3e3216] [cursor=pointer]:
+                      - code [ref=f3e3217]: "32"
+                    - gridcell [ref=f3e3218] [cursor=pointer]:
+                      - code [ref=f3e3219]: "40"
+                    - 'gridcell "{" [ref=f3e3220]':
+                      - code [ref=f3e3221]:
+                        - generic [ref=f3e3222]: "{"
+                  - row [ref=f3e3223]:
+                    - 'gridcell "@@ -94,7 +102,7 @@ export const legalCopy: Record<''legalNotice'' | ''privacy'' | ''cookies'', LegalSecti" [ref=f3e3224]':
+                      - generic [ref=f3e3225]:
+                        - generic [ref=f3e3226]:
+                          - button [ref=f3e3227] [cursor=pointer]
+                          - button [ref=f3e3230] [cursor=pointer]
+                        - code [ref=f3e3233]:
+                          - generic [ref=f3e3234]: "@@ -94,7 +102,7 @@ export const legalCopy: Record<'legalNotice' | 'privacy' | 'cookies', LegalSecti"
+                  - row [ref=f3e3235]:
+                    - gridcell [ref=f3e3236] [cursor=pointer]:
+                      - code [ref=f3e3237]: "94"
+                    - gridcell [ref=f3e3238] [cursor=pointer]:
+                      - code [ref=f3e3239]: "102"
+                    - 'gridcell "}," [ref=f3e3240]':
+                      - code [ref=f3e3241]:
+                        - generic [ref=f3e3242]: "},"
+                  - row [ref=f3e3243]:
+                    - gridcell [ref=f3e3244] [cursor=pointer]:
+                      - code [ref=f3e3245]: "95"
+                    - gridcell [ref=f3e3246] [cursor=pointer]:
+                      - code [ref=f3e3247]: "103"
+                    - 'gridcell "{" [ref=f3e3248]':
+                      - code [ref=f3e3249]:
+                        - generic [ref=f3e3250]: "{"
+                  - row [ref=f3e3251]:
+                    - gridcell [ref=f3e3252] [cursor=pointer]:
+                      - code [ref=f3e3253]: "96"
+                    - gridcell [ref=f3e3254] [cursor=pointer]:
+                      - code [ref=f3e3255]: "104"
+                    - 'gridcell "heading: ''Finalidades — ¿con qué finalidades tratamos tus datos?''," [ref=f3e3256]':
+                      - code [ref=f3e3257]:
+                        - generic [ref=f3e3258]: "heading: 'Finalidades — ¿con qué finalidades tratamos tus datos?',"
+                  - row [ref=f3e3259]:
+                    - gridcell [ref=f3e3260] [cursor=pointer]:
+                      - code [ref=f3e3261]: "97"
+                    - gridcell [ref=f3e3262] [cursor=pointer]:
+                      - code
+                    - 'gridcell "- body: [''En cumplimiento del Reglamento (UE) 2016/679, te informamos de que los datos que nos facilitas se tratarán para:'']," [ref=f3e3263]':
+                      - code [ref=f3e3264]:
+                        - generic [ref=f3e3265]: "-"
+                        - generic [ref=f3e3266]: "body: ['En cumplimiento del Reglamento (UE) 2016/679, te informamos de que los datos que nos facilitas se tratarán para:'],"
+                  - row [ref=f3e3267]:
+                    - gridcell [ref=f3e3268] [cursor=pointer]:
+                      - code
+                    - gridcell [ref=f3e3269] [cursor=pointer]:
+                      - code [ref=f3e3270]: "105"
+                    - 'gridcell "+ body: [''En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y de la Ley Orgánica 3/2018 (LOPDGDD), te informamos de que los datos que nos facilitas se tratarán para:'']," [ref=f3e3271]':
+                      - code [ref=f3e3272]:
+                        - generic [ref=f3e3273]: +
+                        - generic [ref=f3e3274]:
+                          - text: "body: ["
+                          - generic [ref=f3e3275]: "'En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y de la Ley Orgánica 3/2018 (LOPDGDD), te informamos de que los datos que nos facilitas se tratarán para:'"
+                          - text: "],"
+                  - row [ref=f3e3276]:
+                    - gridcell [ref=f3e3277] [cursor=pointer]:
+                      - code [ref=f3e3278]: "98"
+                    - gridcell [ref=f3e3279] [cursor=pointer]:
+                      - code [ref=f3e3280]: "106"
+                    - 'gridcell "items: [" [ref=f3e3281]':
+                      - code [ref=f3e3282]:
+                        - generic [ref=f3e3283]: "items: ["
+                  - row [ref=f3e3284]:
+                    - gridcell [ref=f3e3285] [cursor=pointer]:
+                      - code [ref=f3e3286]: "99"
+                    - gridcell [ref=f3e3287] [cursor=pointer]:
+                      - code [ref=f3e3288]: "107"
+                    - gridcell "'Atender tu solicitud de información o de cita y mantener el contacto necesario para ello.'," [ref=f3e3289]:
+                      - code [ref=f3e3290]:
+                        - generic [ref=f3e3291]: "'Atender tu solicitud de información o de cita y mantener el contacto necesario para ello.',"
+                  - row [ref=f3e3292]:
+                    - gridcell [ref=f3e3293] [cursor=pointer]:
+                      - code [ref=f3e3294]: "100"
+                    - gridcell [ref=f3e3295] [cursor=pointer]:
+                      - code [ref=f3e3296]: "108"
+                    - gridcell "'Gestionar la prestación del servicio psicológico contratado y su facturación.'," [ref=f3e3297]:
+                      - code [ref=f3e3298]:
+                        - generic [ref=f3e3299]: "'Gestionar la prestación del servicio psicológico contratado y su facturación.',"
+                  - row [ref=f3e3300]:
+                    - gridcell [ref=f3e3301]:
+                      - generic [ref=f3e3302]:
+                        - button [ref=f3e3303] [cursor=pointer]
+                        - code [ref=f3e3306]
+          - generic [ref=f3e3308]:
+            - heading "0 commit comments" [level=2] [ref=f3e3309]
+            - generic [ref=f3e3310]:
+              - generic [ref=f3e3311]: Comments
+              - generic [ref=f3e3312]: "0"
+              - generic [ref=f3e3313]: (0)
+            - button "Lock conversation" [ref=f3e3314] [cursor=pointer]
+  - contentinfo [ref=f3e520]:
+    - heading "Footer" [level=2] [ref=f3e521]
+    - generic [ref=f3e522]:
+      - generic [ref=f3e523]:
+        - link "GitHub Homepage" [ref=f3e524] [cursor=pointer]:
+          - /url: https://github.com
+        - generic [ref=f3e527]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=f3e528]:
+        - heading "Footer navigation" [level=3] [ref=f3e529]
+        - list "Footer navigation" [ref=f3e530]:
+          - listitem [ref=f3e531]:
+            - link "Terms" [ref=f3e532] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=f3e533]:
+            - link "Privacy" [ref=f3e534] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=f3e535]:
+            - link "Security" [ref=f3e536] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=f3e537]:
+            - link "Status" [ref=f3e538] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=f3e539]:
+            - link "Community" [ref=f3e540] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=f3e541]:
+            - link "Docs" [ref=f3e542] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=f3e543]:
+            - link "Contact" [ref=f3e544] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=f3e545]:
+            - button "Manage cookies" [ref=f3e547] [cursor=pointer]
+          - listitem [ref=f3e548]:
+            - button "Do not share my personal information" [ref=f3e550] [cursor=pointer]

@@ -1,0 +1,331 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - link "Skip to content" [ref=f3e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner "Global navigation menu" [ref=f3e8]:
+      - generic [ref=f3e9]:
+        - generic [ref=f3e10]:
+          - button "Open menu" [ref=f3e12] [cursor=pointer]
+          - link "Homepage (g then d)" [ref=f3e15] [cursor=pointer]:
+            - /url: /
+        - generic [ref=f3e18]:
+          - navigation "Breadcrumbs" [ref=f3e19]:
+            - list [ref=f3e20]:
+              - listitem [ref=f3e21]:
+                - link "Txetxaki" [ref=f3e22] [cursor=pointer]:
+                  - /url: /Txetxaki
+              - listitem [ref=f3e24]:
+                - link "hilando-fino" [ref=f3e25] [cursor=pointer]:
+                  - /url: /Txetxaki/hilando-fino
+                - button "Switch repository (alt shift r)" [ref=f3e26] [cursor=pointer]
+          - button "Open quick search dialog, type / to search" [ref=f3e31] [cursor=pointer]:
+            - generic [ref=f3e33]:
+              - generic:
+                - text: Type
+                - generic: /
+                - text: to search
+        - generic [ref=f3e34]:
+          - generic [ref=f3e35]:
+            - generic [ref=f3e38]:
+              - link "Chat with Copilot" [ref=f3e40] [cursor=pointer]:
+                - /url: /copilot
+              - button "Open Copilot…" [ref=f3e45] [cursor=pointer]
+            - button "Create new..." [ref=f3e47] [cursor=pointer]
+            - generic [ref=f3e49]:
+              - link "All issues" [ref=f3e50] [cursor=pointer]:
+                - /url: /issues
+              - link "All pull requests" [ref=f3e54] [cursor=pointer]:
+                - /url: /pulls
+              - link "All repositories" [ref=f3e57] [cursor=pointer]:
+                - /url: /repos
+          - link "You have no unread notifications (g then n)" [ref=f3e60] [cursor=pointer]:
+            - /url: /notifications
+          - button "Open user navigation menu" [ref=f3e64] [cursor=pointer]:
+            - img "User avatar" [ref=f3e65]
+      - heading "Repository navigation" [level=2] [ref=f3e66]
+      - navigation "Repository" [ref=f3e67]:
+        - list [ref=f3e68]:
+          - listitem [ref=f3e69]:
+            - link "Code" [ref=f3e70] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino
+          - listitem [ref=f3e75]:
+            - link "Issues" [ref=f3e76] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/issues
+          - listitem [ref=f3e82]:
+            - link "Pull requests" [ref=f3e83] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/pulls
+          - listitem [ref=f3e88]:
+            - link "Agents" [ref=f3e89] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/agents?author=Txetxaki
+          - listitem [ref=f3e95]:
+            - link "Actions" [ref=f3e96] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/actions
+          - listitem [ref=f3e101]:
+            - link "Projects" [ref=f3e102] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/projects
+          - listitem [ref=f3e107]:
+            - link "Wiki" [ref=f3e108] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/wiki
+          - listitem [ref=f3e113]:
+            - link "Security and quality" [ref=f3e114] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/security
+          - listitem [ref=f3e119]:
+            - link "Insights" [ref=f3e120] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/pulse
+          - listitem [ref=f3e125]:
+            - link "Settings" [ref=f3e126] [cursor=pointer]:
+              - /url: /Txetxaki/hilando-fino/settings
+  - main [ref=f3e134]:
+    - generic [ref=f3e140]:
+      - heading "Commits" [level=1] [ref=f3e144]
+      - generic [ref=f3e149]:
+        - generic [ref=f3e150]:
+          - heading "Branch selector" [level=2] [ref=f3e151]
+          - button "master branch" [ref=f3e152] [cursor=pointer]:
+            - generic [ref=f3e153]: master
+          - generic [ref=f3e157]:
+            - heading "User selector" [level=2] [ref=f3e158]
+            - button "All users" [ref=f3e160] [cursor=pointer]
+            - button "All time" [ref=f3e168] [cursor=pointer]
+        - generic [ref=f3e171]:
+          - heading "Commit history" [level=2] [ref=f3e172]
+          - generic [ref=f3e173]:
+            - generic [ref=f3e179]:
+              - heading "Commits on Aug 8, 2026" [level=3] [ref=f3e180]
+              - list "Commits on Aug 8, 2026" [ref=f3e183]:
+                - listitem "More information available below." [ref=f3e184]:
+                  - heading [level=4] [ref=f3e186]:
+                    - link "ready" [ref=f3e187] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/commit/3d329fc95ca7b8881c5d61b9e0bc93ac1d1c1a10
+                  - generic [ref=f3e192]:
+                    - generic [ref=f3e193]:
+                      - link [ref=f3e194] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e195]
+                      - link "commits by Txetxaki" [ref=f3e196] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e197]: committed
+                  - generic [ref=f3e203]:
+                    - generic [ref=f3e204]:
+                      - link "3d329fc" [ref=f3e205] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/3d329fc95ca7b8881c5d61b9e0bc93ac1d1c1a10
+                      - button "Copy full SHA for 3d329fc" [ref=f3e209] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e213] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/3d329fc95ca7b8881c5d61b9e0bc93ac1d1c1a10
+            - generic [ref=f3e221]:
+              - heading "Commits on Jul 31, 2026" [level=3] [ref=f3e222]
+              - list "Commits on Jul 31, 2026" [ref=f3e225]:
+                - listitem "More information available below." [ref=f3e226]:
+                  - generic [ref=f3e227]:
+                    - heading [level=4] [ref=f3e228]:
+                      - 'link "perf: serve pre-scaled logo variants instead of the 278kB brand master" [ref=f3e229] [cursor=pointer]':
+                        - /url: /Txetxaki/hilando-fino/commit/d50a6ae1bb98653b7996ca1e90514ad1e84ce477
+                    - button "Show description for d50a6ae" [ref=f3e230] [cursor=pointer]
+                  - generic [ref=f3e237]:
+                    - generic [ref=f3e238]:
+                      - link [ref=f3e239] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e240]
+                      - link "commits by Txetxaki" [ref=f3e241] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e242]: committed
+                  - generic [ref=f3e248]:
+                    - generic [ref=f3e249]:
+                      - link "d50a6ae" [ref=f3e250] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/d50a6ae1bb98653b7996ca1e90514ad1e84ce477
+                      - button "Copy full SHA for d50a6ae" [ref=f3e254] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e258] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/d50a6ae1bb98653b7996ca1e90514ad1e84ce477
+                - listitem "More information available below." [ref=f3e261]:
+                  - generic [ref=f3e262]:
+                    - heading [level=4] [ref=f3e263]:
+                      - 'link "feat: adapt the whole site to Marta''s supplied copy, photos and real practice data" [ref=f3e264] [cursor=pointer]':
+                        - /url: /Txetxaki/hilando-fino/commit/8394952bed02a5fc294de1e8009fdcd85e61260d
+                    - button "Show description for 8394952" [ref=f3e265] [cursor=pointer]
+                  - generic [ref=f3e272]:
+                    - generic [ref=f3e273]:
+                      - link [ref=f3e274] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e275]
+                      - link "commits by Txetxaki" [ref=f3e276] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e277]: committed
+                  - generic [ref=f3e283]:
+                    - generic [ref=f3e284]:
+                      - link "8394952" [ref=f3e285] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/8394952bed02a5fc294de1e8009fdcd85e61260d
+                      - button "Copy full SHA for 8394952" [ref=f3e289] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e293] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/8394952bed02a5fc294de1e8009fdcd85e61260d
+            - generic [ref=f3e301]:
+              - heading "Commits on Jul 23, 2026" [level=3] [ref=f3e302]
+              - list "Commits on Jul 23, 2026" [ref=f3e305]:
+                - listitem "More information available below." [ref=f3e306]:
+                  - generic [ref=f3e307]:
+                    - heading [level=4] [ref=f3e308]:
+                      - 'link "fix: use real brand terracotta as a solid accent, fix contrast regression" [ref=f3e309] [cursor=pointer]':
+                        - /url: /Txetxaki/hilando-fino/commit/0fe69fe1c5adc22f62880ed6e476345ff1a58c1a
+                    - button "Show description for 0fe69fe" [ref=f3e310] [cursor=pointer]
+                  - generic [ref=f3e317]:
+                    - generic [ref=f3e318]:
+                      - link [ref=f3e319] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e320]
+                      - link "commits by Txetxaki" [ref=f3e321] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e322]: committed
+                  - generic [ref=f3e328]:
+                    - generic [ref=f3e329]:
+                      - link "0fe69fe" [ref=f3e330] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/0fe69fe1c5adc22f62880ed6e476345ff1a58c1a
+                      - button "Copy full SHA for 0fe69fe" [ref=f3e334] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e338] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/0fe69fe1c5adc22f62880ed6e476345ff1a58c1a
+                - listitem "More information available below." [ref=f3e341]:
+                  - generic [ref=f3e342]:
+                    - heading [level=4] [ref=f3e343]:
+                      - 'link "fix: stop mobile h1/h2 clamp() from flooring to an oversized fixed size" [ref=f3e344] [cursor=pointer]':
+                        - /url: /Txetxaki/hilando-fino/commit/38d9414279b98f231b08f384c0e9f55145b74740
+                    - button "Show description for 38d9414" [ref=f3e345] [cursor=pointer]
+                  - generic [ref=f3e352]:
+                    - generic [ref=f3e353]:
+                      - link [ref=f3e354] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e355]
+                      - link "commits by Txetxaki" [ref=f3e356] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e357]: committed
+                  - generic [ref=f3e363]:
+                    - generic [ref=f3e364]:
+                      - link "38d9414" [ref=f3e365] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/38d9414279b98f231b08f384c0e9f55145b74740
+                      - button "Copy full SHA for 38d9414" [ref=f3e369] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e373] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/38d9414279b98f231b08f384c0e9f55145b74740
+                - listitem "More information available below." [ref=f3e376]:
+                  - generic [ref=f3e377]:
+                    - heading [level=4] [ref=f3e378]:
+                      - 'link "fix: close nav menus on selection, fix TOC anchor links, fix mobile overflow" [ref=f3e379] [cursor=pointer]':
+                        - /url: /Txetxaki/hilando-fino/commit/ee2023ddcbaa3849f1c0af7c0ff16fdfdb6479a8
+                    - button "Show description for ee2023d" [ref=f3e380] [cursor=pointer]
+                  - generic [ref=f3e387]:
+                    - generic [ref=f3e388]:
+                      - link [ref=f3e389] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e390]
+                      - link "commits by Txetxaki" [ref=f3e391] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e392]: committed
+                  - generic [ref=f3e398]:
+                    - generic [ref=f3e399]:
+                      - link "ee2023d" [ref=f3e400] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/ee2023ddcbaa3849f1c0af7c0ff16fdfdb6479a8
+                      - button "Copy full SHA for ee2023d" [ref=f3e404] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e408] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/ee2023ddcbaa3849f1c0af7c0ff16fdfdb6479a8
+                - listitem "More information available below." [ref=f3e411]:
+                  - generic [ref=f3e412]:
+                    - heading [level=4] [ref=f3e413]:
+                      - 'link "feat: add 29 treatment pages with first-person voice, SEO schema, and safety fixes" [ref=f3e414] [cursor=pointer]':
+                        - /url: /Txetxaki/hilando-fino/commit/ef054278724b69f33c63695a2b128dd36239918a
+                    - button "Show description for ef05427" [ref=f3e415] [cursor=pointer]
+                  - generic [ref=f3e422]:
+                    - generic [ref=f3e423]:
+                      - link [ref=f3e424] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e425]
+                      - link "commits by Txetxaki" [ref=f3e426] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e427]: committed
+                  - generic [ref=f3e433]:
+                    - generic [ref=f3e434]:
+                      - link "ef05427" [ref=f3e435] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/ef054278724b69f33c63695a2b128dd36239918a
+                      - button "Copy full SHA for ef05427" [ref=f3e439] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e443] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/ef054278724b69f33c63695a2b128dd36239918a
+                - listitem "More information available below." [ref=f3e446]:
+                  - heading [level=4] [ref=f3e448]:
+                    - 'link "feat: build Marta psychology website and Pages preview" [ref=f3e449] [cursor=pointer]':
+                      - /url: /Txetxaki/hilando-fino/commit/e44e36193bf86b379d666b27a1954651c65a6616
+                  - generic [ref=f3e454]:
+                    - generic [ref=f3e455]:
+                      - link [ref=f3e456] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e457]
+                      - link "commits by Txetxaki" [ref=f3e458] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e459]: committed
+                  - generic [ref=f3e465]:
+                    - generic [ref=f3e466]:
+                      - link "e44e361" [ref=f3e467] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/e44e36193bf86b379d666b27a1954651c65a6616
+                      - button "Copy full SHA for e44e361" [ref=f3e471] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e475] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/e44e36193bf86b379d666b27a1954651c65a6616
+            - generic [ref=f3e483]:
+              - heading "Commits on Jul 22, 2026" [level=3] [ref=f3e484]
+              - list "Commits on Jul 22, 2026" [ref=f3e487]:
+                - listitem "More information available below." [ref=f3e488]:
+                  - heading [level=4] [ref=f3e490]:
+                    - 'link "docs: add brand identity and Claude Project package for Hilando Fino Psicología" [ref=f3e491] [cursor=pointer]':
+                      - /url: /Txetxaki/hilando-fino/commit/2d85c0f1334d3a8c9d4b28eedc5e9ae866c02a4e
+                  - generic [ref=f3e496]:
+                    - generic [ref=f3e497]:
+                      - link [ref=f3e498] [cursor=pointer]:
+                        - /url: /Txetxaki
+                        - img "Txetxaki" [ref=f3e499]
+                      - link "commits by Txetxaki" [ref=f3e500] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commits?author=Txetxaki
+                        - text: Txetxaki
+                    - generic [ref=f3e501]: committed
+                  - generic [ref=f3e507]:
+                    - generic [ref=f3e508]:
+                      - link "2d85c0f" [ref=f3e509] [cursor=pointer]:
+                        - /url: /Txetxaki/hilando-fino/commit/2d85c0f1334d3a8c9d4b28eedc5e9ae866c02a4e
+                      - button "Copy full SHA for 2d85c0f" [ref=f3e513] [cursor=pointer]
+                    - link "Browse repository at this point" [ref=f3e517] [cursor=pointer]:
+                      - /url: /Txetxaki/hilando-fino/tree/2d85c0f1334d3a8c9d4b28eedc5e9ae866c02a4e
+  - contentinfo [ref=f3e520]:
+    - heading "Footer" [level=2] [ref=f3e521]
+    - generic [ref=f3e522]:
+      - generic [ref=f3e523]:
+        - link "GitHub Homepage" [ref=f3e524] [cursor=pointer]:
+          - /url: https://github.com
+        - generic [ref=f3e527]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=f3e528]:
+        - heading "Footer navigation" [level=3] [ref=f3e529]
+        - list "Footer navigation" [ref=f3e530]:
+          - listitem [ref=f3e531]:
+            - link "Terms" [ref=f3e532] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=f3e533]:
+            - link "Privacy" [ref=f3e534] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=f3e535]:
+            - link "Security" [ref=f3e536] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=f3e537]:
+            - link "Status" [ref=f3e538] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=f3e539]:
+            - link "Community" [ref=f3e540] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=f3e541]:
+            - link "Docs" [ref=f3e542] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=f3e543]:
+            - link "Contact" [ref=f3e544] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=f3e545]:
+            - button "Manage cookies" [ref=f3e547] [cursor=pointer]
+          - listitem [ref=f3e548]:
+            - button "Do not share my personal information" [ref=f3e550] [cursor=pointer]
