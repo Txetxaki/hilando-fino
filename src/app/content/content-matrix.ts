@@ -52,7 +52,7 @@ export const contentPages = {
     canonicalPath: '/',
     primaryIntent: 'brand, method, local trust, and service discovery introduction',
     title: 'Hilando Fino Psicología | Marta Martín en Ciudad Real',
-    description: '',
+    description: 'Psicología en Ciudad Real para personas y familias, con una mirada integradora, cercana y respetuosa.',
     h1: 'Hilando Fino Psicología',
     sourceFacts: verifiedBrandFacts
   }),

@@ -41,6 +41,7 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
           <label>Modalidad preferida
             <select formControlName="modalityPreference" (change)="trackModality()">
               <option value="in-person-ciudad-real">Presencial en Ciudad Real</option>
+              <option value="online">En línea</option>
               <option value="unsure">No lo sé todavía</option>
             </select>
           </label>

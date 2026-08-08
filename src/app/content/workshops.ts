@@ -17,7 +17,7 @@ export const workshopLines: readonly WorkshopLine[] = [
   {
     name: 'Talleres para centros educativos',
     body: 'Formaciones prácticas para comprender qué hay detrás de las conductas de niños y adolescentes y aprender herramientas útiles que puedan aplicarse desde el primer día en el aula.',
-    audience: 'Dirigido a docentes, equipos directivos y orientadores.',
+    audience: 'Dirigido a docentes, equipos directivos y de orientación.',
     contentsTitle: 'Trauma y duelo en el aula',
     contents: [
       'Cómo afectan el trauma y el duelo al aprendizaje.',

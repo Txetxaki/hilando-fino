@@ -473,9 +473,9 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
     sections: [
       {
         eyebrow: 'Formación y talleres',
-        title: 'Espacios de aprendizaje sobre desarrollo emocional, trauma y relaciones humanas.',
+        title: 'Aprendizaje y divulgación.',
         body: [
-          'Diseño espacios de aprendizaje dirigidos a centros educativos, familias y profesionales para comprender mejor el desarrollo emocional, el trauma y las relaciones humanas desde una perspectiva práctica y basada en la evidencia.',
+          'Espacios de aprendizaje dirigidos a centros educativos, familias y profesionales para comprender mejor el desarrollo emocional, el trauma y las relaciones humanas desde una perspectiva práctica y basada en la evidencia.',
           'La idea no es sustituir un proceso terapéutico, sino ofrecer lenguaje, criterios y herramientas para acompañar mejor situaciones cotidianas, sin convertir el malestar en etiquetas rígidas.'
         ],
         links: [
@@ -496,7 +496,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
         ]
       }
     ],
-    blocks: [{ kind: 'workshops', eyebrow: 'Líneas de trabajo', title: 'Tres líneas de formación' }],
+    blocks: [{ kind: 'workshops', eyebrow: 'Líneas de trabajo', title: 'Formación y talleres' }],
     related: [areaCards[4], commonRelated[0], commonRelated[2]]
   }
 };
