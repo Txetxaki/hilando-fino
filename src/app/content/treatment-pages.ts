@@ -203,7 +203,7 @@ const baseTreatmentPages = [
     faqs: faq('el posparto', ['¿Cuánto dura la tristeza normal tras el parto?', 'Los primeros días de labilidad son habituales. Si se alarga varias semanas o va a más, conviene mirarlo con calma.', '¿Los pensamientos intrusivos significan que soy peligrosa?', 'Casi nunca. Suelen ser imágenes angustiosas y egodistónicas, pero merecen hablarse en lugar de esconderse.', '¿Puedo venir con el bebé?', 'Podemos organizarlo. Lo importante es que puedas acudir, no que resuelvas antes la logística perfecta.', '¿Y si ya pasó el primer año?', 'Sigue teniendo sentido. Hay pospartos que se elaboran mucho después.'])
   }),
   page({
-    sector: 'perinatal', slug: 'gestacion-y-preparacion-al-parto', label: 'Gestación y preparación al parto', h1: 'Gestación y preparación al parto',
+    sector: 'perinatal', slug: 'gestacion-y-preparacion-al-parto', label: 'Gestación serena y preparación al parto', h1: 'Gestación serena y preparación al parto',
     title: 'Miedo al parto y apoyo emocional en el embarazo | Hilando Fino',
     description: 'Trabajo emocional y corporal para regular el miedo, calmar el sistema nervioso y afrontar el parto con mayor confianza.',
     summary: 'Embarazo y parto trabajados desde el miedo, la respiración, el sistema nervioso y las experiencias previas.',

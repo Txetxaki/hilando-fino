@@ -8,25 +8,33 @@ export interface LegalSection {
 
 const identityLines = [
   `Titular: ${practiceIdentity.practitionerName} (${practiceIdentity.brandName}).`,
-  `${practiceIdentity.professionalTitle}, colegiada nº ${practiceIdentity.collegiateNumber}.`,
+  `NIF: ${practiceIdentity.nif}.`,
+  `${practiceIdentity.professionalTitle}, colegiada nº ${practiceIdentity.collegiateNumber} en el ${practiceIdentity.professionalCollegeName} (${practiceIdentity.professionalCollegeUrl}).`,
   `Nº de Registro Sanitario: ${practiceIdentity.healthRegistryNumber}.`,
   `Domicilio profesional: ${practiceIdentity.address.streetAddress}, ${practiceIdentity.address.addressLocality}.`,
   `Teléfono: ${practiceIdentity.phone}.`,
-  `Correo electrónico: ${practiceIdentity.email}.`
+  `Correo electrónico: ${practiceIdentity.email}.`,
+  `Normas profesionales aplicables: Código Deontológico del Psicólogo, accesible a través del ${practiceIdentity.professionalCollegeName} (${practiceIdentity.professionalCollegeUrl}).`
 ];
 
 /**
  * Adapted from the template Marta supplied, with her real identity in place of the
- * `xxxxxx` markers. Two obligations still need data only she can give before this
- * page goes live: the fiscal identifier (NIF) required by the LSSI-CE and the
- * identity of the hosting provider. They are absent rather than invented.
+ * `xxxxxx` markers, plus the professional-college data the LSSI-CE requires for a
+ * regulated profession (Art. 10.1.g) and the NIF it requires in Art. 10.1.b.
+ * All LSSI-CE-mandated identification fields are now present. Naming the hosting
+ * provider, despite appearing in many templates, is not itself an LSSI-CE
+ * requirement for a site like this and has been left out.
+ *
+ * The email above is the domain-bound corporate address Marta is setting up; do
+ * not deploy to production until she confirms the mailbox is actually live (see
+ * the note on `practiceIdentity`).
  */
 export const legalCopy: Record<'legalNotice' | 'privacy' | 'cookies', LegalSection[]> = {
   legalNotice: [
     {
       body: [
         'En este espacio encontrarás la información relativa a los términos y condiciones legales que definen la relación entre las personas usuarias y esta web. Conviene que los conozcas antes de continuar tu navegación.',
-        'Esta web cumple con el Reglamento (UE) 2016/679 General de Protección de Datos y con la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE).'
+        'Esta web cumple con el Reglamento (UE) 2016/679 General de Protección de Datos (RGPD), con la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD), y con la Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE).'
       ]
     },
     {
@@ -94,7 +102,7 @@ export const legalCopy: Record<'legalNotice' | 'privacy' | 'cookies', LegalSecti
     },
     {
       heading: 'Finalidades — ¿con qué finalidades tratamos tus datos?',
-      body: ['En cumplimiento del Reglamento (UE) 2016/679, te informamos de que los datos que nos facilitas se tratarán para:'],
+      body: ['En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y de la Ley Orgánica 3/2018 (LOPDGDD), te informamos de que los datos que nos facilitas se tratarán para:'],
       items: [
         'Atender tu solicitud de información o de cita y mantener el contacto necesario para ello.',
         'Gestionar la prestación del servicio psicológico contratado y su facturación.',

@@ -56,6 +56,19 @@ export const methodModels: readonly MethodModel[] = [
     name: 'Bioenergética',
     facets: [],
     summary: 'Toma de conciencia del cuerpo. Ayuda a liberar tensiones físicas crónicas que sostienen emociones reprimidas, devolviendo la vitalidad y la conexión corporal.'
+  },
+  {
+    name: 'Terapias de Tercera Generación',
+    facets: [
+      {
+        label: '¿En qué consisten?',
+        text: 'Abordajes orientados a la presencia plena, la aceptación emocional y la acción con sentido, ayudan a cambiar la manera en la que te relacionas con el malestar.'
+      },
+      {
+        label: 'Herramientas que integro',
+        text: 'Mindfulness para calmar la reactividad mental y conectar con el presente; ACT para actuar con libertad según tus decisiones y lo que realmente te importa; y Activación Conductual para romper el bucle de la apatía y la desmotivación.'
+      }
+    ]
   }
 ];
 
@@ -67,7 +80,7 @@ export const methodResources: readonly MethodResource[] = [
     imageKey: 'sandtray'
   },
   {
-    name: 'Trabajo proyectivo con figuras',
+    name: 'Trabajo proyectivo con Playmobil',
     qualifier: 'Muñecos y figuras proyectivas',
     body: 'Un recurso de orientación sistémica que utiliza figuras para representar visualmente las dinámicas familiares, los conflictos relacionales o los bloqueos internos. Al externalizar la situación sobre la mesa, la persona o la familia puede tomar distancia, observar el problema desde una nueva perspectiva y encontrar alternativas de solución de forma muy ágil.',
     imageKey: 'projectiveFigures'

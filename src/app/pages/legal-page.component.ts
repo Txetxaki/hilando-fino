@@ -11,11 +11,6 @@ import { assertPublicPageKey } from '../content/public-routes';
   imports: [RouterLink],
   template: `
     <article class="page-shell legal-page">
-      <nav class="breadcrumbs" aria-label="Migas de pan">
-        <a routerLink="/">Inicio</a>
-        <span aria-hidden="true">/</span>
-        <span>{{ page().h1 }}</span>
-      </nav>
       <header class="hero compact-hero">
         <p class="overline-pill">Información clara para navegar con confianza</p>
         <h1>{{ page().h1 }}</h1>

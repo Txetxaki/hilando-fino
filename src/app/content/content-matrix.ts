@@ -79,7 +79,7 @@ export const contentPages = {
     canonicalPath: '/areas-de-intervencion',
     primaryIntent: 'service discovery hub with four substantial parent areas',
     title: 'Áreas de intervención psicológica | Hilando Fino Psicología',
-    description: 'Infancia y familias, adolescentes, adultos, orientación educativa, talleres y acompañamiento en trauma y duelo desde una mirada cuidadosa.',
+    description: '',
     h1: 'Áreas de intervención',
     sourceFacts: verifiedBrandFacts
   }),

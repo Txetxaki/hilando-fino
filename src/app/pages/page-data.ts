@@ -2,7 +2,7 @@ import { contentPages } from '../content/content-matrix';
 import { hubLabels } from '../content/hub-labels';
 import { treatmentsForSector } from '../content/treatment-index';
 import type { StandardPageKey } from '../content/public-routes';
-import { HubKey, PageBlock, PageCard, PageContent, SiteImageKey } from '../content/types';
+import { HubKey, PageBlock, PageCard, PageContent, PageSection, SiteImageKey } from '../content/types';
 
 function topicCards(hub: HubKey): PageCard[] {
   if (hub === 'workshops') return [];
@@ -42,13 +42,20 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
   home: {
     page: contentPages.home,
     heroNote: 'Psicología en Ciudad Real para personas y familias.',
-    heroImage: 'consultingRoom',
+    heroBody: [
+      'Me llamo Marta Martín. Acompaño a personas y familias a comprender el origen de su malestar y a desarrollar nuevas formas de afrontarlo, integrando una atención cercana y respetuosa con intervenciones adaptadas a cada persona.',
+      'Infancia y familias, adolescencia, adultos, psicología perinatal, orientación educativa y talleres se organizan como puertas de entrada amplias. Dentro de cada área encontrarás situaciones frecuentes descritas sin diagnosticar ni prometer resultados.',
+      'La intención es que puedas reconocer un tema, leerlo con cuidado y decidir si merece la pena pedir una primera consulta.'
+    ],
+    heroLinks: [
+      { label: 'Ver áreas de intervención', href: '/areas-de-intervencion' },
+      { label: 'Ver talleres y formación', href: '/talleres' },
+      { label: 'Ir a contacto', href: '/contacto' }
+    ],
     sections: [
       {
-        eyebrow: 'Tirando del hilo',
-        title: 'Un lugar para desenredar lo que ahora pesa.',
+        title: 'Tirando del hilo',
         body: [
-          'Me llamo Marta Martín. Acompaño a personas y familias a comprender el origen de su malestar y a desarrollar nuevas formas de afrontarlo, integrando una atención cercana y respetuosa con intervenciones adaptadas a cada persona.',
           'Trabajo desde una idea sencilla: antes de intervenir necesito comprender bien. No se trata de encajarte en una etiqueta, sino de mirar historia, contexto, cuerpo, emociones y vínculos.',
           'Mi forma de acompañar es integradora, con evaluación cuidadosa y comunicación clara. La prioridad es que entiendas qué te ocurre, qué necesitas y qué camino terapéutico puede tener sentido para tu situación.'
         ],
@@ -67,19 +74,6 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
         links: [
           { label: 'Psicóloga en Ciudad Real', href: '/psicologia-ciudad-real' },
           { label: 'Trauma y duelo en Ciudad Real', href: '/psicologia-trauma-ciudad-real' }
-        ]
-      },
-      {
-        eyebrow: 'Áreas',
-        title: 'Encuentra el punto de entrada que más se parece a lo que necesitas.',
-        body: [
-          'Infancia y familias, adolescencia, adultos, psicología perinatal, orientación educativa y talleres se organizan como puertas de entrada amplias. Dentro de cada área encontrarás situaciones frecuentes descritas sin diagnosticar ni prometer resultados.',
-          'La intención es que puedas reconocer un tema, leerlo con cuidado y decidir si merece la pena pedir una primera consulta.'
-        ],
-        links: [
-          { label: 'Ver áreas de intervención', href: '/areas-de-intervencion' },
-          { label: 'Ver talleres y formación', href: '/talleres' },
-          { label: 'Ir a contacto', href: '/contacto' }
         ]
       }
     ],
@@ -186,20 +180,16 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
   interventions: {
     page: contentPages.interventions,
     heroNote: 'Un mapa claro para elegir por etapa, contexto o motivo de consulta.',
+    heroBody: [
+      'Encuentra el punto de entrada que más se parece a lo que necesitas. Infancia y familias, adolescencia, adultos, psicología perinatal, orientación educativa y talleres se organizan como puertas de entrada amplias.',
+      'Dentro de cada área encontrarás situaciones frecuentes descritas sin diagnosticar ni prometer resultados. La intención es que puedas reconocer un tema, leerlo con cuidado y decidir si merece la pena pedir una primera consulta.'
+    ],
+    heroLinks: [
+      { label: 'Psicología en Ciudad Real', href: '/psicologia-ciudad-real' },
+      { label: 'Cómo trabajo', href: '/como-trabajo' },
+      { label: 'Sobre mí', href: '/sobre-mi' }
+    ],
     sections: [
-      {
-        eyebrow: 'Mapa de ayuda',
-        title: 'Cinco áreas principales y una línea formativa.',
-        body: [
-          'Encuentra el punto de entrada que más se parece a lo que necesitas. Infancia y familias, adolescencia, adultos, psicología perinatal, orientación educativa y talleres se organizan como puertas de entrada amplias.',
-          'Dentro de cada área encontrarás situaciones frecuentes descritas sin diagnosticar ni prometer resultados. La intención es que puedas reconocer un tema, leerlo con cuidado y decidir si merece la pena pedir una primera consulta.'
-        ],
-        links: [
-          { label: 'Psicología en Ciudad Real', href: '/psicologia-ciudad-real' },
-          { label: 'Cómo trabajo', href: '/como-trabajo' },
-          { label: 'Sobre mí', href: '/sobre-mi' }
-        ]
-      },
       {
         eyebrow: 'Trauma y duelo',
         title: 'Una ruta específica para experiencias que necesitan especial cuidado.',
@@ -220,13 +210,14 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
     key: 'childrenFamilies',
     hub: 'children-families',
     heroNote: 'Juego, autorregulación y vínculo para recuperar la calma en casa.',
+    introInHero: true,
     intro:
-      'La infancia se expresa, siente y sana a través de la vivencia corporal, porque el cuerpo del niño expresa lo que aún no puede nombrar. Acompaño a niños y familias a comprender el origen de sus dificultades a través del juego, la autorregulación y el fortalecimiento del vínculo afectivo: un espacio de escucha libre de juicios para recuperar el equilibrio y la calma en el hogar.',
+      'La infancia se expresa, siente y sana a través de la vivencia corporal, porque el cuerpo del niño expresa lo que aún no puede nombrar. Acompaño a niños y familias a comprender el origen de sus dificultades a través del juego, la autorregulación y el fortalecimiento del vínculo afectivo. Un espacio de escucha libre de juicios para recuperar el equilibrio y la calma en el hogar.',
+    heroLinks: [{ label: 'Cómo trabajo con familias', href: '/como-trabajo' }],
     situations:
-      'Acompañar a un niño implica mirar también a la familia, la escuela, las rutinas y los vínculos. Puede tener sentido pedir orientación cuando la ansiedad, los miedos, los conflictos de conducta, la autoestima, el sueño, el control de esfínteres, una separación familiar, el trauma o el duelo empiezan a afectar al bienestar cotidiano.',
+      'Acompañar a un niño implica mirar también a la familia, la escuela, las rutinas y los vínculos. La conducta, el miedo o el sueño rara vez se entienden bien si se separan del contexto. Puede tener sentido pedir orientación cuando la ansiedad, los miedos, los conflictos de conducta, la autoestima, el sueño, el control de esfínteres, una separación familiar, el trauma o el duelo empiezan a afectar al bienestar cotidiano.',
     work: 'El trabajo combina escucha a la familia, comprensión de las necesidades emocionales, coordinación prudente con el entorno educativo si procede y una mirada de apego para responder con más seguridad.',
     links: [
-      { label: 'Cómo trabajo con familias', href: '/como-trabajo' },
       { label: 'Trauma y duelo infantil', href: '/psicologia-trauma-ciudad-real' },
       { label: 'Orientación educativa', href: '/areas-de-intervencion/orientacion-educativa-y-formacion' }
     ],
@@ -277,7 +268,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
         eyebrow: 'Motivos de consulta',
         title: 'Con qué llega la mayoría de las personas adultas',
         items: [
-          'Gestión de la ansiedad y el estrés: sobrecarga constante, angustia, responsabilidad sostenida, pensamientos en bucle o síntomas físicos como tensión, insomnio o presión en el pecho.',
+          'Gestión de la ansiedad y el estrés: sobrecarga constante, angustia, cuerpo, trabajo, familia y responsabilidad sostenida, pensamientos en bucle o síntomas físicos como tensión, insomnio o presión en el pecho.',
           'Estado de ánimo y bajo nivel de energía: sensación de vacío, tristeza profunda, apatía o pérdida de motivación en el día a día.',
           'Dificultades relacionales y de pareja: conflictos repetitivos, problemas para poner límites, dependencia emocional o momentos de crisis e incertidumbre en la relación.',
           'Autoestima, identidad y patrones que se repiten: autoexigencia elevada, miedo al rechazo o la sensación de estar bloqueado en las mismas dinámicas vitales.',
@@ -515,22 +506,25 @@ function hubPage(input: {
   hub: HubKey;
   heroNote: string;
   intro: string;
+  /** Only set when her doc gives the intro no heading at all — it belongs in the hero copy, not a content-band section (currently just Infancia y familias). When absent, intro and situations render together under "Qué puede estar pasando." as before. */
+  introInHero?: boolean;
+  heroLinks?: { label: string; href: string }[];
   situations: string;
   work: string;
   links: { label: string; href: string }[];
   blocks?: PageBlock[];
 }): PageContent {
   const page = contentPages[input.key];
+  const openingSections: PageSection[] = input.introInHero
+    ? [{ eyebrow: hubLabels[input.hub], title: 'Qué puede estar pasando.', body: [input.situations], links: input.links }]
+    : [{ eyebrow: hubLabels[input.hub], title: 'Qué puede estar pasando.', body: [input.intro, input.situations], links: input.links }];
   return {
     page,
     heroNote: input.heroNote,
+    heroBody: input.introInHero ? [input.intro] : undefined,
+    heroLinks: input.introInHero ? input.heroLinks : undefined,
     sections: [
-      {
-        eyebrow: hubLabels[input.hub],
-        title: 'Qué puede estar pasando.',
-        body: [input.intro, input.situations],
-        links: input.links
-      },
+      ...openingSections,
       {
         eyebrow: 'Cómo se trabaja',
         title: 'Comprender la situación antes de elegir herramientas.',

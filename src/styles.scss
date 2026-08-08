@@ -1,3 +1,13 @@
+/* Barlow (SIL OFL licensed) self-hosted instead of linked from Google Fonts CDN,
+   so no visitor IP is sent to Google on every page load - relevant on a site
+   with its own /privacidad and /cookies pages. */
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/barlow-400.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/barlow-500.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/barlow-600.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/barlow-700.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/barlow-800.woff2') format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 900; font-display: swap; src: url('/fonts/barlow-900.woff2') format('woff2'); }
+
 :root {
   --color-plum: #5a434c;
   --color-plum-dark: #3e2e35;
@@ -5,12 +15,23 @@
   --color-terracotta: #d1807e;
   --color-terracotta-safe: #85504b;
   --color-terracotta-light: #f8ebeb;
+  /* Raw --color-terracotta (#d1807e) on --color-plum-dark (#3e2e35) measures
+     ~4.31:1 - just under the 4.5:1 AA floor for normal-size text. This 20%
+     white tint of the same hue measures ~5.46:1 (verified), for terracotta
+     sub-headings that sit on the dark footer band. */
+  --color-terracotta-tint: #da9998;
+  /* Rose for display text on the light hero/page backgrounds. The raw brand
+     terracotta measures only 2.91:1 there - below even the 3:1 large-text
+     floor - so it can fill a shape but never carry words. This deepened rose
+     keeps the pink read and measures 4.68:1 (verified), passing AA at any
+     size. */
+  --color-rose: #b25856;
   --color-cream: #fbf8f7;
   --color-paper: #fffdfb;
   --color-ink: #22191a;
   --color-muted: #5f5358;
-  --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
-  --font-body: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Barlow', system-ui, -apple-system, sans-serif;
+  --font-body: 'Barlow', system-ui, -apple-system, sans-serif;
   --font-accent: 'Segoe Print', 'Bradley Hand ITC', cursive;
   --space: clamp(1rem, 2vw, 1.5rem);
   --container: 74rem;
@@ -30,7 +51,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
-body { margin: 0; background: radial-gradient(circle at 8% 10%, #f8ebeb 0 18rem, transparent 19rem), linear-gradient(180deg, #fffdfb 0, var(--color-cream) 34rem); }
+body { margin: 0; background: var(--color-cream); }
 a { color: var(--color-plum); }
 a:hover { color: var(--color-plum-dark); }
 :focus-visible { outline: 3px solid var(--color-plum-dark); outline-offset: 4px; }
@@ -38,18 +59,32 @@ a:hover { color: var(--color-plum-dark); }
 .skip-link { position: absolute; left: 1rem; top: -5rem; z-index: 20; padding: .75rem 1rem; background: var(--color-plum-dark); color: white; border-radius: 999px; }
 .skip-link:focus { top: 1rem; }
 
-.site-header { position: sticky; top: 0; z-index: 10; background: rgba(251, 248, 247, .92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(90, 67, 76, .12); }
-.nav-shell { position: relative; max-width: var(--container); margin: 0 auto; padding: .65rem var(--space); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+/* Solid terracotta-safe bar, not the raw brand terracotta: white text on
+   --color-terracotta (#d1807e) measures ~2.96:1 (fails WCAG at any size);
+   white on --color-terracotta-safe (#85504b) measures ~6.47:1 (passes AA/AAA). */
+.site-header { position: sticky; top: 0; z-index: 10; background: var(--color-terracotta-safe); border-bottom: 1px solid rgba(0, 0, 0, .12); }
+.nav-shell { position: relative; max-width: var(--container); margin: 0 auto; padding: .65rem var(--space); display: flex; align-items: center; gap: 1rem; }
+.brand-mark { background: #fff; border-radius: 1rem; padding: .45rem .9rem; display: inline-flex; align-items: center; }
 .brand img { display: block; width: min(13rem, 42vw); height: auto; }
-.menu-toggle { display: none; min-height: 44px; border: 1px solid rgba(90, 67, 76, .25); border-radius: 999px; background: #fff; color: var(--color-plum-dark); padding: .6rem 1rem; font: inherit; font-weight: 800; }
-.nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem .55rem; font-size: .93rem; font-weight: 700; }
-.nav-links a, .dropdown-trigger { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; padding: .65rem .72rem; border-radius: 999px; color: var(--color-plum-dark); }
+.menu-toggle { display: none; min-height: 44px; border: 1px solid rgba(90, 67, 76, .25); border-radius: 999px; background: #fff; color: var(--color-plum-dark); padding: .6rem 1rem; font: inherit; font-weight: 500; }
+.nav-links { display: flex; align-items: center; flex-wrap: wrap; flex: 1; justify-content: center; gap: .25rem .55rem; font-size: .93rem; font-weight: 500; }
+/* Layout stays on the descendant selector so links inside .dropdown-panel keep
+   their hit area, padding and un-underlined look. Only `color` is scoped with
+   `>`: white belongs to links sitting directly on the solid terracotta-safe
+   bar, and a descendant selector also swept in the panel links, which sit on a
+   light var(--color-paper) popover - measured 1.01:1 (white on #fffdfb), an
+   invisible mega-menu on desktop. */
+.nav-links a, .dropdown-trigger { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; padding: .65rem .72rem; border-radius: 999px; }
+.nav-links > a, .dropdown-trigger { color: #fff; }
+.dropdown-panel a { color: var(--color-plum-dark); }
 /* Active/current-page state uses solid terracotta + ink text (5.81:1,
    verified) instead of the previous pale plum-light background, so the real
    second brand color marks "you are here" instead of a barely-visible tint. */
 .nav-links a.active, .dropdown-trigger.active { background: var(--color-terracotta); color: var(--color-ink); }
-.nav-cta { background: var(--color-plum); color: white !important; }
-.nav-links .nav-cta.active { background: var(--color-plum); color: white !important; }
+/* Outlined pill: lives directly on the terracotta-safe bar (moved out of
+   .nav-links), so it needs its own sizing/typography, not just color. */
+.nav-cta { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: .65rem 1.1rem; border-radius: 999px; font-size: .93rem; font-weight: 600; background: transparent; border: 1.5px solid #fff; color: #fff !important; }
+.nav-cta.active { background: var(--color-terracotta); border-color: var(--color-terracotta); color: var(--color-ink) !important; }
 .dropdown-trigger { border: 0; background: transparent; font: inherit; cursor: pointer; }
 .dropdown-trigger::after { content: '⌄'; margin-left: .35rem; }
 .nav-dropdown { position: relative; }
@@ -59,16 +94,15 @@ a:hover { color: var(--color-plum-dark); }
 .nav-dropdown.open .dropdown-panel, .nav-dropdown:focus-within .dropdown-panel { transform: translate(-50%, 0); }
 .mega-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
 .mega-sector { display: grid; align-content: start; gap: .12rem; padding: .6rem; border-radius: .95rem; background: var(--color-cream); }
-.mega-sector-title { font-weight: 900; background: rgba(238, 236, 237, .72); }
+.mega-sector-title { font-weight: 600; background: rgba(238, 236, 237, .72); }
 .mega-child { font-size: .86rem; min-height: 38px !important; padding: .45rem .55rem !important; }
 
 .page-shell { max-width: var(--container); margin: 0 auto; padding: 2rem var(--space) 5rem; }
-.breadcrumbs { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; color: var(--color-muted); font-size: .9rem; margin-bottom: 1.25rem; }
-.breadcrumbs a { text-decoration-thickness: 1px; }
 
-.hero { position: relative; overflow: hidden; border: 1px solid rgba(90, 67, 76, .14); border-radius: 2rem; padding: clamp(2.4rem, 7vw, 5.7rem); background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(248,235,235,.92)); }
-.woven-hero::before { content: ''; position: absolute; inset: auto -5rem -5rem auto; width: 22rem; height: 22rem; border: 1px solid rgba(90, 67, 76, .22); border-radius: 48% 52% 60% 40% / 58% 38% 62% 42%; transform: rotate(-18deg); }
-.woven-hero::after { content: ''; position: absolute; right: 4rem; top: 3rem; width: 8rem; height: 8rem; border: 1px solid rgba(133, 80, 75, .32); border-radius: 999px 42% 999px 45%; transform: rotate(22deg); }
+/* Flat fill, no decorative blobs: the .woven-hero pseudo-elements (rotated
+   organic shapes) were dropped per feedback asking for a more minimal hero
+   with less ornament. The class stays on the template as a harmless no-op. */
+.hero { position: relative; overflow: hidden; border: 1px solid rgba(90, 67, 76, .14); border-radius: 2rem; padding: 5rem 1rem; background: var(--color-paper); }
 /* Solid terracotta background + ink text = 5.81:1 contrast (verified) - the
    real logo terracotta (#d1807e) was previously only ever shown as a pale
    tint or a darkened "safe" substitute, because raw terracotta text/border
@@ -80,13 +114,19 @@ a:hover { color: var(--color-plum-dark); }
    more specific selector) would otherwise win and put muted gray text on
    the solid terracotta background - measured 2.47:1 by axe, a real failure,
    not the 5.81:1 ink combination this rule intends everywhere it's used. */
-.overline-pill, .eyebrow { display: inline-flex; width: fit-content; border-radius: 999px; padding: .45rem .75rem; background: var(--color-terracotta); color: var(--color-ink) !important; font-weight: 800; font-size: .82rem; letter-spacing: .02em; }
-h1, h2, h3 { font-family: var(--font-display); color: var(--color-plum-dark); line-height: 1.04; letter-spacing: -.03em; }
-h1 { max-width: 14ch; margin: 1rem 0; font-size: clamp(3rem, 8vw, 6.5rem); }
+.overline-pill, .eyebrow { display: inline-flex; width: fit-content; border-radius: 999px; padding: .45rem .75rem; font-weight: 700; font-size: 1rem; letter-spacing: .02em; }
+.overline-pill { background: transparent; color: var(--color-terracotta) !important; }
+.eyebrow { background: var(--color-terracotta); color: var(--color-ink) !important; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; color: var(--color-plum-dark); line-height: 1.04; letter-spacing: -.03em; }
+/* No max-width cap: 14ch forced ordinary titles onto 2-3 cramped lines and,
+   combined with margin-left/right:0 (not auto), kept the box flush-left even
+   inside a text-align:center parent - the h1 looked both "randomly" narrow
+   and off-center. Full width lets it fill its column and center properly. */
+h1 { margin: 1rem 0; font-size: clamp(3rem, 8vw, 4.5rem); }
 h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
 .hero-copy { max-width: 48rem; font-size: clamp(1.15rem, 2vw, 1.35rem); line-height: 1.7; color: var(--color-muted); }
 .hero-actions, .inline-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
-.button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; border-radius: 999px; padding: .8rem 1.2rem; font-weight: 800; text-decoration: none; border: 1px solid var(--color-plum); cursor: pointer; }
+.button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; border-radius: 999px; padding: .8rem 1.2rem; font-weight: 600; text-decoration: none; border: 1px solid var(--color-plum); cursor: pointer; }
 .button.primary { background: var(--color-plum); color: white; }
 .button.secondary { background: transparent; color: var(--color-plum); }
 
@@ -98,6 +138,16 @@ h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
 .hero-media { display: block; }
 .hero-media img { display: block; width: 100%; height: auto; border-radius: 1.5rem; box-shadow: 0 1.25rem 2.5rem rgba(62, 46, 53, .16); }
 
+/* Home hero has no photo (has-media never applies for it) - center the whole
+   column instead of the default left-aligned layout other pages keep. */
+.home-page .hero-text { text-align: center; }
+.home-page .hero-copy { margin-inline: auto; }
+.home-page .hero-actions { justify-content: center; }
+.home-page .overline-pill { margin-inline: auto; }
+.hero-name { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.15; letter-spacing: -.01em; color: var(--color-rose); }
+.hero-logo { display: block; width: min(10rem, 50vw); height: auto; margin: 2rem auto 0; }
+.hero-logo img { display: block; width: 100%; height: auto; }
+
 .pull-quote { margin: clamp(2.5rem, 6vw, 4rem) 0; padding: clamp(1.5rem, 4vw, 2.5rem); border-left: 4px solid var(--color-terracotta-safe); border-radius: 0 1.35rem 1.35rem 0; background: var(--color-terracotta-light); font-family: var(--font-display); font-style: italic; font-size: clamp(1.15rem, 2.2vw, 1.5rem); line-height: 1.55; color: var(--color-plum-dark); }
 
 .content-figure { margin: clamp(2rem, 5vw, 3.5rem) 0; max-width: 44rem; }
@@ -107,10 +157,8 @@ h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
 .block-band { margin: clamp(3rem, 8vw, 6rem) 0; }
 /* Both class selectors are needed: `.content-band { max-width: 55rem }` is declared
    later in this file, so a single-class `.wide-band` rule loses on source order and
-   silently keeps the model/resource/workshop grids at reading width. The pairing also
-   cancels the `:nth-of-type(even)` right-shift, which is meaningless once the band
-   spans the full container. */
-.content-band.wide-band { max-width: none; margin-left: 0; }
+   silently keeps the model/resource/workshop grids at reading width. */
+.content-band.wide-band { max-width: none; }
 
 .credential-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-top: 1.75rem; }
 .credential-group { padding: 1.35rem; border-radius: 1.25rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); border-top: 4px solid var(--color-terracotta-safe); }
@@ -130,15 +178,15 @@ h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
 .resource-item:only-child, .resource-item:not(:has(picture)) { grid-template-columns: 1fr; }
 .resource-item img { display: block; width: 100%; height: auto; border-radius: 1rem; }
 .resource-item h3 { margin: 0 0 .25rem; font-size: 1.35rem; }
-.resource-qualifier { margin: 0 0 .6rem !important; font-weight: 800; font-size: .9rem; letter-spacing: .02em; text-transform: uppercase; color: var(--color-terracotta-safe) !important; }
+.resource-qualifier { margin: 0 0 .6rem !important; font-weight: 700; font-size: .9rem; letter-spacing: .02em; text-transform: uppercase; color: var(--color-terracotta-safe) !important; }
 .resource-item p { color: var(--color-muted); line-height: 1.7; margin: 0; }
 
 .workshop-list { display: grid; gap: 1.25rem; margin-top: 1.75rem; }
 .workshop-item { padding: 1.5rem; border-radius: 1.35rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); border-top: 4px solid var(--color-terracotta-safe); }
 .workshop-item h3 { margin: 0 0 .6rem; font-size: 1.4rem; }
 .workshop-item p { color: var(--color-muted); line-height: 1.7; }
-.workshop-audience { font-weight: 800; color: var(--color-plum-dark) !important; }
-.workshop-contents-title { margin: 1rem 0 .6rem !important; font-weight: 900; color: var(--color-plum-dark) !important; }
+.workshop-audience { font-weight: 600; color: var(--color-plum-dark) !important; }
+.workshop-contents-title { margin: 1rem 0 .6rem !important; font-weight: 600; color: var(--color-plum-dark) !important; }
 
 .checklist { margin-top: 1.5rem; }
 .highlight-band { padding: clamp(1.4rem, 3.5vw, 2.4rem); border-radius: 1.45rem; background: linear-gradient(135deg, #fff, var(--color-terracotta-light)); border: 1px solid rgba(133, 80, 75, .2); }
@@ -147,18 +195,17 @@ h2 { font-size: clamp(2rem, 4vw, 3.15rem); margin: .6rem 0 1rem; }
 .legal-section h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
 .legal-list { margin-top: 1rem; }
 
-.footer-nap { margin-top: 1.25rem; display: grid; gap: .3rem; font-style: normal; color: var(--color-muted); line-height: 1.6; }
-.footer-nap a { color: var(--color-plum); }
-.footer-registry { font-size: .88rem; }
-
 .toc { margin: 1.25rem 0 3rem; padding: 1rem; border-radius: 1.25rem; background: rgba(255,255,255,.72); border: 1px solid rgba(90, 67, 76, .12); display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
-.toc p { margin: 0; font-weight: 900; color: var(--color-plum-dark); }
-.toc a { font-weight: 700; text-decoration-thickness: 1px; }
+.toc p { margin: 0; font-weight: 600; color: var(--color-plum-dark); }
+.toc a { font-weight: 500; text-decoration-thickness: 1px; }
 
+/* Every band sits at the same left edge. The old
+   `:nth-of-type(even) { margin-left: auto }` pushed alternate sections to the
+   right, so the page read as a zigzag of shifting margins - dropped for a
+   single, uniform column. */
 .content-band { margin: clamp(3rem, 8vw, 6rem) 0; max-width: 55rem; scroll-margin-top: 7rem; }
-.content-band:nth-of-type(even) { margin-left: auto; }
 .content-band p { font-size: 1.08rem; line-height: 1.82; color: var(--color-muted); }
-.inline-links a { padding: .55rem .8rem; border-bottom: 2px solid var(--color-terracotta-safe); text-decoration: none; font-weight: 800; }
+.inline-links a { padding: .55rem .8rem; border-bottom: 2px solid var(--color-terracotta-safe); text-decoration: none; font-weight: 600; }
 
 .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; margin: 3rem 0; }
 /* border-top uses terracotta-safe, not raw terracotta: raw terracotta on the
@@ -181,34 +228,69 @@ a.thread-card:hover { transform: translateY(-2px); box-shadow: 0 1rem 2rem rgba(
 
 .contact-form { display: grid; gap: 1rem; max-width: 52rem; margin-top: 2rem; }
 .field-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-label { display: grid; gap: .35rem; color: var(--color-plum-dark); font-weight: 800; }
+label { display: grid; gap: .35rem; color: var(--color-plum-dark); font-weight: 600; }
 input, select, textarea { width: 100%; border: 1px solid rgba(90, 67, 76, .28); border-radius: .8rem; padding: .8rem .9rem; font: inherit; background: #fff; color: var(--color-ink); }
 textarea { resize: vertical; }
 .checkbox-row { display: flex; align-items: flex-start; gap: .7rem; }
 .checkbox-row input { width: 1.2rem; margin-top: .2rem; }
 .form-help, .error-summary, #contact-status { color: var(--color-muted); margin-top: -.4rem; }
-.error-summary { color: #93000a; font-weight: 800; }
+.error-summary { color: #93000a; font-weight: 700; }
 .honeypot { position: absolute; left: -9999px; }
 
-.site-footer { border-top: 1px solid rgba(90, 67, 76, .12); background: #fff; padding: 2.5rem var(--space); display: grid; grid-template-columns: minmax(16rem, 26rem) 1fr; gap: 2rem; }
-.site-footer p { color: var(--color-muted); max-width: 34rem; line-height: 1.7; }
-.footer-sitemap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
-.footer-sitemap div { display: grid; align-content: start; gap: .45rem; }
-.footer-sitemap h2 { margin: 0 0 .3rem; font: 900 .85rem var(--font-body); letter-spacing: .05em; text-transform: uppercase; }
-.footer-sitemap a { text-decoration-thickness: 1px; }
+/* Full-width dark plum band (matches the reference footer), light text at
+   reduced opacity by default; headings and hover states step up to full
+   white. See the --color-terracotta-tint definition above for why the
+   Consulta/Acreditaciones sub-headings use that tint and not raw terracotta. */
+.site-footer { background: var(--color-plum-dark); color: rgba(255, 255, 255, .85); padding: 3rem var(--space) 0; }
+.site-footer a { color: rgba(255, 255, 255, .85); text-decoration-thickness: 1px; }
+.site-footer a:hover { color: #fff; }
+.footer-grid { max-width: var(--container); margin: 0 auto; padding-bottom: 2.5rem; display: grid; grid-template-columns: minmax(14rem, 22rem) minmax(12rem, 16rem) minmax(20rem, 1fr); gap: 2.5rem; }
+
+.footer-mark { display: inline-flex; align-items: center; justify-content: center; background: #fff; border-radius: .85rem; padding: .6rem .9rem; }
+.footer-mark img { display: block; width: 4.5rem; height: auto; }
+.footer-signature { margin: 1rem 0 .3rem; font-weight: 600; color: #fff; }
+.footer-intro p:not(.footer-signature) { margin-top: 0; color: rgba(255, 255, 255, .72); max-width: 26rem; line-height: 1.7; }
+
+.footer-contact h2, .footer-nav-col h2 { margin: 0 0 1rem; font-size: 1.05rem; line-height: 1.2; letter-spacing: 0; color: #fff; }
+.footer-nap { display: grid; gap: .55rem; font-style: normal; line-height: 1.55; }
+.footer-contact-link { display: inline-flex; align-items: center; gap: .55rem; }
+.footer-icon { width: 1em; height: 1em; flex-shrink: 0; color: rgba(255, 255, 255, .7); }
+.footer-subhead { margin-top: .3rem; font-weight: 700; font-size: .85rem; letter-spacing: .03em; text-transform: uppercase; color: var(--color-terracotta-tint); }
+.footer-registry { font-size: .88rem; color: rgba(255, 255, 255, .72); }
+
+.footer-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.footer-nav-col { display: grid; align-content: start; gap: .5rem; }
+
+.footer-bottom { max-width: var(--container); margin: 0 auto; border-top: 1px solid rgba(255, 255, 255, .16); padding: 1.25rem 0 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; font-size: .85rem; color: rgba(255, 255, 255, .6); }
+.footer-legal { display: flex; flex-wrap: wrap; gap: .35rem 1.15rem; }
+.footer-legal a { color: rgba(255, 255, 255, .6); }
+.footer-legal a:hover { color: #fff; }
 
 @media (max-width: 920px) {
-  .nav-shell { align-items: center; }
-  .menu-toggle { display: inline-flex; }
+  .nav-shell { align-items: center; gap: .5rem; }
+  /* .nav-links becomes absolutely positioned below (out of normal flow), so it
+     no longer fills the middle of the flex row on mobile; push the toggle
+     (and the nav-cta that follows it) to the bar's right edge instead. */
+  .menu-toggle { display: inline-flex; margin-left: auto; padding: .55rem .85rem; }
+  /* The brand chip, toggle and always-visible Contacto pill all share one row
+     on mobile (nav-cta used to live inside the collapsible panel, so it never
+     had to compete for space here); shrink the chip and both pills so the
+     three fit down to a ~320px phone without clipping. */
+  .brand-mark { padding: .35rem .6rem; }
+  .brand img { width: min(8rem, 30vw); }
+  .nav-cta { padding: .55rem .85rem; }
   .nav-links { position: absolute; left: var(--space); right: var(--space); top: calc(100% + .5rem); display: none; padding: .9rem; border-radius: 1.25rem; background: var(--color-paper); border: 1px solid rgba(90, 67, 76, .14); box-shadow: 0 1.5rem 3rem rgba(62, 46, 53, .14); }
   .nav-links.open { display: grid; align-items: stretch; max-height: calc(100vh - 6rem); overflow: auto; }
-  .nav-links a, .dropdown-trigger { justify-content: flex-start; width: 100%; border-radius: .85rem; }
+  /* The base rule turns nav links white for the solid terracotta-safe header
+     bar; the mobile dropdown panel is a light var(--color-paper) popover, so
+     restore dark text here or links go white-on-white when it opens. */
+  .nav-links a, .dropdown-trigger { justify-content: flex-start; width: 100%; border-radius: .85rem; color: var(--color-plum-dark); }
   .nav-dropdown { width: 100%; }
   .dropdown-panel { position: static; width: 100%; min-width: 0; margin-top: .25rem; box-shadow: none; border-radius: .9rem; opacity: 1; transform: none; display: none; pointer-events: auto; }
   .nav-dropdown.open .dropdown-panel, .nav-dropdown:focus-within .dropdown-panel { display: grid; transform: none; }
   .mega-grid { grid-template-columns: 1fr; max-height: 62vh; overflow: auto; }
-  .site-footer { grid-template-columns: 1fr; }
-  .footer-sitemap { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-nav { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 960px) {
@@ -218,7 +300,7 @@ textarea { resize: vertical; }
 }
 
 @media (max-width: 720px) {
-  .hero { padding: 2rem 1.25rem; border-radius: 1.25rem; }
+  .hero { border-radius: 1.25rem; }
   .field-pair { grid-template-columns: 1fr; }
   .hero.has-media .hero-media { max-width: none; }
   /* The base h1/h2 rules use an 8vw/4vw preferred value with a floor that's

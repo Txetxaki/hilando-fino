@@ -56,20 +56,22 @@ const primaryLinks = [
                ~214kB from every route. The sizes attribute mirrors the .brand img rule
                (width: min(13rem, 42vw)): 42vw wins below a 495px viewport, which is exactly
                where 42vw equals 13rem. -->
-          <picture>
-            <source
-              type="image/webp"
-              srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w"
-              sizes="(max-width: 495px) 42vw, 208px"
-            />
-            <img
-              src="images/logo-440.png"
-              srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w"
-              sizes="(max-width: 495px) 42vw, 208px"
-              width="220"
-              height="86"
-              alt="Marta Martín · Hilando Fino Psicología"
-            /></picture>
+          <span class="brand-mark">
+            <picture>
+              <source
+                type="image/webp"
+                srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w"
+                sizes="(max-width: 495px) 42vw, 208px"
+              />
+              <img
+                src="images/logo-440.png"
+                srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w"
+                sizes="(max-width: 495px) 42vw, 208px"
+                width="220"
+                height="86"
+                alt="Marta Martín · Hilando Fino Psicología"
+              /></picture>
+          </span>
         </a>
 
         <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileOpen()" aria-controls="primary-navigation" (click)="toggleMobile($event)">
@@ -110,8 +112,9 @@ const primaryLinks = [
           </div>
 
           <a routerLink="/talleres" routerLinkActive="active" (click)="closeMenus()">Talleres</a>
-          <a routerLink="/contacto" class="nav-cta" routerLinkActive="active" (click)="closeMenus()">Contacto</a>
         </div>
+
+        <a routerLink="/contacto" class="nav-cta" routerLinkActive="active" (click)="closeMenus()">Contacto</a>
       </nav>
     </header>
 
@@ -120,37 +123,75 @@ const primaryLinks = [
     </main>
 
     <footer class="site-footer">
-      <div class="footer-intro">
-        <strong>Hilando Fino Psicología</strong>
-        <p>Psicología en Ciudad Real con una mirada integradora, cercana y respetuosa con cada proceso.</p>
-        <address class="footer-nap">
-          <span>{{ identity.practitionerName }} · {{ identity.professionalTitle }}</span>
-          <span>{{ identity.address.streetAddress }}, {{ identity.address.addressLocality }}</span>
-          <a [href]="telHref">{{ identity.phone }}</a>
-          <a [href]="mailtoHref">{{ identity.email }}</a>
-          <span class="footer-registry">Col. {{ identity.collegiateNumber }} · Nº de Registro Sanitario {{ identity.healthRegistryNumber }}</span>
-        </address>
+      <div class="footer-grid">
+        <div class="footer-intro">
+          <span class="footer-mark">
+            <picture>
+              <source
+                type="image/webp"
+                srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w"
+                sizes="72px"
+              />
+              <img
+                src="images/logo-440.png"
+                srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w"
+                sizes="72px"
+                width="220"
+                height="86"
+                alt="Marta Martín · Hilando Fino Psicología"
+              /></picture>
+          </span>
+          <p class="footer-signature">{{ identity.practitionerName }} · {{ identity.professionalTitle }}</p>
+          <p>Psicología en Ciudad Real con una mirada integradora, cercana y respetuosa con cada proceso.</p>
+        </div>
+
+        <div class="footer-contact">
+          <h2>Contacto</h2>
+          <address class="footer-nap">
+            <a class="footer-contact-link" [href]="telHref">
+              <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z" />
+              </svg>
+              {{ identity.phone }}
+            </a>
+            <a class="footer-contact-link" [href]="mailtoHref">
+              <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 6-10 7L2 6" />
+              </svg>
+              {{ identity.email }}
+            </a>
+            <span class="footer-subhead">Consulta</span>
+            <span>{{ identity.address.streetAddress }}, {{ identity.address.addressLocality }}</span>
+            <span class="footer-subhead">Acreditaciones</span>
+            <span class="footer-registry">Col. {{ identity.collegiateNumber }} · Nº de Registro Sanitario {{ identity.healthRegistryNumber }}</span>
+          </address>
+        </div>
+
+        <nav class="footer-nav" aria-label="Mapa del sitio">
+          <div class="footer-nav-col">
+            <h2>Web</h2>
+            @for (link of primaryLinks; track link.href) {
+              <a [routerLink]="link.href">{{ link.label }}</a>
+            }
+          </div>
+          <div class="footer-nav-col">
+            <h2>Áreas</h2>
+            @for (link of areaLinks; track link.href) {
+              <a [routerLink]="link.href">{{ link.label }}</a>
+            }
+          </div>
+        </nav>
       </div>
-      <nav class="footer-sitemap" aria-label="Mapa del sitio">
-        <div>
-          <h2>Web</h2>
-          @for (link of primaryLinks; track link.href) {
-            <a [routerLink]="link.href">{{ link.label }}</a>
-          }
-        </div>
-        <div>
-          <h2>Áreas</h2>
-          @for (link of areaLinks; track link.href) {
-            <a [routerLink]="link.href">{{ link.label }}</a>
-          }
-        </div>
-        <div>
-          <h2>Legal</h2>
+
+      <div class="footer-bottom">
+        <span>© {{ currentYear }} {{ identity.practitionerName }} - {{ identity.brandName }}. Todos los derechos reservados.</span>
+        <nav class="footer-legal" aria-label="Legal">
           <a routerLink="/aviso-legal">Aviso legal</a>
           <a routerLink="/privacidad">Privacidad</a>
           <a routerLink="/cookies">Cookies</a>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </footer>
   `
 })
@@ -164,6 +205,7 @@ export class AppComponent {
   readonly identity = practiceIdentity;
   readonly telHref = telHref;
   readonly mailtoHref = mailtoHref;
+  readonly currentYear = new Date().getFullYear();
   readonly mobileOpen = signal(false);
   readonly areasOpen = signal(false);
   readonly currentUrl = signal('/');

@@ -1,7 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-import { hubLabels } from '../content/hub-labels';
 import { parentHref, treatmentByPath } from '../content/treatment-index';
 import type { TreatmentPage } from '../content/treatment-types';
 
@@ -11,13 +10,6 @@ import type { TreatmentPage } from '../content/treatment-types';
   imports: [RouterLink],
   template: `
     <article class="page-shell treatment-page">
-      <nav class="breadcrumbs" aria-label="Migas de pan">
-        <a routerLink="/">Inicio</a><span aria-hidden="true">/</span>
-        <a routerLink="/areas-de-intervencion">Áreas de intervención</a><span aria-hidden="true">/</span>
-        <a [routerLink]="parentHref()">{{ parentLabel() }}</a><span aria-hidden="true">/</span>
-        <span>{{ page().h1 }}</span>
-      </nav>
-
       <header class="hero woven-hero treatment-hero">
         <p class="overline-pill">{{ page().summary }}</p>
         <h1>{{ page().h1 }}</h1>
@@ -95,9 +87,5 @@ export class TreatmentPageComponent {
 
   parentHref(): string {
     return parentHref(this.page().sector);
-  }
-
-  parentLabel(): string {
-    return hubLabels[this.page().sector];
   }
 }

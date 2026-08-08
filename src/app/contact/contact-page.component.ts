@@ -12,9 +12,6 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
   imports: [ReactiveFormsModule, RouterLink],
   template: `
     <article class="page-shell contact-page">
-      <nav class="breadcrumbs" aria-label="Migas de pan">
-        <a routerLink="/">Inicio</a><span aria-hidden="true">/</span><span>Contacto</span>
-      </nav>
       <header class="hero compact-hero">
         <p class="overline-pill">Un primer mensaje breve, práctico y respetuoso con tu privacidad</p>
         <h1>Contacto</h1>

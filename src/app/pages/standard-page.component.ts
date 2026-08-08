@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { assertStandardPageKey, StandardPageKey } from '../content/public-routes';
 import { credentialGroups } from '../content/credentials';
 import { methodModels, methodResources } from '../content/method-models';
+import { practiceIdentity } from '../content/practice-identity';
 import { fallbackSrc, jpgSrcset, siteImages, webpSrcset, type SiteImage } from '../content/site-images';
 import type { PageBlock, SiteImageKey } from '../content/types';
 import { workshopLines } from '../content/workshops';
@@ -14,27 +15,35 @@ import { pageContents } from './page-data';
   standalone: true,
   imports: [RouterLink],
   template: `
-    <article class="page-shell" [class.local-page]="content().page.key === 'local'" [class.trauma-page]="content().page.key === 'traumaLocal'">
-      <nav class="breadcrumbs" aria-label="Migas de pan">
-        @for (crumb of breadcrumbs(); track crumb.href ?? crumb.label) {
-          @if (crumb.href) {
-            <a [routerLink]="crumb.href">{{ crumb.label }}</a>
-            <span aria-hidden="true">/</span>
-          } @else {
-            <span>{{ crumb.label }}</span>
-          }
-        }
-      </nav>
-
+    <article class="page-shell" [class.local-page]="content().page.key === 'local'" [class.trauma-page]="content().page.key === 'traumaLocal'" [class.home-page]="content().page.key === 'home'">
       <header class="hero woven-hero" [class.has-media]="heroImage()">
         <div class="hero-text">
           <p class="overline-pill">{{ content().heroNote }}</p>
           <h1>{{ content().page.h1 }}</h1>
+          @if (content().page.key === 'home') {
+            <p class="hero-name">{{ identity.practitionerName }}</p>
+          }
           <p class="hero-copy">{{ content().page.description }}</p>
+          @for (paragraph of content().heroBody; track paragraph) {
+            <p class="hero-copy">{{ paragraph }}</p>
+          }
+          @if (content().heroLinks?.length) {
+            <div class="inline-links" aria-label="Enlaces relacionados">
+              @for (link of content().heroLinks; track link.href) {
+                <a [routerLink]="linkPath(link.href)" [queryParams]="linkQueryParams(link.href)">{{ link.label }}</a>
+              }
+            </div>
+          }
           <div class="hero-actions">
             <a routerLink="/contacto" class="button primary">Pedir cita</a>
             <a routerLink="/areas-de-intervencion" class="button secondary">Ver áreas</a>
           </div>
+          @if (content().page.key === 'home') {
+            <picture class="hero-logo">
+              <source type="image/webp" srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w" sizes="160px" />
+              <img src="images/logo-440.png" srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w" sizes="160px" width="220" height="86" alt="" loading="lazy" decoding="async" />
+            </picture>
+          }
         </div>
         @if (heroImage(); as media) {
           <picture class="hero-media">
@@ -262,7 +271,7 @@ export class StandardPageComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly pageKey = signal<StandardPageKey>('home');
   readonly content = computed(() => pageContents[this.pageKey()]);
-  readonly breadcrumbs = computed(() => this.buildBreadcrumbs(this.pageKey()));
+  readonly identity = practiceIdentity;
   readonly heroImage = computed(() => {
     const key = this.content().heroImage;
     return key ? siteImages[key] : undefined;
@@ -320,14 +329,5 @@ export class StandardPageComponent {
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '');
-  }
-
-  private buildBreadcrumbs(key: StandardPageKey): { label: string; href?: string }[] {
-    const current = pageContents[key].page.h1;
-    if (['childrenFamilies', 'adolescents', 'adults', 'perinatal', 'educationTraining'].includes(key)) {
-      return [{ label: 'Inicio', href: '/' }, { label: 'Áreas de intervención', href: '/areas-de-intervencion' }, { label: current }];
-    }
-    if (key === 'traumaLocal') return [{ label: 'Inicio', href: '/' }, { label: 'Psicología Ciudad Real', href: '/psicologia-ciudad-real' }, { label: current }];
-    return [{ label: 'Inicio', href: '/' }, { label: current }];
   }
 }
