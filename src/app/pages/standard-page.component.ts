@@ -25,7 +25,7 @@ import { pageContents } from './page-data';
                 <img src="images/logo-660.png" srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w" sizes="(max-width: 40rem) 78vw, 20rem" width="660" height="258" alt="" fetchpriority="high" decoding="async" />
               </picture>
             </h1>
-            <p class="hero-copy">Trabajo desde una mirada integradora, que une el conocimiento clínico, con el respeto por la hoistoria, el cuerpo y el ritmo de cada persona</p>
+            <p class="hero-copy">Trabajo desde una mirada integradora, que une el conocimiento clínico, con el respeto por la historia, el cuerpo y el ritmo de cada persona</p>
           } @else {
             <p class="overline-pill">{{ content().heroNote }}</p>
             <h1>{{ content().page.h1 }}</h1>
