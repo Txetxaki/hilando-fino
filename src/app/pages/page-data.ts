@@ -41,17 +41,6 @@ const evaluationSection = {
 export const pageContents: Record<StandardPageKey, PageContent> = {
   home: {
     page: contentPages.home,
-    heroNote: 'Psicología en Ciudad Real para personas y familias.',
-    heroBody: [
-      'Me llamo Marta Martín. Acompaño a personas y familias a comprender el origen de su malestar y a desarrollar nuevas formas de afrontarlo, integrando una atención cercana y respetuosa con intervenciones adaptadas a cada persona.',
-      'Infancia y familias, adolescencia, adultos, psicología perinatal, orientación educativa y talleres se organizan como puertas de entrada amplias. Dentro de cada área encontrarás situaciones frecuentes descritas sin diagnosticar ni prometer resultados.',
-      'La intención es que puedas reconocer un tema, leerlo con cuidado y decidir si merece la pena pedir una primera consulta.'
-    ],
-    heroLinks: [
-      { label: 'Ver áreas de intervención', href: '/areas-de-intervencion' },
-      { label: 'Ver talleres y formación', href: '/talleres' },
-      { label: 'Ir a contacto', href: '/contacto' }
-    ],
     sections: [
       {
         title: 'Tirando del hilo',

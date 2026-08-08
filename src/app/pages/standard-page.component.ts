@@ -18,31 +18,32 @@ import { pageContents } from './page-data';
     <article class="page-shell" [class.local-page]="content().page.key === 'local'" [class.trauma-page]="content().page.key === 'traumaLocal'" [class.home-page]="content().page.key === 'home'">
       <header class="hero woven-hero" [class.has-media]="heroImage()">
         <div class="hero-text">
-          <p class="overline-pill">{{ content().heroNote }}</p>
-          <h1>{{ content().page.h1 }}</h1>
           @if (content().page.key === 'home') {
-            <p class="hero-name">{{ identity.practitionerName }}</p>
-          }
-          <p class="hero-copy">{{ content().page.description }}</p>
-          @for (paragraph of content().heroBody; track paragraph) {
-            <p class="hero-copy">{{ paragraph }}</p>
-          }
-          @if (content().heroLinks?.length) {
-            <div class="inline-links" aria-label="Enlaces relacionados">
-              @for (link of content().heroLinks; track link.href) {
-                <a [routerLink]="linkPath(link.href)" [queryParams]="linkQueryParams(link.href)">{{ link.label }}</a>
-              }
+            <h1 class="hero-logo-heading" aria-label="Hilando Fino Psicología">
+              <picture class="hero-logo">
+                <source type="image/webp" srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w" sizes="(max-width: 40rem) 78vw, 20rem" />
+                <img src="images/logo-660.png" srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w" sizes="(max-width: 40rem) 78vw, 20rem" width="660" height="258" alt="" fetchpriority="high" decoding="async" />
+              </picture>
+            </h1>
+            <p class="hero-copy">Trabajo desde una mirada integradora, que une el conocimiento clínico, con el respeto por la hoistoria, el cuerpo y el ritmo de cada persona</p>
+          } @else {
+            <p class="overline-pill">{{ content().heroNote }}</p>
+            <h1>{{ content().page.h1 }}</h1>
+            <p class="hero-copy">{{ content().page.description }}</p>
+            @for (paragraph of content().heroBody; track paragraph) {
+              <p class="hero-copy">{{ paragraph }}</p>
+            }
+            @if (content().heroLinks?.length) {
+              <div class="inline-links" aria-label="Enlaces relacionados">
+                @for (link of content().heroLinks; track link.href) {
+                  <a [routerLink]="linkPath(link.href)" [queryParams]="linkQueryParams(link.href)">{{ link.label }}</a>
+                }
+              </div>
+            }
+            <div class="hero-actions">
+              <a routerLink="/contacto" class="button primary">Pedir cita</a>
+              <a routerLink="/areas-de-intervencion" class="button secondary">Ver áreas</a>
             </div>
-          }
-          <div class="hero-actions">
-            <a routerLink="/contacto" class="button primary">Pedir cita</a>
-            <a routerLink="/areas-de-intervencion" class="button secondary">Ver áreas</a>
-          </div>
-          @if (content().page.key === 'home') {
-            <picture class="hero-logo">
-              <source type="image/webp" srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w" sizes="160px" />
-              <img src="images/logo-440.png" srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w" sizes="160px" width="220" height="86" alt="" loading="lazy" decoding="async" />
-            </picture>
           }
         </div>
         @if (heroImage(); as media) {

@@ -69,7 +69,7 @@ export type PageBlock =
 
 export interface PageContent {
   page: ContentPage;
-  heroNote: string;
+  heroNote?: string;
   heroImage?: SiteImageKey;
   /** Extra lead paragraphs rendered under the hero copy with no heading of their own — for text she wrote as the page's main paragraph, not as a labelled sub-section. */
   heroBody?: string[];
