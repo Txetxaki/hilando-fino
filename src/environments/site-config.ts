@@ -1,5 +1,5 @@
 export const siteConfig = {
-  siteUrl: 'https://pending-domain.invalid',
+  siteUrl: 'https://hilandofinopsicologia.com',
   baseHref: '/',
-  draftNoindex: true
+  draftNoindex: false
 } as const;

@@ -64,13 +64,17 @@ const forbiddenVisibleTerms = [
   /launch gates?/i
 ];
 
+const draftNoindex = process.env['SEO_EXPECT_DRAFT_NOINDEX'] === 'true';
+const expectedRobots = draftNoindex ? /noindex/ : /index, follow/;
+const siteUrl = process.env['HILANDO_FINO_SITE_URL'] ?? 'https://hilandofinopsicologia.com';
+
 test.describe('public static-prerender routes', () => {
   for (const [path, heading] of routes) {
-    test(`${path} renders crawlable heading and preview-safe metadata`, async ({ page }) => {
+    test(`${path} renders crawlable heading and selected indexing metadata`, async ({ page }) => {
       await page.goto(path);
       await expect(page.getByRole('heading', { name: heading, level: 1 })).toBeVisible();
-      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
-      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /pending-domain\.invalid/);
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', expectedRobots);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${siteUrl}${path === '/' ? '/' : path}`);
       const visibleText = await page.locator('body').innerText();
       for (const forbidden of forbiddenVisibleTerms) expect(visibleText).not.toMatch(forbidden);
     });
@@ -84,7 +88,7 @@ test.describe('public static-prerender routes', () => {
       await expect(page.getByRole('navigation', { name: 'Migas de pan' }).getByRole('link', { name: /Áreas de intervención/ })).toBeVisible();
       await expect(page.getByRole('heading', { name: /Preguntas sobre/i })).toBeVisible();
       await expect(page.getByRole('link', { name: /Orientar mi consulta|Escribirme una primera orientación/i }).first()).toBeVisible();
-      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', expectedRobots);
       const visibleText = await page.locator('body').innerText();
       for (const forbidden of forbiddenVisibleTerms) expect(visibleText).not.toMatch(forbidden);
     }
@@ -195,6 +199,6 @@ test.describe('public static-prerender routes', () => {
     await expect(page.getByRole('heading', { name: 'No hemos encontrado esta página', level: 1 })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Hilando Fino Psicología', level: 1 })).toHaveCount(0);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://pending-domain.invalid/404');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${siteUrl}/404`);
   });
 });

@@ -1,6 +1,6 @@
 # Launch and rollback gates
 
-The website is implemented in draft-safe mode. Public launch remains blocked until Marta/legal approval is complete.
+The production artifact is configured for `https://hilandofinopsicologia.com/` with indexable metadata. Preview mode remains available and is explicitly selected with `PAGES_PREVIEW=true`.
 
 > **Public preview warning:** GitHub Pages is publicly viewable even when the source repository is private. `noindex` reduces indexing signals but is not access control. Do not deploy secrets, patient data, private clinical notes, or unapproved production claims.
 
@@ -49,26 +49,30 @@ node -e "const {randomBytes}=require('node:crypto'); require('node:fs').appendFi
 
 The current delivery is static-prerender plus Express API, not runtime SSR. Known prerendered route files are served directly. Unknown paths return a real HTTP `404` with safe `noindex` metadata instead of falling back to the home page. See `docs/architecture/runtime-model.md`.
 
-## GitHub Pages preview
+## GitHub Pages production and preview
 
 - Workflow: `.github/workflows/ci.yml`.
 - Triggers: pushes to `master` and manual `workflow_dispatch`; pull requests run quality gates without deploying.
 - Artifact command: `npm run build:pages && npm run verify:pages`.
-- Base URL: `/hilando-fino/` for repository Pages.
+- Production base URL: `/` on `https://hilandofinopsicologia.com`.
+- Optional preview base URL: set `PAGES_BASE_HREF` and `PAGES_SITE_URL` together with `PAGES_PREVIEW=true`.
 - Artifact path: `dist/hilando-fino/browser` only.
 - Excluded from deploy by construction: Express server bundle, contact backend runtime, `.env` files, source maps, secrets, and server health data.
-- Preview status: draft/noindex; no LocalBusiness/NAP/contact submission.
+- Production status: `index, follow`, `Allow: /`, and sitemap URLs use the custom domain.
+- Preview status: draft/noindex, `Disallow: /`, and no LocalBusiness/NAP/contact submission.
 - Preview banner/status copy must stay conspicuous and non-clinical: the site is a draft, not an emergency service, not diagnosis/triage, and not a production contact intake.
 - Static `404.html`: noindex, canonical `/404`, and does not masquerade as the home page.
-- Post-deploy smoke uses `${{ steps.deployment.outputs.page_url }}` to verify HTTP success, noindex, repository-base assets/logo, a required route sample, and safe 404 behavior.
+- Post-deploy smoke uses `${{ steps.deployment.outputs.page_url }}` to verify HTTP success, production indexing metadata, custom-domain origins, assets, a required route sample, and safe 404 behavior.
+
+GitHub Pages cannot enforce the apex HTTP-to-HTTPS redirect from repository code. Canonical, Open Graph, JSON-LD, sitemap, and robots origins are HTTPS, but the redirect itself must be enabled and verified in GitHub Pages custom-domain settings and DNS.
 
 ## Verification commands
 
 - `npm run performance:smoke` builds with the pinned Node runtime, starts the built static-prerender server on a controlled free local port, waits for readiness, runs a Playwright navigation smoke, and always cleans up. It is still not Lighthouse/CWV.
 - `npm run lighthouse` runs real Lighthouse lab budgets on the built server. Lighthouse lab output must not be reported as INP; INP requires approved launch monitoring or field data.
 - Lighthouse Chrome cleanup uses bounded retries. A real cleanup leak fails the gate; expected Windows timing is retried instead of silently hidden.
-- `npm run build:pages` prepares the safe static GitHub Pages artifact.
-- `npm run verify:pages` checks every prerendered HTML file for Pages base href, canonical/JSON-LD origin `https://txetxaki.github.io/hilando-fino`, malformed URLs, local/pending origins, required routes, draft noindex, disabled contact, safe static 404, and absence of sensitive/server files.
+- `npm run build:pages` prepares the production static GitHub Pages artifact; use `PAGES_PREVIEW=true` for the explicit preview policy.
+- `npm run verify:pages` checks every prerendered HTML file for the selected base href, canonical/JSON-LD origin, Twitter metadata, local/pending origins, indexability policy, sitemap/robots, favicon, required routes, disabled contact, safe static 404, and absence of sensitive/server files.
 - `npm run pages:smoke -- --artifact-dir dist/hilando-fino/browser` runs the post-deploy smoke contract against the local Pages artifact when a deployed `page_url` is not available.
 - `npm run verify:inventory` reconciles the exact intended tracked/untracked path manifest before or after staging and proves the raw Stitch ZIP remains ignored/local-only.
 

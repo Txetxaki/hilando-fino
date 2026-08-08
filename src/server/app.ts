@@ -8,12 +8,13 @@ import { contactFieldLimits } from '../app/contact/contact.constants';
 import { renderNotFoundHtml } from '../app/content/not-found';
 import { knownPrerenderedPaths } from '../app/content/public-routes';
 import { contactHandler, csrfTokenHandler } from './contact/handler';
+import { siteConfig } from '../environments/site-config';
 
 export function createHilandoFinoApp(): express.Express {
   const app = express();
   const browserDist = join(process.cwd(), 'dist', 'hilando-fino', 'browser');
-  const siteUrl = process.env['HILANDO_FINO_SITE_URL'] ?? 'https://pending-domain.invalid';
-  const baseHref = process.env['HILANDO_FINO_BASE_HREF'] ?? '/';
+  const siteUrl = process.env['HILANDO_FINO_SITE_URL'] ?? siteConfig.siteUrl;
+  const baseHref = process.env['HILANDO_FINO_BASE_HREF'] ?? siteConfig.baseHref;
   const knownPrerenderedRoutes = new Set(knownPrerenderedPaths);
 
   app.disable('x-powered-by');
@@ -57,7 +58,7 @@ export function createHilandoFinoApp(): express.Express {
       const routeIndex = routePath === '/' ? join(browserDist, 'index.html') : join(browserDist, routePath.slice(1), 'index.html');
       if (existsSync(routeIndex)) {
         res.setHeader('Cache-Control', 'no-store');
-        res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+        if (siteConfig.draftNoindex) res.setHeader('X-Robots-Tag', 'noindex, nofollow');
         res.sendFile(routeIndex);
         return;
       }

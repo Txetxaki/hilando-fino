@@ -4,11 +4,12 @@ import { join } from 'node:path';
 import { buildPrerenderedApp } from './server-lifecycle.mjs';
 import { renderNotFoundHtml } from '../src/app/content/not-found.ts';
 
-const baseHref = process.env['PAGES_BASE_HREF'] ?? '/hilando-fino/';
-const siteUrl = process.env['PAGES_SITE_URL'] ?? 'https://txetxaki.github.io/hilando-fino';
+const preview = process.env['PAGES_PREVIEW'] === 'true';
+const baseHref = process.env['PAGES_BASE_HREF'] ?? '/';
+const siteUrl = process.env['PAGES_SITE_URL'] ?? 'https://hilandofinopsicologia.com';
 const browserDir = join(process.cwd(), 'dist', 'hilando-fino', 'browser');
 
-await buildPrerenderedApp({ baseHref, siteUrl, configuration: 'pages' });
+await buildPrerenderedApp({ baseHref, siteUrl, configuration: 'pages', draftNoindex: preview });
 mkdirSync(browserDir, { recursive: true });
 removeCsrFallbackTemplate(browserDir);
 rewriteHtmlUrlsForBase(browserDir, baseHref);

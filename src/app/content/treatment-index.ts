@@ -1,5 +1,6 @@
 import { sectorPath, treatmentPages } from './treatment-pages';
 import type { TreatmentContentPage, TreatmentPage, TreatmentSector } from './treatment-types';
+import { siteConfig } from '../../environments/site-config';
 
 /**
  * 29 original topic routes + 6 perinatal routes + the adult mood/low-energy route
@@ -37,7 +38,7 @@ export const treatmentContentPages: readonly TreatmentContentPage[] = treatmentP
   title: page.title,
   description: page.description,
   h1: page.h1,
-  noindex: true,
+  noindex: siteConfig.draftNoindex,
   includeInSitemap: true,
   parentHub: page.sector,
   lastReviewed: page.editorial.lastReviewed,

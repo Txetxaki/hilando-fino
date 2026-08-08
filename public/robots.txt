@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-Sitemap: https://pending-domain.invalid/sitemap.xml
+Sitemap: https://hilandofinopsicologia.com/sitemap.xml

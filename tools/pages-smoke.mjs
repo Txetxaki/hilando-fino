@@ -4,8 +4,10 @@ import { join } from 'node:path';
 const artifactArgIndex = process.argv.indexOf('--artifact-dir');
 const artifactDir = artifactArgIndex >= 0 ? process.argv[artifactArgIndex + 1] : process.env['PAGES_ARTIFACT_DIR'];
 const pageUrl = process.env['PAGES_PAGE_URL'] ?? process.env['PAGE_URL'];
-const baseHref = process.env['PAGES_BASE_HREF'] ?? '/hilando-fino/';
-const pagesSiteUrl = process.env['PAGES_SITE_URL'] ?? 'https://txetxaki.github.io/hilando-fino';
+const baseHref = process.env['PAGES_BASE_HREF'] ?? '/';
+const pagesSiteUrl = process.env['PAGES_SITE_URL'] ?? 'https://hilandofinopsicologia.com';
+const draftNoindex = process.env['PAGES_PREVIEW'] === 'true';
+const expectedRobots = draftNoindex ? 'noindex, nofollow' : 'index, follow';
 const pagesUrl = new URL(pagesSiteUrl);
 const pagesPath = pagesUrl.pathname === '/' ? '' : pagesUrl.pathname.replace(/\/$/, '');
 
@@ -39,7 +41,8 @@ async function checkPage(path, options = {}) {
   const expectedStatus = options.expectStatus ?? 200;
   if (response.status !== expectedStatus) failures.push(`${url}: expected HTTP ${expectedStatus}, got ${response.status}`);
   const html = await response.text();
-  if (!html.includes('name="robots" content="noindex, nofollow"')) failures.push(`${url}: missing noindex robots metadata`);
+  const expectedPageRobots = expectedStatus === 404 ? 'noindex, nofollow' : expectedRobots;
+  if (!html.includes(`name="robots" content="${expectedPageRobots}"`)) failures.push(`${url}: missing ${expectedPageRobots} robots metadata`);
   checkCanonicalAndForbiddenOrigins(url, html);
   if (options.expectHeading && !html.includes(options.expectHeading)) failures.push(`${url}: missing expected content: ${options.expectHeading}`);
   if (path === '') {
@@ -69,7 +72,8 @@ async function checkLocalArtifact(dir) {
     }
     const html = readFileSync(path, 'utf8');
     if (!html.includes(heading)) localFailures.push(`${file}: missing expected content: ${heading}`);
-    if (!html.includes('name="robots" content="noindex, nofollow"')) localFailures.push(`${file}: missing noindex robots metadata`);
+    const expectedPageRobots = file === '404.html' ? 'noindex, nofollow' : expectedRobots;
+    if (!html.includes(`name="robots" content="${expectedPageRobots}"`)) localFailures.push(`${file}: missing ${expectedPageRobots} robots metadata`);
     if (!html.includes(`<base href="${baseHref}">`)) localFailures.push(`${file}: missing expected base href ${baseHref}`);
     checkCanonicalAndForbiddenOrigins(file, html, localFailures);
   }
@@ -77,6 +81,7 @@ async function checkLocalArtifact(dir) {
   // variants, so the smoke check follows the asset visitors actually download.
   const logo = join(dir, 'images', 'logo-440.png');
   if (!existsSync(logo)) localFailures.push('images/logo-440.png: missing from local Pages artifact');
+  if (!existsSync(join(dir, 'favicon.ico'))) localFailures.push('favicon.ico: missing from local Pages artifact');
   if (localFailures.length > 0) {
     console.error(localFailures.join('\n'));
     process.exit(1);

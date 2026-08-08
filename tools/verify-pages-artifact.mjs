@@ -4,8 +4,10 @@ import { join, relative, sep } from 'node:path';
 import { publicRouteManifest, requiredPagesArtifactFiles } from '../src/app/content/public-routes.ts';
 
 const browserDir = join(process.cwd(), 'dist', 'hilando-fino', 'browser');
-const baseHref = process.env['PAGES_BASE_HREF'] ?? '/hilando-fino/';
-const pagesSiteUrl = process.env['PAGES_SITE_URL'] ?? 'https://txetxaki.github.io/hilando-fino';
+const baseHref = process.env['PAGES_BASE_HREF'] ?? '/';
+const pagesSiteUrl = process.env['PAGES_SITE_URL'] ?? 'https://hilandofinopsicologia.com';
+const draftNoindex = process.env['PAGES_PREVIEW'] === 'true';
+const expectedRobots = draftNoindex ? 'noindex, nofollow' : 'index, follow';
 const pagesUrl = new URL(pagesSiteUrl);
 const pagesPath = pagesUrl.pathname === '/' ? '' : pagesUrl.pathname.replace(/\/$/, '');
 const requiredRoutes = requiredPagesArtifactFiles;
@@ -23,6 +25,30 @@ const contactDishonestMessageVariants = [contactDishonestMessage, hexEscapeNonAs
 let contactHonestMessageFound = false;
 
 if (!existsSync(browserDir)) failures.push('dist/hilando-fino/browser is missing. Run npm run build:pages first.');
+
+const favicon = join(browserDir, 'favicon.ico');
+if (!existsSync(favicon)) failures.push('favicon.ico is missing from the Pages artifact');
+
+const robotsFile = join(browserDir, 'robots.txt');
+if (!existsSync(robotsFile)) {
+  failures.push('robots.txt is missing from the Pages artifact');
+} else {
+  const robots = readFileSync(robotsFile, 'utf8');
+  if (robots.includes('pending-domain.invalid') || robots.includes('localhost')) failures.push('robots.txt contains a pending/local origin');
+  if (draftNoindex ? !robots.includes('Disallow: /') : !robots.includes('Allow: /')) failures.push(`robots.txt does not match ${draftNoindex ? 'preview' : 'production'} policy`);
+  if (!robots.includes(`Sitemap: ${pagesSiteUrl}/sitemap.xml`)) failures.push('robots.txt does not point to the real sitemap origin');
+}
+
+const sitemapFile = join(browserDir, 'sitemap.xml');
+if (!existsSync(sitemapFile)) {
+  failures.push('sitemap.xml is missing from the Pages artifact');
+} else {
+  const sitemap = readFileSync(sitemapFile, 'utf8');
+  if (sitemap.includes('pending-domain.invalid') || sitemap.includes('localhost')) failures.push('sitemap.xml contains a pending/local origin');
+  if (!sitemap.includes(`<loc>${pagesSiteUrl}/</loc>`)) failures.push('sitemap.xml does not contain the real site origin');
+  if (draftNoindex && !sitemap.includes('<url>')) failures.push('preview sitemap unexpectedly has no route inventory');
+  if (!draftNoindex && sitemap.includes('noindex')) failures.push('production sitemap contains preview-only indexing policy');
+}
 
 for (const route of requiredRoutes) {
   const file = join(browserDir, route);
@@ -73,13 +99,15 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log('GitHub Pages artifact verification passed: base href, routes, noindex metadata, contact fallback, 404, and sensitive-file checks are safe.');
+console.log(`GitHub Pages artifact verification passed: ${expectedRobots} metadata, base href, routes, origins, sitemap/robots, favicon, contact fallback, 404, and sensitive-file checks are safe.`);
 
 function verifyHtml(route, html) {
   if (!html.includes(`<base href="${baseHref}">`)) failures.push(`${route} does not use the expected base href ${baseHref}`);
-  if (!html.includes('name="robots" content="noindex, nofollow"')) failures.push(`${route} is not draft-safe noindex`);
+  if (route === '404.html') return;
+  if (!html.includes(`name="robots" content="${expectedRobots}"`)) failures.push(`${route} does not emit ${expectedRobots}`);
   if (html.includes('@type":"LocalBusiness') || html.includes('@type":"HealthAndBeautyBusiness')) failures.push(`${route} contains local business schema before NAP approval`);
   if (route === 'contacto/index.html' && !html.includes('Un primer mensaje breve, práctico y respetuoso con tu privacidad')) failures.push('contact route does not render final-facing contact guidance');
+  if (!html.includes('name="twitter:title"') || !html.includes('name="twitter:description"') || !html.includes('name="twitter:image"')) failures.push(`${route} is missing explicit Twitter metadata`);
   const unsafeUrls = collectRelevantUrls(html).filter((url) => isUnsafeRootAbsoluteRepositoryUrl(url));
   if (unsafeUrls.length > 0) failures.push(`${route} has root-absolute repository URLs outside ${baseHref}: ${unsafeUrls.join(', ')}`);
   verifyUrlContracts(route, html);

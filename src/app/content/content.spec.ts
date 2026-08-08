@@ -37,12 +37,12 @@ const forbiddenVoicePatterns = [
 ];
 
 describe('content architecture', () => {
-  it('keeps preview metadata blocked while sitemap artifacts list every real route', () => {
+  it('publishes the approved production route inventory while preview remains an explicit build mode', () => {
     for (const page of allContentPages) expect(() => assertValidContentPage(page)).not.toThrow();
-    expect(approvedSitemapPages).toEqual([]);
+    expect(approvedSitemapPages.map((page) => page.canonicalPath).sort()).toEqual(publicRouteManifest.map((route) => route.canonicalPath).sort());
     expect(previewSitemapPages.map((page) => page.canonicalPath).sort()).toEqual(publicRouteManifest.map((route) => route.canonicalPath).sort());
     expect(contentPages.local.primaryIntent).toContain('Ciudad Real');
-    expect(contentPages.local.noindex).toBe(true);
+    expect(contentPages.local.noindex).toBe(false);
   });
 
   it('renders unique useful summaries for every treatment page with parent hub links', () => {

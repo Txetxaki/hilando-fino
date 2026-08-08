@@ -48,10 +48,10 @@ export async function runCommand(command, args, options = {}) {
   }
 }
 
-export async function buildPrerenderedApp({ baseHref = '/', siteUrl = 'https://pending-domain.invalid', configuration = 'production' } = {}) {
+export async function buildPrerenderedApp({ baseHref = '/', siteUrl = 'https://hilandofinopsicologia.com', configuration = 'production', draftNoindex = false } = {}) {
   await runCommand(process.execPath, ['--import', 'tsx', 'tools/generate-sitemap.ts'], {
     label: 'sitemap generation',
-    env: { HILANDO_FINO_SITE_URL: siteUrl }
+    env: { HILANDO_FINO_SITE_URL: siteUrl, HILANDO_FINO_DRAFT_NOINDEX: String(draftNoindex) }
   });
 
   const buildArgs = ['node_modules/@angular/cli/bin/ng.js', 'build', '--configuration', configuration];
@@ -60,7 +60,9 @@ export async function buildPrerenderedApp({ baseHref = '/', siteUrl = 'https://p
       '--define',
       `__HILANDO_FINO_SITE_URL__=${JSON.stringify(siteUrl)}`,
       '--define',
-      `__HILANDO_FINO_BASE_HREF__=${JSON.stringify(baseHref)}`
+      `__HILANDO_FINO_BASE_HREF__=${JSON.stringify(baseHref)}`,
+      '--define',
+      `__HILANDO_FINO_DRAFT_NOINDEX__=${JSON.stringify(draftNoindex)}`
     );
   }
   if (baseHref !== '/') {
@@ -69,7 +71,7 @@ export async function buildPrerenderedApp({ baseHref = '/', siteUrl = 'https://p
 
   await runCommand(process.execPath, buildArgs, {
     label: 'Angular prerender build',
-    env: { HILANDO_FINO_SITE_URL: siteUrl }
+    env: { HILANDO_FINO_SITE_URL: siteUrl, HILANDO_FINO_DRAFT_NOINDEX: String(draftNoindex) }
   });
 }
 

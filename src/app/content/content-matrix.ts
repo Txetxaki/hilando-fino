@@ -1,6 +1,7 @@
-import { ContentPage, isIndexable } from './types';
+import { ContentPage } from './types';
 import type { StaticPublicPageKey } from './public-routes';
 import { treatmentContentPages } from './treatment-index';
+import { siteConfig } from '../../environments/site-config';
 
 const today = '2026-07-23';
 
@@ -33,7 +34,7 @@ const publicationCopyNote = ['Production domain, brand-bound email address, pric
 function publicPage(input: Omit<ContentPage, 'status' | 'noindex' | 'includeInSitemap' | 'lastReviewed' | 'blockers' | 'modalityAvailability'> & Partial<ContentPage>): ContentPage {
   return {
     status: input.status ?? 'approved-placeholder',
-    noindex: input.noindex ?? true,
+    noindex: input.noindex ?? siteConfig.draftNoindex,
     includeInSitemap: input.includeInSitemap ?? true,
     lastReviewed: input.lastReviewed ?? today,
     blockers: input.blockers ?? publicationCopyNote,
@@ -215,7 +216,9 @@ export const contentPages = {
 } satisfies Record<StaticPublicPageKey, ContentPage>;
 
 export const allContentPages = [...Object.values(contentPages), ...treatmentContentPages];
-export const approvedSitemapPages = allContentPages.filter(isIndexable);
+// The production launch approval is represented by the deployment policy. Preview keeps
+// the same route inventory but never exposes it as indexable content.
+export const approvedSitemapPages = allContentPages.filter((page) => !siteConfig.draftNoindex && page.includeInSitemap);
 export const previewSitemapPages = allContentPages.filter((page) => page.includeInSitemap);
 
 export function pageByPath(path: string): ContentPage | undefined {

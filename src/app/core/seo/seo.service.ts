@@ -22,7 +22,8 @@ export class SeoService {
     const canonicalPath = page?.canonicalPath ?? notFoundContent.canonicalPath;
     this.title.setTitle(title);
     this.meta.updateTag({ name: 'description', content: description });
-    this.meta.updateTag({ name: 'robots', content: page?.noindex === false ? 'index, follow' : 'noindex, nofollow' });
+    const robots = !siteConfig.draftNoindex && page?.noindex === false ? 'index, follow' : 'noindex, nofollow';
+    this.meta.updateTag({ name: 'robots', content: robots });
     this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:description', content: description });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
@@ -34,6 +35,9 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
     this.meta.updateTag({ property: 'og:image:alt', content: 'Marta Martín en su consulta de psicología en Ciudad Real.' });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.updateTag({ name: 'twitter:image', content: `${siteUrl}/${ogImagePath}` });
     this.setCanonical(`${siteUrl}${canonicalPath}`);
     this.setJsonLd(page ? schemaForPage(siteUrl, page) : []);
   }
