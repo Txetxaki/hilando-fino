@@ -1,10 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AnalyticsService } from '../core/analytics/analytics.service';
-import { ModalityPreference } from '../content/types';
-import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
+import { mailtoHref, practiceIdentity } from '../content/practice-identity';
+import { contactSubmissionMessages, submitContactRequest, type ContactSubmissionStatus } from './contact-submission';
+import {
+  approvedContactModalities,
+  ciudadRealFitLabels,
+  ciudadRealFitOptions,
+  contactFieldLimits,
+  modalityPreferenceLabels,
+  preferredContactLabels,
+  preferredContactOptions,
+  reasonCategoryLabels
+} from './contact.constants';
+import type { CiudadRealFit, ContactRequest, PreferredContact, ReasonCategory } from './contact.types';
+
+type ApprovedModality = (typeof approvedContactModalities)[number];
 
 @Component({
   selector: 'hf-contact-page',
@@ -28,8 +41,9 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
           <label>Nombre <input formControlName="name" autocomplete="name" /></label>
           <label>Preferencia de contacto
             <select formControlName="preferredContact">
-              <option value="email">Email</option>
-              <option value="phone">Teléfono</option>
+              @for (option of preferredContactChoices; track option) {
+                <option [value]="option">{{ preferredContactLabels[option] }}</option>
+              }
             </select>
           </label>
         </div>
@@ -40,16 +54,16 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
         <div class="field-pair">
           <label>Modalidad preferida
             <select formControlName="modalityPreference" (change)="trackModality()">
-              <option value="in-person-ciudad-real">Presencial en Ciudad Real</option>
-              <option value="online">En línea</option>
-              <option value="unsure">No lo sé todavía</option>
+              @for (option of modalityChoices; track option) {
+                <option [value]="option">{{ modalityPreferenceLabels[option] }}</option>
+              }
             </select>
           </label>
           <label>Encaje con Ciudad Real
             <select formControlName="ciudadRealFit">
-              <option value="yes">Me interesa Ciudad Real</option>
-              <option value="unsure">Necesito consultarlo</option>
-              <option value="no">No busco Ciudad Real</option>
+              @for (option of ciudadRealFitChoices; track option) {
+                <option [value]="option">{{ ciudadRealFitLabels[option] }}</option>
+              }
             </select>
           </label>
         </div>
@@ -68,15 +82,17 @@ import { contactFieldLimits, reasonCategoryLabels } from './contact.constants';
           <input type="checkbox" formControlName="privacyConsent" />
           <span>He leído la información de privacidad y acepto que se use este mensaje para responder a mi consulta.</span>
         </label>
-        <input type="hidden" formControlName="csrfToken" />
         <input class="honeypot" formControlName="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
-        @if (form.invalid && submitted) {
+        @if (form.invalid && submitted()) {
           <p class="error-summary" role="alert">Revisa los campos obligatorios antes de enviar.</p>
         }
         <p id="privacy-note">Consulta las rutas de <a routerLink="/privacidad">privacidad</a>, <a routerLink="/aviso-legal">aviso legal</a> y <a routerLink="/cookies">cookies</a>.</p>
-        <button class="button primary" type="submit">Enviar solicitud</button>
-        <p id="contact-status" role="status">{{ statusMessage }}</p>
+        <button class="button primary" type="submit" [disabled]="sending()">{{ sending() ? 'Enviando…' : 'Enviar solicitud' }}</button>
+        <p id="contact-status" role="status">{{ statusMessage() }}</p>
+        @if (status() === 'unavailable') {
+          <p class="contact-fallback"><a [href]="mailtoHref">{{ practiceEmail }}</a></p>
+        }
       </form>
 
       <aside class="related-block" aria-labelledby="contact-related-title">
@@ -95,21 +111,33 @@ export class ContactPageComponent {
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly analytics = inject(AnalyticsService);
-  readonly categories = Object.entries(reasonCategoryLabels);
-  submitted = false;
-  statusMessage = '';
+
+  readonly categories = Object.entries(reasonCategoryLabels) as [ReasonCategory, string][];
+  /** The server approves only a subset of modalities, so the select is built from that list instead of every modality the site talks about. */
+  readonly modalityChoices = approvedContactModalities;
+  readonly preferredContactChoices = preferredContactOptions;
+  readonly ciudadRealFitChoices = ciudadRealFitOptions;
+  readonly modalityPreferenceLabels = modalityPreferenceLabels;
+  readonly preferredContactLabels = preferredContactLabels;
+  readonly ciudadRealFitLabels = ciudadRealFitLabels;
+  readonly mailtoHref = mailtoHref;
+  readonly practiceEmail = practiceIdentity.email;
+
+  readonly submitted = signal(false);
+  readonly sending = signal(false);
+  readonly status = signal<ContactSubmissionStatus | 'idle'>('idle');
+  readonly statusMessage = signal('');
 
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(contactFieldLimits.name)]],
     email: ['', [Validators.email, Validators.maxLength(contactFieldLimits.email)]],
     phone: ['', [Validators.maxLength(contactFieldLimits.phone)]],
-    preferredContact: this.fb.nonNullable.control<'email' | 'phone'>('email'),
-    modalityPreference: this.fb.nonNullable.control<ModalityPreference>('in-person-ciudad-real'),
-    ciudadRealFit: this.fb.nonNullable.control<'yes' | 'no' | 'unsure'>('yes'),
-    reasonCategory: this.fb.nonNullable.control('general'),
+    preferredContact: this.fb.nonNullable.control<PreferredContact>('email'),
+    modalityPreference: this.fb.nonNullable.control<ApprovedModality>('in-person-ciudad-real'),
+    ciudadRealFit: this.fb.nonNullable.control<CiudadRealFit>('yes'),
+    reasonCategory: this.fb.nonNullable.control<ReasonCategory>('general'),
     message: ['', [Validators.maxLength(contactFieldLimits.message)]],
     privacyConsent: this.fb.nonNullable.control(false, Validators.requiredTrue),
-    csrfToken: [''],
     website: ['']
   });
 
@@ -124,15 +152,57 @@ export class ContactPageComponent {
     this.analytics.track('modality_preference_selected', { modality: this.form.controls.modalityPreference.value });
   }
 
-  submit(): void {
-    this.submitted = true;
+  async submit(): Promise<void> {
+    if (this.sending()) return;
+    this.submitted.set(true);
     this.analytics.track('contact_form_start', { route: '/contacto' });
+
     if (this.form.invalid) {
       this.analytics.track('contact_submit_failure', { validationOutcome: 'invalid' });
-      this.statusMessage = 'Revisa los campos señalados y vuelve a intentarlo.';
+      this.status.set('rejected');
+      this.statusMessage.set(contactSubmissionMessages.invalid);
       return;
     }
-    this.analytics.track('contact_submit_failure', { validationOutcome: 'provider-disabled' });
-    this.statusMessage = 'Todavía no puedo recibir tu mensaje desde aquí. Vuelve a visitar esta página más adelante.';
+
+    this.sending.set(true);
+    this.statusMessage.set('Enviando tu solicitud…');
+    try {
+      const result = await submitContactRequest(this.toContactRequest(), { fetch: globalThis.fetch.bind(globalThis) });
+      this.status.set(result.status);
+      this.statusMessage.set(result.message);
+      if (result.status === 'sent') {
+        this.analytics.track('contact_submit_success', { route: '/contacto', validationOutcome: 'valid' });
+        this.resetAfterSuccess();
+        return;
+      }
+      this.analytics.track('contact_submit_failure', {
+        validationOutcome: result.status === 'rejected' ? 'invalid' : 'provider-disabled'
+      });
+    } finally {
+      this.sending.set(false);
+    }
+  }
+
+  private toContactRequest(): ContactRequest {
+    const raw = this.form.getRawValue();
+    return {
+      name: raw.name,
+      email: raw.email || undefined,
+      phone: raw.phone || undefined,
+      preferredContact: raw.preferredContact,
+      modalityPreference: raw.modalityPreference,
+      ciudadRealFit: raw.ciudadRealFit,
+      reasonCategory: raw.reasonCategory,
+      message: raw.message || undefined,
+      privacyConsent: true,
+      website: raw.website
+    };
+  }
+
+  private resetAfterSuccess(): void {
+    const modality = this.form.controls.modalityPreference.value;
+    this.form.reset();
+    this.form.controls.modalityPreference.setValue(modality);
+    this.submitted.set(false);
   }
 }

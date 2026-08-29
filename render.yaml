@@ -1,0 +1,64 @@
+# Render Blueprint for the Node host that serves the site AND the /api/contact boundary.
+#
+# Why the whole site lives here and not only the API: the CSRF cookie is issued with
+# SameSite=Lax and the browser sends it with credentials: 'same-origin'. A form served from
+# GitHub Pages posting to an API on another origin would never send that cookie, so every
+# submission would fail the CSRF check. Site and API must share one origin.
+#
+# Setup is manual and intentional: connect this repository in the Render dashboard, let it
+# read this file, then fill the `sync: false` secrets there. Nothing secret lives in git.
+services:
+  - type: web
+    name: hilando-fino
+    runtime: node
+    # Frankfurt is the closest region to the practice's visitors in Ciudad Real.
+    region: frankfurt
+    plan: starter
+    # Hard requirement, not a cost choice: the CSRF one-time-token registry and the contact
+    # rate limiter are both in-process. A second instance would reject tokens issued by the
+    # first, so the contact form would fail for roughly half of all visitors.
+    numInstances: 1
+    buildCommand: npm ci && npm run build
+    startCommand: node dist/hilando-fino/server/server.mjs
+    healthCheckPath: /__healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22.19.0
+      - key: HOST
+        value: 0.0.0.0
+      - key: NODE_ENV
+        value: production
+      - key: HILANDO_FINO_SITE_URL
+        value: https://hilandofinopsicologia.com
+
+      # --- Launch approvals. Each one is a human decision, not a default. ---
+      - key: CONTACT_ENABLED
+        value: "true"
+      - key: CONTACT_RETENTION_APPROVED
+        value: "true"
+      - key: CONTACT_RUNTIME_APPROVED
+        value: "true"
+      - key: CONTACT_DEPLOYMENT_MODE
+        value: single-instance
+      - key: CONTACT_PROVIDER
+        value: approved-email
+      - key: CONTACT_PUBLIC_ORIGIN
+        value: https://hilandofinopsicologia.com
+      # Render terminates TLS in front of the app, so Express must trust exactly one hop or
+      # every visitor shares one req.ip and the rate limiter throttles the whole site.
+      - key: CONTACT_TRUST_PROXY
+        value: "true"
+
+      # --- Secrets: set these in the Render dashboard, never in this file. ---
+      # Generate with:
+      #   node -e "console.log('base64:'+require('node:crypto').randomBytes(32).toString('base64'))"
+      - key: CONTACT_CSRF_SECRET
+        sync: false
+      - key: CONTACT_SMTP_HOST
+        sync: false
+      - key: CONTACT_SMTP_USER
+        sync: false
+      - key: CONTACT_SMTP_PASSWORD
+        sync: false
+      - key: CONTACT_SMTP_TO
+        sync: false

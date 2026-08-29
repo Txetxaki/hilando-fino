@@ -18,6 +18,10 @@ export function createHilandoFinoApp(): express.Express {
   const knownPrerenderedRoutes = new Set(knownPrerenderedPaths);
 
   app.disable('x-powered-by');
+  // Exactly one hop, and only where the deployment declares a proxy. Behind TLS termination
+  // `req.ip` is otherwise the proxy's address, so the contact rate limiter would treat every
+  // visitor as the same client; trusting every hop instead would let a client spoof its own.
+  if (process.env['CONTACT_TRUST_PROXY'] === 'true') app.set('trust proxy', 1);
   app.use((_req, res, next) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');

@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import { getCsrfConfig, issueCsrfToken, verifyCsrfSubmission } from './csrf';
-import { createContactProvider } from './provider';
+import { createContactProvider, readSmtpConfig, type ContactProvider } from './provider';
 import { InMemoryRateLimiter } from './rate-limit';
 import { contactSecurityPolicy } from './security-policy';
 import { redactedContactLog, validateContactRequest } from './validation';
@@ -32,6 +32,17 @@ export function validateLiveContactDeployment(env: NodeJS.ProcessEnv = process.e
   return errors;
 }
 
+/**
+ * Read-only summary of why live contact is or is not accepting mail, for the boot log.
+ * It reports reason codes only, never values, and never changes what the gate allows —
+ * `validateLiveContactDeployment` stays the single authority for that.
+ */
+export function contactReadiness(env: NodeJS.ProcessEnv = process.env): { ready: boolean; blockedBy: string[] } {
+  if (env['CONTACT_ENABLED'] !== 'true') return { ready: false, blockedBy: ['contact_not_enabled'] };
+  const blockedBy = [...validateLiveContactDeployment(env), ...(readSmtpConfig(env) ? [] : ['smtp_config_incomplete'])];
+  return { ready: blockedBy.length === 0, blockedBy };
+}
+
 export function csrfTokenHandler(): RequestHandler {
   return (req, res) => {
     const rate = csrfLimiter.check(req.ip ?? 'unknown');
@@ -51,7 +62,9 @@ export function csrfTokenHandler(): RequestHandler {
 }
 
 export function contactHandler(): RequestHandler {
-  const provider = createContactProvider();
+  // Resolved on first accepted submission so a disabled deployment never builds an SMTP
+  // transport, and so credentials injected after module load are still picked up.
+  let provider: ContactProvider | null = null;
   return async (req, res) => {
     const deploymentErrors = validateLiveContactDeployment();
     if (deploymentErrors.length > 0) {
@@ -84,11 +97,13 @@ export function contactHandler(): RequestHandler {
       return;
     }
 
+    provider ??= createContactProvider();
     try {
       await provider.send(result.safeRequest);
       res.status(202).json({ ok: true, message: 'Solicitud recibida.' });
     } catch {
-      console.error('contact_provider_failure', { reasonCategory: result.safeRequest.reasonCategory, modalityPreference: result.safeRequest.modalityPreference });
+      // `provider: 'disabled'` means the SMTP credentials never resolved; anything else is a real delivery failure.
+      console.error('contact_provider_failure', { provider: provider.kind, reasonCategory: result.safeRequest.reasonCategory, modalityPreference: result.safeRequest.modalityPreference });
       res.status(503).json({ ok: false, message: 'No se ha podido enviar ahora mismo.' });
     }
   };

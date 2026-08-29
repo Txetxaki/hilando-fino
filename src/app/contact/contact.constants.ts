@@ -28,3 +28,20 @@ export const reasonCategoryLabels: Record<ReasonCategory, string> = {
   adults: 'Adultos',
   'education-training': 'Orientación educativa y formación'
 };
+
+export const preferredContactLabels: Record<PreferredContact, string> = {
+  email: 'Email',
+  phone: 'Teléfono'
+};
+
+export const modalityPreferenceLabels: Record<ModalityPreference, string> = {
+  'in-person-ciudad-real': 'Presencial en Ciudad Real',
+  online: 'En línea',
+  unsure: 'No lo sé todavía'
+};
+
+export const ciudadRealFitLabels: Record<CiudadRealFit, string> = {
+  yes: 'Me interesa Ciudad Real',
+  unsure: 'Necesito consultarlo',
+  no: 'No busco Ciudad Real'
+};

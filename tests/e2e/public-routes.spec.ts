@@ -4,7 +4,7 @@ import { treatmentPages } from '../../src/app/content/treatment-pages';
 
 const routes = [
   ['/', 'Hilando Fino Psicología'],
-  ['/sobre-mi', 'Sobre Marta Martín'],
+  ['/sobre-mi', 'Sobre mí'],
   ['/como-trabajo', 'Cómo trabajo'],
   ['/areas-de-intervencion', 'Áreas de intervención'],
   ['/areas-de-intervencion/infancia-y-familias', 'Infancia y familias'],
@@ -12,7 +12,7 @@ const routes = [
   ['/areas-de-intervencion/adultos', 'Adultos'],
   ['/areas-de-intervencion/orientacion-educativa-y-formacion', 'Orientación educativa y formación'],
   ['/psicologia-ciudad-real', 'Psicóloga en Ciudad Real'],
-  ['/psicologia-trauma-ciudad-real', 'Psicología para trauma y duelo en Ciudad Real'],
+  ['/psicologia-trauma-ciudad-real', 'Psicología para trauma y duelo'],
   ['/contacto', 'Contacto'],
   ['/talleres', 'Talleres'],
   ['/aviso-legal', 'Aviso legal'],
@@ -179,7 +179,7 @@ test.describe('public static-prerender routes', () => {
     await expect(page.getByRole('link', { name: 'Trauma en adultos' }).first()).toHaveAttribute('href', '/areas-de-intervencion/adultos/trauma');
   });
 
-  test('contact flow looks final and honestly declines instead of a fake retryable failure', async ({ page }) => {
+  test('contact flow hands over to the direct mailbox instead of a fake retryable failure', async ({ page }) => {
     await page.goto('/contacto');
     await expect(page.getByText('Este formulario no es un servicio de urgencias')).toBeVisible();
     const button = page.getByRole('button', { name: 'Enviar solicitud' });
@@ -188,9 +188,18 @@ test.describe('public static-prerender routes', () => {
     await page.getByRole('textbox', { name: 'Email' }).fill('persona@example.com');
     await page.getByLabel('He leído la información de privacidad').check();
     await button.click();
-    await expect(page.getByRole('status')).toContainText('Todavía no puedo recibir tu mensaje');
+    // No CONTACT_* environment is configured for e2e, so this exercises the degraded path a
+    // visitor hits whenever the API is unreachable: a usable mailbox, never a dead end.
+    await expect(page.getByRole('status')).toContainText('info@hilandofinopsicologia.com');
+    await expect(page.locator('.contact-form').getByRole('link', { name: 'info@hilandofinopsicologia.com' })).toHaveAttribute('href', 'mailto:info@hilandofinopsicologia.com');
     await expect(page.getByRole('status')).not.toContainText(/éxito|enviad[ao]/i);
     await expect(page.getByRole('status')).not.toContainText(/vuelve a intentarlo/i);
+  });
+
+  test('contact form only offers modalities the server actually accepts', async ({ page }) => {
+    await page.goto('/contacto');
+    const options = page.locator('select[formcontrolname="modalityPreference"] option');
+    await expect(options).toHaveText(['Presencial en Ciudad Real', 'No lo sé todavía']);
   });
 
   test('unknown runtime routes return a real noindex 404 instead of the home page', async ({ page }) => {

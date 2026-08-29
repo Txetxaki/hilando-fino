@@ -25,8 +25,17 @@ The production artifact is configured for `https://hilandofinopsicologia.com/` w
 | `CONTACT_DEPLOYMENT_MODE=single-instance` | Yes | Confirms the current in-memory replay model is safe for the live target |
 | `CONTACT_PUBLIC_ORIGIN=https://...` | Yes | Enforces HTTPS public origin for live contact cookies |
 | `CONTACT_TRUST_PROXY=true` | Yes | Confirms proxy/TLS forwarding has been configured intentionally |
-| `CONTACT_PROVIDER=approved-email` | Yes | Confirms provider/DPA approval; current implementation still rejects until a real provider change lands |
+| `CONTACT_PROVIDER=approved-email` | Yes | Confirms provider/DPA approval |
+| `CONTACT_SMTP_HOST` | Yes | SMTP submission host, e.g. `smtp.dondominio.com` |
+| `CONTACT_SMTP_USER` | Yes | Authenticating mailbox; also the default envelope sender |
+| `CONTACT_SMTP_PASSWORD` | Yes | Mailbox password. Rejected if shorter than 8 characters or if it starts like an example placeholder |
+| `CONTACT_SMTP_TO` | Yes | Mailbox that receives the enquiries |
+| `CONTACT_SMTP_PORT` | No | Defaults to `465` (implicit TLS). Use `587` for STARTTLS |
+| `CONTACT_SMTP_SECURE` | No | Defaults to `true` only on port 465. Overrides the port-derived choice |
+| `CONTACT_SMTP_FROM` | No | Envelope sender when it differs from `CONTACT_SMTP_USER`; must stay a mailbox the domain is allowed to send as |
 | `HILANDO_FINO_SITE_URL` | Before indexation | Sets canonical/sitemap production origin |
+
+Every `CONTACT_SMTP_*` requirement is all-or-nothing: if any required value is missing, malformed, or placeholder-shaped, `readSmtpConfig` returns `null` and contact stays disabled rather than accepting submissions it would silently drop. A misconfigured mailbox is therefore visible in the logs as `contact_provider_failure { provider: 'disabled' }`; a real delivery failure reports `provider: 'smtp'`.
 
 ## Contact architecture gate
 
@@ -34,7 +43,35 @@ Live multi-instance contact is blocked until shared CSRF replay state or sticky-
 
 Do not set `CONTACT_ENABLED=true` on GitHub Pages or any static preview. GitHub Pages cannot run the Express `/api/contact` boundary; the preview must remain visibly disabled and degraded-safe.
 
-`CONTACT_ENABLED=true` alone is **not** a working activation path. The current UI intentionally does not submit, and the provider implementation always rejects. Live contact needs a separate implementation/approval change for legal text, retention, provider/DPA, secure HTTPS/proxy deployment, and either single-instance approval or shared replay storage.
+`CONTACT_ENABLED=true` alone is **not** a working activation path. The form submits and the SMTP provider delivers, but live contact still needs every approval above: legal text, retention, provider/DPA, an HTTPS/proxy deployment, and single-instance hosting. Missing any of them keeps the endpoint at `503`.
+
+## Where the form degrades
+
+The browser never assumes `/api/contact` exists. Any unreachable, non-JSON, or `5xx` answer — which is exactly what GitHub Pages returns, since the Express bundle is excluded from that artifact — collapses into one visitor-facing outcome: the status line names `info@hilandofinopsicologia.com` and renders it as a `mailto:` link. The static preview is therefore usable rather than a dead end, and no deployment can leave a visitor with nowhere to write.
+
+This means the contact form only *sends* where the Express server actually runs. GitHub Pages serves the site; it cannot serve the API. Running live contact requires a Node host for `dist/hilando-fino/server/server.mjs` with the environment above.
+
+### Site and API must share one origin
+
+Splitting them — site on Pages, API elsewhere — does not work and cannot be made to work by configuration. The CSRF cookie is issued `HttpOnly; SameSite=Lax; Path=/api/contact`, and the browser sends it with `credentials: 'same-origin'`. A cross-origin submission never carries that cookie, so `verifyCsrfSubmission` rejects every request. The Express server already serves the prerendered routes and static assets, so the Node host serves the whole site and `hilandofinopsicologia.com` points at it.
+
+### Single instance is a correctness requirement
+
+`CONTACT_DEPLOYMENT_MODE=single-instance` is not a cost preference. `issueCsrfToken` records each token in an in-process `Map` and `verifyCsrfSubmission` refuses any token absent from it, so a token issued by one instance and submitted to another is rejected. Two instances break roughly half of all submissions; serverless and autoscaling targets are ruled out entirely until that registry is shared.
+
+`render.yaml` in the repository root encodes all of the above as a Render Blueprint: one always-on instance in Frankfurt, the approval variables inline, and every secret marked `sync: false` so it is entered in the dashboard rather than committed.
+
+## Verifying the configuration
+
+The server prints its contact readiness once at boot, so a misconfiguration is visible immediately instead of after a visitor's message is already lost:
+
+```
+contact_readiness { ready: false, blockedBy: [ 'smtp_config_incomplete' ] }
+```
+
+Reason codes only — never values. `contact_not_enabled` means `CONTACT_ENABLED` is not `true`; the rest map to the approval and credential checks above.
+
+Nothing in this project reads a `.env` file automatically. `npm run serve:prerender` starts the built server with the ambient environment only, which is what the e2e suite depends on. For a local run with credentials, use `npm run serve:local`, which loads `.env` and then `.env.local` through Node's own `--env-file-if-exists`. `npm start` runs `ng serve`, which does not start the Express server at all, so `/api/contact` does not exist there.
 
 Generate the CSRF secret directly into an ignored local env file; do not paste reusable examples into source or print real project secrets in logs:
 
