@@ -16,7 +16,7 @@ export interface MethodResource {
   name: string;
   qualifier: string;
   body: string;
-  imageKey?: 'sandtray' | 'projectiveFigures';
+  imageKey?: 'sandtray' | 'projectiveFigures' | 'dixitCards';
 }
 
 export const methodModels: readonly MethodModel[] = [
@@ -88,6 +88,7 @@ export const methodResources: readonly MethodResource[] = [
   {
     name: 'Cartas Dixit en terapia',
     qualifier: 'Proyección metafórica',
-    body: 'Un recurso visual basado en imágenes ilustradas que actúa como puente para la expresión emocional y la autoexploración. Es especialmente útil para desbloquear la comunicación, poner nombre a sensaciones difíciles de definir y facilitar que niños, adolescentes y adultos conecten de forma intuitiva con lo que están sintiendo.'
+    body: 'Un recurso visual basado en imágenes ilustradas que actúa como puente para la expresión emocional y la autoexploración. Es especialmente útil para desbloquear la comunicación, poner nombre a sensaciones difíciles de definir y facilitar que niños, adolescentes y adultos conecten de forma intuitiva con lo que están sintiendo.',
+    imageKey: 'dixitCards'
   }
 ];

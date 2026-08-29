@@ -48,7 +48,7 @@ export interface PageCard {
   status?: ApprovalStatus;
 }
 
-export type SiteImageKey = 'martaDesk' | 'martaWorking' | 'consultingRoom' | 'sandtray' | 'projectiveFigures';
+export type SiteImageKey = 'martaDesk' | 'martaWorking' | 'consultingRoom' | 'sandtray' | 'projectiveFigures' | 'dixitCards';
 
 /**
  * Editorial blocks that only some pages need. Keeping them as a discriminated

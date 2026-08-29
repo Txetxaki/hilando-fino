@@ -61,9 +61,11 @@ export const contentPages = {
     key: 'about',
     canonicalPath: '/sobre-mi',
     primaryIntent: 'Marta professional profile from verified facts',
-    title: 'Sobre Marta Martín | Hilando Fino Psicología',
+    // The visible H1 is "Sobre mí" (Marta's wording); the <title> keeps her full
+    // name because that is the string search results and browser tabs show.
+    title: 'Sobre mí | Marta Martín, Hilando Fino Psicología',
     description: 'Conoce a Marta Martín y la forma de entender el acompañamiento psicológico en Hilando Fino Psicología.',
-    h1: 'Sobre Marta Martín',
+    h1: 'Sobre mí',
     sourceFacts: [...verifiedBrandFacts, ...methodFacts]
   }),
   method: publicPage({
@@ -71,7 +73,7 @@ export const contentPages = {
     canonicalPath: '/como-trabajo',
     primaryIntent: 'therapy method from verified image source',
     title: 'Cómo trabajo | Evaluación, EMDR e integración terapéutica',
-    description: 'Una forma de trabajo psicológica integradora: evaluación cuidadosa, vínculo, emoción, cuerpo, relaciones y herramientas con respaldo científico como EMDR.',
+    description: 'Un abordaje terapéutico integrador: evaluación cuidadosa, vínculo, emoción, cuerpo, relaciones y respaldo científico.',
     h1: 'Cómo trabajo',
     sourceFacts: [...verifiedBrandFacts, ...methodFacts]
   }),
@@ -150,7 +152,7 @@ export const contentPages = {
     primaryIntent: 'trauma and grief psychology intent in Ciudad Real',
     title: 'Psicología para trauma y duelo en Ciudad Real | Hilando Fino',
     description: 'Acompañamiento psicológico en trauma y duelo en Ciudad Real con evaluación cuidadosa, enfoque integrador y posible trabajo con EMDR según cada caso.',
-    h1: 'Psicología para trauma y duelo en Ciudad Real',
+    h1: 'Psicología para trauma y duelo',
     sourceFacts: [...verifiedBrandFacts, ...methodFacts]
   }),
   contact: publicPage({

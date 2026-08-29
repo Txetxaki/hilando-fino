@@ -165,7 +165,12 @@ describe('content architecture', () => {
   it('gives every treatment page substantial visible content, FAQ, source facts, boundaries, and local CTA', () => {
     for (const page of treatmentPages) {
       const body = treatmentBody(page);
-      expect(body.length, `${page.canonicalPath} body length`).toBeGreaterThan(2_600);
+      // 2_455, not the original 2_600: the closing line shared by every "Qué puede
+      // incluir el acompañamiento" section was shortened by Marta from 196 to 51
+      // characters, so every page lost exactly 145 characters of identical boilerplate.
+      // Lowering the floor by that same 145 keeps the guard exactly as strict as it
+      // was against genuinely thin pages.
+      expect(body.length, `${page.canonicalPath} body length`).toBeGreaterThan(2_455);
       expect([page.situations, page.contextImpact, page.howICanHelp, page.process]).toHaveLength(4);
       expect(page.faq.length, `${page.canonicalPath} FAQ`).toBeGreaterThanOrEqual(4);
       expect(page.related.length, `${page.canonicalPath} related`).toBeGreaterThanOrEqual(4);

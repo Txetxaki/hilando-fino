@@ -15,9 +15,13 @@ const areaCards: PageCard[] = [
   { title: hubLabels.adults, body: 'Acompañamiento individual para recuperar la calma, la claridad y el equilibrio cuando se sostiene mucho durante demasiado tiempo.', href: '/areas-de-intervencion/adultos' },
   { title: hubLabels.perinatal, body: 'Cuidado para la fertilidad, el embarazo, el posparto, el vínculo con el bebé y el duelo perinatal.', href: '/areas-de-intervencion/psicologia-perinatal' },
   { title: hubLabels['education-training'], body: 'Orientación a familias y centros educativos ante aprendizaje, altas capacidades, coordinación escolar y asesoramiento familiar.', href: '/areas-de-intervencion/orientacion-educativa-y-formacion' },
-  { title: 'Trauma y duelo en Ciudad Real', body: 'Una página específica para entender cómo acompaño el trauma y el duelo desde la evaluación, el ritmo y el cuidado clínico.', href: '/psicologia-trauma-ciudad-real' },
-  { title: hubLabels.workshops, body: 'Formación para centros educativos, familias y profesionales sobre desarrollo emocional, trauma y relaciones humanas.', href: '/talleres' }
+  { title: 'Trauma y duelo', body: 'Una página específica para entender cómo acompaño el trauma y el duelo desde la evaluación, el ritmo y el cuidado clínico.', href: '/psicologia-trauma-ciudad-real' }
 ];
+
+// Talleres deliberately stays out of areaCards: it is not an intervention area and
+// already has its own page. It keeps a place among the related pages of
+// /areas-de-intervencion instead, so /talleres loses none of its internal link equity.
+const workshopsRelated: PageCard = { title: hubLabels.workshops, body: 'Formación para centros educativos, familias y profesionales sobre desarrollo emocional, trauma y relaciones humanas.', href: '/talleres' };
 
 const commonRelated: PageCard[] = [
   { title: 'Cómo trabajo', body: 'La evaluación cuidadosa, la mirada integradora y el lugar que ocupan EMDR, Gestalt, Bioenergética o el Círculo de Seguridad Parental.', href: '/como-trabajo' },
@@ -128,7 +132,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
         title: 'No una técnica para todo, sino un proceso ajustado a cada persona.',
         body: [
           'Cada persona tiene una historia única y merece una intervención adaptada a sus necesidades. Por eso comienzo siempre realizando una evaluación cuidadosa para comprender no solo los síntomas, sino también aquello que los mantiene.',
-          'Trabajo desde un enfoque integrador que combina intervenciones con respaldo científico, como EMDR y otros modelos de eficacia demostrada, con una mirada humanista centrada en la persona, sus emociones, sus relaciones y sus recursos.'
+          'Trabajo desde un enfoque integrador que combina intervenciones con respaldo científico con una mirada humanista centrada en la persona, sus emociones, sus relaciones y sus recursos.'
         ],
         links: [{ label: 'Psicología para trauma y duelo', href: '/psicologia-trauma-ciudad-real' }]
       },
@@ -157,7 +161,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
     blocks: [
       { kind: 'quote', text: 'Mi objetivo no es aplicar una técnica concreta, sino encontrar la forma de acompañar mejor a cada persona.' },
       { kind: 'models', eyebrow: 'Modelos', title: 'Los enfoques con los que trabajo', intro: 'Ninguno se aplica por defecto: entran en el proceso cuando la evaluación indica que pueden ayudar.' },
-      { kind: 'resources', eyebrow: 'Recursos', title: 'Herramientas dentro de la sesión', intro: 'Recursos que abren la expresión cuando las palabras no alcanzan, especialmente con niños, adolescentes y familias.' }
+      { kind: 'resources', eyebrow: 'Recursos clínicos', title: 'Facilitan la expresión emocional cuando las palabras no alcanzan' }
     ],
     cards: [
       { title: 'Evaluación cuidadosa', body: 'Antes de decidir el camino escucho, ordeno la demanda y comprendo el contexto.' },
@@ -170,7 +174,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
     page: contentPages.interventions,
     heroNote: 'Un mapa claro para elegir por etapa, contexto o motivo de consulta.',
     heroBody: [
-      'Encuentra el punto de entrada que más se parece a lo que necesitas. Infancia y familias, adolescencia, adultos, psicología perinatal, orientación educativa y talleres se organizan como puertas de entrada amplias.',
+      'Encuentra el punto de entrada que más se parece a lo que necesitas. Infancia y familias, adolescencia, adultos, psicología perinatal y orientación educativa se organizan como puertas de entrada amplias.',
       'Dentro de cada área encontrarás situaciones frecuentes descritas sin diagnosticar ni prometer resultados. La intención es que puedas reconocer un tema, leerlo con cuidado y decidir si merece la pena pedir una primera consulta.'
     ],
     heroLinks: [
@@ -193,7 +197,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
       }
     ],
     cards: areaCards,
-    related: commonRelated
+    related: [...commonRelated, workshopsRelated]
   },
   childrenFamilies: hubPage({
     key: 'childrenFamilies',

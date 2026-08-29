@@ -52,21 +52,21 @@ const primaryLinks = [
       <nav class="nav-shell" aria-label="Navegación principal">
         <a routerLink="/" class="brand" aria-label="Hilando Fino Psicología, inicio" (click)="closeMenus()">
           <!-- The brand master logo.png is 3509x1412 and 278kB, but the header renders it at
-               220x86 CSS px on every single page. Serving pre-scaled variants instead cuts
-               ~214kB from every route. The sizes attribute mirrors the .brand img rule
-               (width: min(13rem, 42vw)): 42vw wins below a 495px viewport, which is exactly
-               where 42vw equals 13rem. -->
+               272x106 CSS px at most. Serving pre-scaled variants instead cuts ~214kB from
+               every route. The sizes attribute mirrors the .brand img rules: min(17rem, 46vw)
+               on desktop (17rem always wins there), capped at min(10rem, 34vw) below the
+               920px mobile breakpoint, where 34vw wins below 470px. -->
           <span class="brand-mark">
             <picture>
               <source
                 type="image/webp"
                 srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w"
-                sizes="(max-width: 495px) 42vw, 208px"
+                sizes="(max-width: 470px) 34vw, (max-width: 920px) 160px, 272px"
               />
               <img
                 src="images/logo-440.png"
                 srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w"
-                sizes="(max-width: 495px) 42vw, 208px"
+                sizes="(max-width: 470px) 34vw, (max-width: 920px) 160px, 272px"
                 width="220"
                 height="86"
                 alt="Marta Martín · Hilando Fino Psicología"

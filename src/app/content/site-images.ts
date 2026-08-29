@@ -70,6 +70,17 @@ export const siteImages = {
     height: 720,
     alt: 'Figuras Playmobil colocadas sobre una bandeja giratoria de madera durante un trabajo proyectivo familiar.',
     sizes: '(max-width: 720px) 92vw, 30rem'
+  },
+  /* IMG_6303.jpeg (Marta, 2026-08-29), 4280x4978. Kept at its native portrait
+     ratio rather than cropped to the 4:3 of its siblings: the four cards run
+     almost edge to edge vertically, so any centred crop clips two of them. */
+  dixitCards: {
+    base: 'cartas-dixit',
+    widths: [480, 720, 960],
+    width: 960,
+    height: 1117,
+    alt: 'Cuatro cartas ilustradas de Dixit extendidas sobre una mesa clara de madera.',
+    sizes: '(max-width: 720px) 92vw, 22rem'
   }
 } as const satisfies Record<string, SiteImage>;
 
