@@ -1,7 +1,9 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
+import { contactSubmissionMessages } from '../src/app/contact/contact-submission.ts';
 import { publicRouteManifest, requiredPagesArtifactFiles } from '../src/app/content/public-routes.ts';
+import { practiceIdentity } from '../src/app/content/practice-identity.ts';
 
 const browserDir = join(process.cwd(), 'dist', 'hilando-fino', 'browser');
 const baseHref = process.env['PAGES_BASE_HREF'] ?? '/';
@@ -18,11 +20,31 @@ const failures = [];
 // is the closest sound static-artifact proof that the honest message shipped and the old
 // dishonest/retryable wording did not regress back in. esbuild minification may re-encode
 // accented characters as \xHH escapes instead of literal UTF-8 bytes, so match both encodings.
-const contactHonestMessage = 'Todavía no puedo recibir tu mensaje desde aquí. Vuelve a visitar esta página más adelante.';
+//
+// Read from the app rather than duplicated here, so the gate cannot drift from the string the
+// bundle actually ships. What the gate pins is the *property*, asserted just below: the message
+// has to hand the visitor a mailbox, which is what makes the degraded path honest instead of a
+// dead end. A future edit that drops the address fails here.
+const contactHonestMessage = contactSubmissionMessages.unavailable;
+if (!contactHonestMessage.includes(practiceIdentity.email)) {
+  failures.push(`The contact-unavailable message no longer names ${practiceIdentity.email}, so the Pages artifact would leave visitors with nowhere to write.`);
+}
 const contactDishonestMessage = 'No he podido enviar la solicitud desde esta página. Por favor, vuelve a intentarlo más tarde.';
-const contactHonestMessageVariants = [contactHonestMessage, hexEscapeNonAscii(contactHonestMessage)];
+// esbuild keeps the message as a template literal with the mailbox interpolated
+// (`...directamente a ${x.email} y te...`), so the composed sentence never appears as one
+// contiguous string in the bundle. Match the static halves around the address instead.
+// Empty halves are dropped, and no halves at all is a failure rather than a pass: `every` over
+// an empty array is vacuously true, which would turn this gate green without checking anything.
+const contactHonestMessageSegments = contactHonestMessage
+  .split(practiceIdentity.email)
+  .filter((segment) => segment.trim())
+  .map((segment) => [segment, hexEscapeNonAscii(segment)]);
+if (contactHonestMessageSegments.length === 0) {
+  failures.push('The contact-unavailable message has no text around the mailbox address, so the artifact check would assert nothing.');
+}
 const contactDishonestMessageVariants = [contactDishonestMessage, hexEscapeNonAscii(contactDishonestMessage)];
 let contactHonestMessageFound = false;
+let contactMailboxFound = false;
 
 if (!existsSync(browserDir)) failures.push('dist/hilando-fino/browser is missing. Run npm run build:pages first.');
 
@@ -83,15 +105,28 @@ for (const file of walk(browserDir)) {
 
   const text = readTextIfSafe(file);
   if (!text) continue;
-  for (const forbidden of ['CONTACT_CSRF_SECRET', 'CONTACT_ENABLED=true', 'CONTACT_RETENTION_APPROVED=true', '/api/contact', 'contact_provider_failure', 'LocalBusiness']) {
+  // '/api/contact' used to be banned here as proof the static artifact carried no backend.
+  // It no longer is: the client now always attempts the call and collapses every failure into
+  // the mailbox handover, so on Pages that attempt is the normal path, not a pretence that the
+  // API exists. The path is a same-origin relative string, inert in a static bundle, and the
+  // honest-message assertion above is what actually proves the degraded path shipped. Secrets,
+  // approval flags and the LocalBusiness claim stay banned — those would be real leaks.
+  for (const forbidden of ['CONTACT_CSRF_SECRET', 'CONTACT_ENABLED=true', 'CONTACT_RETENTION_APPROVED=true', 'contact_provider_failure', 'LocalBusiness']) {
     if (text.includes(forbidden)) failures.push(`${rel} contains forbidden Pages artifact text: ${forbidden}`);
   }
-  if (contactHonestMessageVariants.some((variant) => text.includes(variant))) contactHonestMessageFound = true;
+  if (contactHonestMessageSegments.every((variants) => variants.some((variant) => text.includes(variant)))) contactHonestMessageFound = true;
+  if (text.includes(practiceIdentity.email)) contactMailboxFound = true;
   if (contactDishonestMessageVariants.some((variant) => text.includes(variant))) failures.push(`${rel} still contains the old dishonest/retryable contact failure message`);
 }
 
 if (!contactHonestMessageFound) {
   failures.push('Pages artifact never includes the honest contact-unavailable message in any built file; the client bundle should carry it since contacto/index.html cannot capture post-interaction state.');
+}
+
+// The message interpolates the address, so the halves alone do not prove a visitor is given a
+// real mailbox: the value has to ship too.
+if (!contactMailboxFound) {
+  failures.push(`Pages artifact never includes ${practiceIdentity.email}, so the interpolated contact-unavailable message would name an empty mailbox.`);
 }
 
 if (failures.length > 0) {
