@@ -48,8 +48,12 @@ type ApprovedModality = (typeof approvedContactModalities)[number];
           </label>
         </div>
         <div class="field-pair">
-          <label>Email <input formControlName="email" type="email" autocomplete="email" /></label>
-          <label>Teléfono <input formControlName="phone" autocomplete="tel" /></label>
+          <!-- inputmode drives which keyboard the phone opens: without it the
+               telephone field offered the full alphabetic keyboard. type="tel"
+               also keeps the value a free-form string, so prefixes and spaces
+               survive, unlike type="number". -->
+          <label>Email <input formControlName="email" type="email" inputmode="email" autocomplete="email" /></label>
+          <label>Teléfono <input formControlName="phone" type="tel" inputmode="tel" autocomplete="tel" /></label>
         </div>
         <div class="field-pair">
           <label>Modalidad preferida

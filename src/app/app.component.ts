@@ -100,10 +100,27 @@ const primaryLinks = [
               <div class="mega-grid" aria-label="Tratamientos por área">
               @for (sector of sectorMenu; track sector.href) {
                 <section class="mega-sector">
-                  <a class="mega-sector-title" [routerLink]="sector.href" routerLinkActive="active" (click)="closeMenus()">{{ sector.label }}</a>
-                  @for (child of sector.children; track child.href) {
-                    <a class="mega-child" [routerLink]="child.href" routerLinkActive="active" (click)="closeMenus()">{{ child.label }}</a>
-                  }
+                  <!-- The sector head is a link plus its own toggle: on the phone panel the
+                       toggle collapses that sector's treatments, so the menu opens as six
+                       reachable rows instead of a 43-link list inside a nested scroller.
+                       The toggle is display:none above the mobile breakpoint, where the
+                       mega-menu shows every treatment at once. -->
+                  <div class="mega-sector-head">
+                    <a class="mega-sector-title" [routerLink]="sector.href" routerLinkActive="active" (click)="closeMenus()">{{ sector.label }}</a>
+                    <button
+                      class="mega-sector-toggle"
+                      type="button"
+                      [attr.aria-expanded]="openSector() === sector.sector"
+                      [attr.aria-controls]="'sector-' + sector.sector"
+                      [attr.aria-label]="'Ver temas de ' + sector.label"
+                      (click)="toggleSector(sector.sector, $event)"
+                    ></button>
+                  </div>
+                  <div class="mega-children" [id]="'sector-' + sector.sector" [class.open]="openSector() === sector.sector">
+                    @for (child of sector.children; track child.href) {
+                      <a class="mega-child" [routerLink]="child.href" routerLinkActive="active" (click)="closeMenus()">{{ child.label }}</a>
+                    }
+                  </div>
                 </section>
               }
               </div>
@@ -208,6 +225,8 @@ export class AppComponent {
   readonly currentYear = new Date().getFullYear();
   readonly mobileOpen = signal(false);
   readonly areasOpen = signal(false);
+  /** Which sector accordion is expanded in the phone panel; null keeps all of them collapsed. */
+  readonly openSector = signal<TreatmentSector | null>(null);
   readonly currentUrl = signal('/');
 
   constructor() {
@@ -222,6 +241,8 @@ export class AppComponent {
   closeMenus(): void {
     this.mobileOpen.set(false);
     this.areasOpen.set(false);
+    this.openSector.set(null);
+    this.lockBackgroundScroll(false);
     // The desktop mega-menu panel stays visually open via `.nav-dropdown:focus-within`
     // even after `areasOpen` flips to false, because SPA navigation does not blur the
     // clicked link. Blurring here lets the CSS focus fallback release the panel.
@@ -237,11 +258,27 @@ export class AppComponent {
   toggleMobile(event: Event): void {
     event.stopPropagation();
     this.mobileOpen.update((value) => !value);
+    if (!this.mobileOpen()) {
+      this.areasOpen.set(false);
+      this.openSector.set(null);
+    }
+    this.lockBackgroundScroll(this.mobileOpen());
   }
 
   toggleAreas(event: Event): void {
     event.stopPropagation();
     this.areasOpen.update((value) => !value);
+    if (!this.areasOpen()) this.openSector.set(null);
+  }
+
+  toggleSector(sector: TreatmentSector, event: Event): void {
+    event.stopPropagation();
+    this.openSector.update((current) => (current === sector ? null : sector));
+  }
+
+  /** The phone panel scrolls inside itself, so the page behind it must not scroll with it. */
+  private lockBackgroundScroll(locked: boolean): void {
+    document.body.classList.toggle('nav-open', locked);
   }
 
   isAreaRoute(): boolean {
