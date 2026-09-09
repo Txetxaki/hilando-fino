@@ -113,13 +113,23 @@ img { max-width: 100%; }
 .nav-cta:hover, .nav-cta.active { background: #fff; color: var(--color-morado) !important; }
 .dropdown-trigger { border: 0; background: transparent; font: inherit; cursor: pointer; }
 .dropdown-trigger::after { content: '⌄'; margin-left: .4rem; margin-top: -.35rem; }
-.nav-dropdown { position: relative; }
+/* Static, so the panel below anchors to .nav-shell (the centred container) rather
+   than to the trigger: a 72rem panel centred on a trigger that sits two thirds
+   across the bar ran off the right edge of the window at 1280px, cutting the
+   perinatal column. */
+.nav-dropdown { position: static; }
 .dropdown-panel { position: absolute; top: calc(100% + .75rem); left: 50%; width: min(72rem, calc(100vw - 2rem)); display: grid; gap: .7rem; padding: 1rem; border-radius: var(--radius-card); background: #fff; border: 1px solid var(--color-line); box-shadow: 0 1.5rem 3rem rgba(82, 57, 71, .16); opacity: 0; transform: translate(-50%, -.35rem); pointer-events: none; transition: opacity .16s ease, transform .16s ease; }
 .nav-dropdown.open .dropdown-panel, .nav-dropdown:focus-within .dropdown-panel { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
 .dropdown-panel a { border-radius: .9rem; justify-content: flex-start; }
 .mega-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
 .mega-sector { display: grid; align-content: start; gap: .15rem; padding: .7rem; border-radius: 1.1rem; background: var(--color-crema); }
+.mega-sector-head { display: flex; align-items: stretch; gap: .3rem; }
+.mega-sector-head .mega-sector-title { flex: 1; min-width: 0; }
 .mega-sector-title { font-weight: 600 !important; background: #fff; }
+/* Collapsed only inside the phone panel; the desktop mega-menu keeps every
+   treatment on screen, so the toggle that drives it is hidden here. */
+.mega-sector-toggle { display: none; }
+.mega-children { display: grid; gap: .15rem; }
 .mega-child { font-size: .95rem !important; min-height: 38px !important; padding: .45rem .6rem !important; }
 
 /* --- Page frame ----------------------------------------------------------- */
@@ -329,7 +339,19 @@ textarea { resize: vertical; }
   .brand img { width: min(9.5rem, 32vw); }
   .nav-cta { padding: .55rem .95rem; font-size: 1rem; background: #fff; border-color: #fff; color: var(--color-morado) !important; }
   .nav-links { position: absolute; left: var(--space); right: var(--space); top: calc(100% + .6rem); display: none; padding: 1rem; border-radius: var(--radius-card); background: #fff; border: 1px solid var(--color-line); box-shadow: 0 1.5rem 3rem rgba(82, 57, 71, .18); font-size: 1.1rem; }
-  .nav-links.open { display: grid; align-items: stretch; max-height: calc(100vh - 6rem); overflow: auto; }
+  /* dvh, not vh: on iOS Safari `100vh` is the tall viewport measured without the
+     browser chrome, so a vh-capped panel runs under the toolbar and its last rows
+     cannot be reached. The vh line stays first as the fallback for browsers
+     without dvh. `overscroll-behavior: contain` stops the scroll from chaining
+     into the page behind the panel. */
+  .nav-links.open {
+    display: grid;
+    align-items: stretch;
+    max-height: calc(100vh - 7rem);
+    max-height: calc(100dvh - 7rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
   /* The panel is white, so its links take the dark value; the band's white text
      would be invisible here. */
   .nav-links a, .dropdown-trigger { justify-content: flex-start; width: 100%; border-radius: .9rem; color: var(--color-morado); font-weight: 500; }
@@ -338,10 +360,30 @@ textarea { resize: vertical; }
   .nav-dropdown { width: 100%; }
   .dropdown-panel { position: static; width: 100%; min-width: 0; margin-top: .25rem; box-shadow: none; border-radius: 1rem; opacity: 1; transform: none; display: none; pointer-events: auto; }
   .nav-dropdown.open .dropdown-panel, .nav-dropdown:focus-within .dropdown-panel { display: grid; transform: none; }
-  .mega-grid { grid-template-columns: 1fr; max-height: 60vh; overflow: auto; }
+  /* One scroller, not two: the treatments used to sit in their own 60vh scroll box
+     inside the panel's scroll box, which on a phone means a swipe lands in
+     whichever container the finger happens to be over. The sectors collapse
+     instead, so the whole menu is six rows and scrolls as a single surface. */
+  .mega-grid { grid-template-columns: 1fr; max-height: none; overflow: visible; gap: .5rem; }
+  .mega-sector-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; min-height: 44px; flex: 0 0 auto;
+    border: 0; border-radius: .9rem; background: #fff; color: var(--color-morado);
+    font: inherit; font-size: 1.2rem; cursor: pointer;
+  }
+  .mega-sector-toggle::after { content: '⌄'; line-height: 1; margin-top: -.4rem; transition: transform .18s ease; }
+  .mega-sector-toggle[aria-expanded='true'] { background: var(--color-morado); color: #fff; }
+  .mega-sector-toggle[aria-expanded='true']::after { transform: rotate(180deg); margin-top: .3rem; }
+  .mega-children { display: none; margin-top: .35rem; }
+  .mega-children.open { display: grid; }
+  .mega-child { min-height: 44px !important; font-size: 1rem !important; }
   .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .footer-nav { grid-template-columns: 1fr; }
 }
+
+/* Set while the phone panel is open: without it the page keeps scrolling under
+   the menu and the panel drifts off screen mid-swipe. */
+body.nav-open { overflow: hidden; }
 
 @media (max-width: 900px) {
   .hero.has-media { grid-template-columns: 1fr; text-align: center; }
@@ -363,6 +405,44 @@ textarea { resize: vertical; }
   .hero-name { font-size: clamp(2.1rem, 11vw, 3.2rem); }
   .hero-brand { font-size: clamp(1.6rem, 6.5vw, 2.1rem); }
   .overline-pill { font-size: clamp(1.25rem, 5.5vw, 1.7rem); }
+
+  /* Phone reading rhythm. The desktop 1.75 leading measured 42 characters per
+     line on a 390px screen - under the 45-75 comfortable band, so every
+     paragraph ran longer than it needed to and the pages scrolled forever.
+     1.65 keeps well clear of the WCAG 1.4.12 1.5 floor. */
+  .content-band p,
+  .model-card p,
+  .faq-item p,
+  .workshop-item p,
+  .resource-item p,
+  .emergency-boundary p { line-height: 1.65; }
+  .content-band { padding: 2.5rem 0; }
+
+  /* Touch targets. These rows were 18-27px tall, so they sat far under the 44px
+     phone guidance (WCAG 2.5.8 AA asks 24px as the hard floor). */
+  .footer-nav-col a,
+  .footer-legal a,
+  .footer-contact-link,
+  .toc a,
+  .inline-links a { display: inline-flex; align-items: center; min-height: 44px; }
+  .footer-nav-col { gap: .1rem; }
+  .footer-legal { gap: 0 1.25rem; }
+  .footer-nap { gap: .35rem; }
+  /* The box stays on the first line of a label that wraps to three lines on a
+     narrow phone; only its size grows, from 13px to the 24px WCAG 2.5.8 floor. */
+  .checkbox-row { align-items: flex-start; min-height: 44px; }
+  /* flex: 0 0 auto, or the flex row shrinks the box back to 13px to fit the
+     three-line consent sentence next to it. */
+  .checkbox-row input { flex: 0 0 auto; width: 1.5rem; height: 1.5rem; margin-top: .1rem; }
+  /* A full-width primary action is the phone convention and removes the reach
+     problem of a 195px button pinned to the left edge. */
+  .contact-form .button { width: 100%; }
+}
+
+/* Narrow phones only: 20px of side padding on a 320-400px screen costs measure
+   the copy cannot spare. */
+@media (max-width: 400px) {
+  :root { --space: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
