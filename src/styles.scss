@@ -197,7 +197,19 @@ h3 { margin: 0 0 .9rem; font-size: clamp(1.45rem, 2.8vw, 2rem); font-weight: 500
    floating every block in its own bordered card. */
 .content-band { margin: 0; padding: clamp(3rem, 7vw, 6rem) 0; border-top: 1px solid var(--color-line); scroll-margin-top: 7rem; }
 .content-band p { max-width: 60rem; font-size: clamp(1.1rem, 1.6vw, 1.3rem); font-weight: 400; line-height: 1.75; color: var(--color-body); }
-.content-band > p:last-of-type { margin-bottom: 0; }
+.content-band > p:last-of-type, .content-band > .section-text > p:last-of-type { margin-bottom: 0; }
+
+/* A section with a side photo (Marta's smaller supplied images): text column
+   plus a narrower media column, mirroring the hero's has-media grid but with
+   a smaller photo, as her doc describes for these sections. */
+.content-band.has-media { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.content-band.has-media .section-text { min-width: 0; }
+.section-media { display: block; }
+.section-media img { display: block; width: 100%; height: auto; border-radius: var(--radius-panel); box-shadow: var(--shadow-card); }
+@media (max-width: 900px) {
+  .content-band.has-media { grid-template-columns: 1fr; }
+  .content-band.has-media .section-media { order: -1; max-width: 20rem; margin-inline: auto; }
+}
 
 /* Blocks that carry their own fill sit inside the section rhythm as big soft
    panels, mirroring the mock's `bg-crema rounded-[40px]` treatment. */

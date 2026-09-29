@@ -82,20 +82,37 @@ import { pageContents } from './page-data';
       }
 
       @for (section of content().sections; track section.title) {
-        <section class="content-band" [id]="sectionId(section.title)">
-          @if (section.eyebrow) {
-            <p class="eyebrow">{{ section.eyebrow }}</p>
-          }
-          <h2>{{ section.title }}</h2>
-          @for (paragraph of section.body; track paragraph) {
-            <p>{{ paragraph }}</p>
-          }
-          @if (section.links?.length) {
-            <div class="inline-links" aria-label="Enlaces relacionados">
-              @for (link of section.links; track link.href) {
-                <a [routerLink]="linkPath(link.href)" [queryParams]="linkQueryParams(link.href)">{{ link.label }}</a>
-              }
-            </div>
+        <section class="content-band" [class.has-media]="section.image" [id]="sectionId(section.title)">
+          <div class="section-text">
+            @if (section.eyebrow) {
+              <p class="eyebrow">{{ section.eyebrow }}</p>
+            }
+            <h2>{{ section.title }}</h2>
+            @for (paragraph of section.body; track paragraph) {
+              <p>{{ paragraph }}</p>
+            }
+            @if (section.links?.length) {
+              <div class="inline-links" aria-label="Enlaces relacionados">
+                @for (link of section.links; track link.href) {
+                  <a [routerLink]="linkPath(link.href)" [queryParams]="linkQueryParams(link.href)">{{ link.label }}</a>
+                }
+              </div>
+            }
+          </div>
+          @if (section.image; as imageKey) {
+            <picture class="section-media">
+              <source type="image/webp" [srcset]="webpSrcset(image(imageKey))" [sizes]="image(imageKey).sizes" />
+              <img
+                [src]="fallbackSrc(image(imageKey))"
+                [srcset]="jpgSrcset(image(imageKey))"
+                [sizes]="image(imageKey).sizes"
+                [width]="image(imageKey).width"
+                [height]="image(imageKey).height"
+                [alt]="image(imageKey).alt"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           }
         </section>
       }
