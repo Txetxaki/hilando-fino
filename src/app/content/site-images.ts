@@ -31,15 +31,17 @@ export function fallbackSrc(image: SiteImage): string {
 }
 
 export const siteImages = {
-  /* Inicio.jpg (Marta, delivered 2026-09-27), 5184x3456 landscape. Home hero,
-     paired with the logo mark instead of replacing it. */
+  /* Inicio.jpg (Marta, delivered 2026-09-27), 5184x3456 landscape. Home hero: the
+     large, centred photo that replaced the logo mark as the hero's main visual
+     (the logo stays only in the sticky header). 1600/2000 added on top of the
+     original 480-1280 set so it still looks sharp at its bigger display size. */
   homeHero: {
     base: 'hero-inicio',
-    widths: [480, 720, 960, 1280],
-    width: 1280,
-    height: 853,
+    widths: [480, 720, 960, 1280, 1600, 2000],
+    width: 2000,
+    height: 1333,
     alt: 'Manos sosteniendo un anillo sobre una mesa de madera clara, en un gesto cercano y cuidadoso.',
-    sizes: '(max-width: 720px) 92vw, 34rem'
+    sizes: '(max-width: 720px) 92vw, (max-width: 1300px) 80vw, 52rem'
   },
   /* Tirando.jpg, 3456x5184 portrait. Smaller side image for the home "Tirando
      del hilo" section, not a hero. */
