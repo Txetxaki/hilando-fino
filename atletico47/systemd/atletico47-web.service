@@ -1,5 +1,5 @@
 [Unit]
-Description=Atletico 47 - servidor estatico de la PWA y API
+Description=OsmaGym - servidor estatico de la PWA y API
 After=network-online.target
 Wants=network-online.target
 

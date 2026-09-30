@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-/* Atlético 47 — servidor estático de la PWA + API
+/* OsmaGym — servidor estático de la PWA + API
  *
  * Sirve sitio/ en 127.0.0.1:8091 (solo loopback). Tailscale Serve pone el
- * HTTPS por delante. Mismo esquema que Atlético 44, en otro puerto: otro
+ * HTTPS por delante. Mismo esquema que la PWA hermana, en otro puerto: otro
  * origen, otro localStorage, otra base de datos. No se pisan.
  *
  *   /api/estado/*, /api/historial/*, /api/salud   -> api-estado.js (SQLite)
@@ -37,8 +37,8 @@ const servidor = http.createServer((req, res) => {
   try { ruta = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
   catch { res.writeHead(400).end('Peticion mal formada'); return; }
 
-  if (ruta === '/api/coach' || ruta.startsWith('/api/coach/')) {
-    coach.manejar(req, res, ruta).catch(e => {
+  if (ruta === '/api/coach') {
+    coach.manejar(req, res).catch(e => {
       console.error('error en coach:', e);
       if (!res.headersSent) { res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'error interno' })); }
     });
@@ -74,5 +74,5 @@ const servidor = http.createServer((req, res) => {
 });
 
 servidor.listen(PUERTO, HOST, () => {
-  console.log('Atlético 47 sirviendo ' + RAIZ + ' en http://' + HOST + ':' + PUERTO + (coach.configurado() ? ' · coach ' + coach.estado().proveedor + '/' + coach.estado().modelo : ' · coach sin configurar (' + coach.estado().error + ')'));
+  console.log('OsmaGym sirviendo ' + RAIZ + ' en http://' + HOST + ':' + PUERTO + (coach.configurado() ? ' · coach activo' : ' · coach sin configurar'));
 });

@@ -20,13 +20,16 @@
  *   EX.legado(r,f,j)    si un registro antiguo (sin r.jor) es de la jornada j
  *   EX.campos(b,sg)     campos propios de la app que se guardan con cada ejercicio
  *   EX.cabeceras()      cabeceras extra para /api/coach (código de acceso)
+ *   EX.fecha()          opcional: fecha con la que trabaja Entreno (por defecto fechaSes o hoy)
+ *   EX.coachUrl()       opcional: URL del Coach (por defecto /api/coach)
  * Además usa: S, LIB, borrador, fechaSes, save, esc, toast, hoyISO, iso, fmtF,
  * sesDe, seriesDe, sugerir, disponible, vTr, op.
  */
 
 /* ============ 1. BORRADOR PERSISTENTE ============ */
 var _tBorr=null;
-function borrKey(){return (fechaSes||hoyISO())+'|'+EX.jor()}
+function _fx(){return EX.fecha?EX.fecha():(fechaSes||hoyISO())}
+function borrKey(){return (_fx())+'|'+EX.jor()}
 function _hace(n){var d=new Date();d.setDate(d.getDate()-n);return iso(d)}
 function borrVacio(b){return !Object.keys(b||{}).some(function(k){
  if(k==='_x')return (b._x||[]).length>0;var x=b[k];
@@ -43,7 +46,7 @@ function guardarBorr(){clearTimeout(_tBorr);_tBorr=setTimeout(function(){
 function cargarBorr(){
  S.borr=S.borr||{};var k=borrKey();
  if(S.borr[k]){borrador=S.borr[k];return}
- borrador={};var f=fechaSes||hoyISO(),r=regDe(f,EX.jor());
+ borrador={};var f=_fx(),r=regDe(f,EX.jor());
  if(r)desdeRegistro(r,f);
 }
 function regDe(f,j){var r=sesDe(f);if(!r)return null;var s=r.s;
@@ -63,7 +66,7 @@ function desdeRegistro(reg,f){
 function _llenas(b){return (b&&b.reps||[]).filter(function(r){return r>0}).length}
 function hechoB(b,n){if(!b)return false;if(b.hecho===1)return true;if(b.hecho===0)return false;return n>0&&_llenas(b)>=n}
 function hechoX(x){return !!(x&&x.hecho)}
-function _fsesion(){var f=fechaSes||hoyISO();return {f:f,s:EX.sesion(f)}}
+function _fsesion(){var f=_fx();return {f:f,s:EX.sesion(f)}}
 function marcarEj(elId,on){var e=document.getElementById(elId);if(!e)return;e.classList.toggle('done',!!on);
  var b=e.querySelector('.exok');if(b)b.setAttribute('aria-pressed',on?'true':'false');
  var t=e.querySelector('.exhecho');if(t)t.textContent=on?'Desmarcar':'Hecho';}
@@ -85,7 +88,7 @@ function autoHecho(k){var i=typeof k==='number'?k:parseInt(String(k).replace(/^\
  var ids=EX.ids(x.s,x.f),b=bd(EX.clave(i)),n=seriesDe(ids[i],x.f);
  if(n>0&&_llenas(b)>=n)b.hecho=1;else if(b.hecho===1&&_llenas(b)>0&&_llenas(b)<n)delete b.hecho;
  marcarEj('e'+i,hechoB(b,n));}
-function progBar(s){var f=fechaSes||hoyISO();s=EX.sesion(f);var ids=s?EX.ids(s,f):[],X=borrador._x||[],t=ids.length+X.length,d=0;
+function progBar(s){var f=_fx();s=EX.sesion(f);var ids=s?EX.ids(s,f):[],X=borrador._x||[],t=ids.length+X.length,d=0;
  ids.forEach(function(id,i){if(hechoB(borrador[EX.clave(i)],seriesDe(id,f)))d++});
  X.forEach(function(x){if(hechoX(x))d++});
  var p=document.getElementById('prog');if(p)p.style.width=(t?d/t*100:0)+'%';
@@ -185,7 +188,7 @@ function addSerieX(j){var x=_X()[j];x.reps=x.reps||[];x.reps.push(x.reps.length?
 function setX(j,campo,v){_X()[j][campo]=v;guardarBorr()}
 function toggleHechoX(j){var x=_X()[j];x.hecho=hechoX(x)?0:1;guardarBorr();marcarEj('x'+j,x.hecho);progBar(_fsesion().s)}
 function delX(j){_X().splice(j,1);guardarBorr();vTr()}
-function addDeLib(id){if(!id||!LIB[id])return;var L=LIB[id],sg=sugerir(id,fechaSes||hoyISO());
+function addDeLib(id){if(!id||!LIB[id])return;var L=LIB[id],sg=sugerir(id,_fx());
  _X().push({id:id,n:L.n,reps:[],peso:sg.peso||0,rpe:0,nota:'',min:0,hecho:0});guardarBorr();vTr();
  var j=_X().length-1;setTimeout(function(){opX(j);var e=document.getElementById('x'+j);if(e)e.scrollIntoView({behavior:'smooth',block:'center'})},40);
  toast(L.n+' añadido. Apunta las series y márcalo hecho.')}
@@ -255,7 +258,7 @@ function interpretarIA(texto){
  +'Usa un id solo si es claramente ese ejercicio. Si algo es cardio o por tiempo, usa "min".\n\nLISTA:\n'+lista+'\n\nTEXTO:\n'+texto;
  var ctrl=window.AbortController?new AbortController():null,reloj=setTimeout(function(){if(ctrl)ctrl.abort()},20000);
  var h={'Content-Type':'application/json'},ex=(EX.cabeceras&&EX.cabeceras())||{};Object.keys(ex).forEach(function(k){if(ex[k])h[k]=ex[k]});
- return fetch('/api/coach',{method:'POST',signal:ctrl?ctrl.signal:undefined,headers:h,body:JSON.stringify({messages:[{role:'user',content:p}]})})
+ return fetch(EX.coachUrl?EX.coachUrl():'/api/coach',{method:'POST',signal:ctrl?ctrl.signal:undefined,headers:h,body:JSON.stringify({messages:[{role:'user',content:p}]})})
  .then(function(r){clearTimeout(reloj);return r.ok?r.json():Promise.reject(new Error('HTTP '+r.status))})
  .then(function(d){var m=String(d.texto||'').match(/\[[\s\S]*\]/);if(!m)throw new Error('sin JSON');
   return JSON.parse(m[0]).filter(function(e){return e&&(e.n||e.id)}).map(function(e){

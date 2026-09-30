@@ -1,15 +1,12 @@
 {
-  "name": "atletico47",
+  "name": "osmagym",
   "version": "1.0.0",
   "private": true,
-  "description": "PWA de fuerza, pádel, cuerpo y comida adaptada a un cuerpo con cinco operaciones",
+  "description": "OsmaGym — PWA de fuerza, pádel, cuerpo y comida adaptada a un cuerpo con cinco operaciones",
   "main": "servidor-web.js",
   "scripts": {
     "start": "node servidor-web.js",
     "push": "node servidor-push/push.js"
   },
-  "engines": { "node": ">=22.5" },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.123.0"
-  }
+  "engines": { "node": ">=22.5" }
 }

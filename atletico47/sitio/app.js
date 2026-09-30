@@ -1,18 +1,20 @@
 /* Adaptador para extras.js (✓ por ejercicio, borrador persistente y extras):
-   en Atlético 47 la jornada es el día de la semana y la clave del borrador, día+índice. */
+   en OsmaGym la jornada es el día de la semana y la clave del borrador, día+índice. */
 var EX={
  jor:function(){return cur},
  clave:function(i,j){return (j||cur)+i},
+ fecha:function(){return fechaCtx()},
  sesion:function(f){return sesionDe(cur,f)},
  ids:function(s){return ejerciciosHoy(s)},
  top:function(id){return LIB[id].r[1]},
  sesJor:function(j,f){return sesionDe(j,f)},
- idsJor:function(s){return s.ej},
+ idsJor:function(s,f){return idsConRegen(s,f)},
  legado:function(r,f,j){return r.dia===j||(!r.dia&&diaSemana(f)===j)},
  campos:function(){return {}},
- cabeceras:function(){return {}}
+ cabeceras:function(){return {'x-coach-code':(S.coachCfg&&S.coachCfg.codigo)||''}},
+ coachUrl:function(){return coachURL()}
 };
-/* Atlético 47 — vistas y arranque
+/* OsmaGym — vistas y arranque
  *
  * Cada pestaña tiene su función vXxx() que pinta a partir de S (motor.js) y de
  * la biblioteca (biblioteca.js). No hay framework: strings de HTML y onclick.
@@ -64,25 +66,35 @@ function pararG(){clearInterval(G.t);G.lista=null;$('guia').classList.remove('on
 
 /* ============ NAVEGACIÓN ============ */
 var TABS=['hoy','tr','hi','pa','cu','co','ai','aj'];
+var VISTAS={hoy:vHoy,tr:vTr,hi:vHist,pa:vPadel,cu:vCuerpo,co:vComida,ai:vAI,aj:vAjustes};
 function vw(id){
  TABS.forEach(function(x){$(x).hidden=(x!==id)});
  document.querySelectorAll('.tab').forEach(function(b){b.setAttribute('aria-selected',b.dataset.t===id)});
- ({hoy:vHoy,tr:vTr,hi:vHist,pa:vPadel,cu:vCuerpo,co:vComida,ai:vAI,aj:vAjustes})[id]();
+ VISTAS[id]();
  window.scrollTo({top:0,behavior:'smooth'});
 }
+/* repinta la pestaña que esté abierta ahora mismo, sin cambiar de pestaña */
+function refrescar(){var vis=TABS.filter(function(x){return $(x)&&!$(x).hidden})[0];if(vis&&VISTAS[vis])VISTAS[vis]()}
 function avisosHTML(){
  return alertas().map(function(a){
   return '<div class="note '+a.n+'"><b>'+a.t+'</b>'+a.c+(a.accion==='descargaYa'?'<div class="row" style="margin-top:10px"><button class="btn sm" onclick="descargaYa()">Adelantar la descarga</button></div>':'')+'</div>'}).join('');
 }
 function descargaYa(){S.descargaExtra=S.semana;save();toast('Semana '+S.semana+' pasa a descarga');vw('hoy')}
+/* true si la semana actual tiene algún ajuste automático de replanSemana todavía sin registrar */
+function haySemanaAjustada(){var hoy=hoyISO();return semanaDe(hoy).some(function(f){return S.plan&&S.plan[f]&&!registrado(f)})}
+function deshacerSemana(){
+ if(restaurarSemana()){toast('Semana restaurada al plan original');refrescar()}
+ else toast('No hay ajustes automáticos que deshacer',1);
+}
 
 /* ============ HOY ============ */
 function vHoy(){
  var f=hoyISO(),dia=diaSemana(f),q=queToca(dia,f),d=dispDe(f)||{},o='';
  o+=avisosHTML();
+ if(revisionCoachHoy&&revisionCoachHoy.f===f)o+='<div class="note"><b>Tu coach ha revisado el día</b>'+esc(revisionCoachHoy.texto)+' <button class="btn gh sm" style="margin-top:8px" onclick="vw(\'ai\')">Ver en Coach</button></div>';
  /* qué toca */
  var tit,sub,boton;
- if(q.tipo==='fuerza'){var s=sesionDe(dia,f);tit=s.n;sub=s.s+' · '+s.ej.length+' ejercicios · 35-40 min';boton='<button class="btn" onclick="vw(\'tr\')">Empezar el entreno</button>'}
+ if(q.tipo==='fuerza'){var s=sesionDe(dia,f),idsHoy=idsConRegen(s,f);tit=s.n;sub=s.s+' · '+s.ej.length+' ejercicios · 35-40 min<br><span style="color:var(--acc)">Hoy tocan: '+esc(musculosSesionTxt(idsHoy))+'</span>';boton='<button class="btn" onclick="vw(\'tr\')">Empezar el entreno</button>'}
  else if(q.tipo==='padel'){tit='Pádel';sub='Calienta 8-10 min antes. Agarre a 6 de 10. Después, apunta cómo quedan rodillas y codo.';boton='<button class="btn" onclick="vw(\'pa\')">Calentamiento y registro</button>'}
  else{tit='Movilidad';sub='8 minutos contra la silla y el coche. Bici suave opcional si te apetece.';boton='<button class="btn" onclick="empezarMovil()">Empezar los 8 minutos</button>'}
  o+='<div class="hd"><h2>'+tit+'</h2><span class="when">Semana '+S.semana+(esDeload()?' · DESCARGA':'')+' · fase '+fase()+'</span></div><p class="sub">'+sub+'</p>';
@@ -99,8 +111,10 @@ function vHoy(){
  /* semana: cada día es un botón; al tocarlo se despliega qué toca ese día */
  if(!diaSel)diaSel=dia;
  o+='<h3 class="sec">La semana</h3><div class="days">'+DIAS.map(function(k){
-  var qq=queToca(k,f),lab=qq.tipo==='fuerza'?qq.k:(qq.tipo==='padel'?'pádel':'movil');
-  return '<button class="day'+(qq.tipo==='movil'?' rest':'')+(k===dia?' hoyd':'')+'" aria-pressed="'+(k===diaSel)+'" onclick="verDiaSem(\''+k+'\')"><span class="d">'+DIAL[k]+'</span><span class="l">'+lab+'</span></button>'}).join('')+'</div>';
+  var kf=fechaDeDia(k),qq=queToca(k,kf),lab=qq.tipo==='fuerza'?qq.k:(qq.tipo==='padel'?'pádel':'movil');
+  var ov=(S.plan||{})[kf];
+  return '<button class="day'+(qq.tipo==='movil'?' rest':'')+(k===dia?' hoyd':'')+'"'+(ov?' style="border-color:var(--warn)" title="'+esc(ov.motivo||'Ajustado esta semana')+'"':'')+' aria-pressed="'+(k===diaSel)+'" onclick="verDiaSem(\''+k+'\')"><span class="d">'+DIAL[k]+'</span><span class="l">'+lab+(ov?' ↻':'')+'</span></button>'}).join('')+'</div>';
+ o+='<div class="row" style="margin-top:10px"><button class="btn gh sm" onclick="regenerarSemana()">↻ Regenerar semana</button><button class="btn gh sm" onclick="cerrarSemana()">Empezar semana nueva</button>'+(haySemanaAjustada()?'<button class="btn gh sm" onclick="deshacerSemana()">Restaurar semana</button>':'')+'</div>';
  o+='<div id="diaSem">'+diaSemHTML(diaSel)+'</div>';
  var cs=cargaSemana();
  o+='<div class="grid">'+stat(cs.fuerza,'fuerza esta semana')+stat(cs.partidos,'partidos')+stat(rachaMovil(),'días seguidos de movilidad')+stat(S.hist.length,'sesiones totales')+'</div>';
@@ -120,11 +134,14 @@ function verDiaSem(k){diaSel=k;
 function diaSemHTML(k){
  var f=fechaDeDia(k),q=queToca(k,f),hoy=hoyISO(),cuando=f===hoy?'hoy':(f<hoy?'pasado':'');
  var o='<div class="hist"><h4>'+DIAN[k]+' '+fmtF(f)+(cuando?' <span class="chip">'+cuando+'</span>':'')+'</h4>';
+ var planOv=(S.plan||{})[f];
+ if(planOv&&planOv.motivo)o+='<p class="err">'+esc(planOv.motivo)+'</p>';
  if(q.tipo==='fuerza'){
-  var s=sesionDe(k,f),a=ajustesDe(f),est=estadoDia(k,f);
+  var s=sesionDe(k,f),a=ajustesDe(f),idsD=idsConRegen(s,f),est=estadoDia(k,f);
   o+='<div class="hmeta" style="margin-bottom:8px"><span>'+s.n+' · '+s.s+'</span><span>'+(est.hechos?est.hechos+' de '+est.tot+' hechos':s.ej.length+' ejercicios')+'</span></div>';
+  o+='<p class="cue" style="padding-top:0;color:var(--acc)">Hoy tocan: '+esc(musculosSesionTxt(idsD))+'</p>';
   if(a.avisos.length)o+='<p class="err">'+a.avisos.map(esc).join(' ')+'</p>';
-  o+='<div class="eq" style="margin:0 0 10px">'+s.ej.map(function(id,i){var L=LIB[id],sg=sugerir(id,f),n=seriesDe(id,f);
+  o+='<div class="eq" style="margin:0 0 10px">'+idsD.map(function(id,i){var L=LIB[id],sg=sugerir(id,f),n=seriesDe(id,f);
    return '<div class="item'+(est.m[i]?' okd':'')+'"><span class="num">'+(est.m[i]?'✓':(i+1<10?'0':'')+(i+1))+'</span><label>'+esc(L.n)+'</label><span class="q">'+n+'×'+(L.r[0]===L.r[1]?L.r[0]:L.r[0]+'-'+L.r[1])+(L.seg?'s':'')+(sg.peso?' · '+sg.peso+' kg':'')+'</span></div>'}).join('')+'</div>';
   var r=sesDe(f);
   o+='<div class="row">'+(r?'<span class="mkcal">guardada'+(r.s.val?' y validada':'')+'</span>':'')+'<button class="btn gh sm" onclick="pick(\''+k+'\');vw(\'tr\')">Abrir en Entreno</button></div>';
@@ -142,35 +159,129 @@ function diaSemHTML(k){
 }
 function guardarHoy(){
  var f=hoyISO();S.hoy[f]={rod:parseInt($('hRod').value)||0,sue:num('hSue'),padel:$('hPad').checked?1:0};
- save();toast('Guardado. La sesión de hoy se ajusta sola.');vHoy();
+ save();
+ revisarReplan(f,'rodillas',{rod:S.hoy[f].rod});
+ if(S.hoy[f].sue!=null)revisarReplan(f,'sueno',{sue:S.hoy[f].sue});
+ revisarCoachDiario('preguntas');
+ toast('Guardado. La sesión de hoy se ajusta sola.');vHoy();
 }
 function empezarMovil(){
- guiar(rutinaMov(),function(){var f=hoyISO();if(S.movil.indexOf(f)<0)S.movil.push(f);save();toast('Movilidad hecha. '+rachaMovil()+' días seguidos.');vHoy()});
+ guiar(rutinaMov(),function(){var f=hoyISO();if(S.movil.indexOf(f)<0)S.movil.push(f);save();revisarReplan(f,'movil_extra',{});revisarCoachDiario('movilidad');toast('Movilidad hecha. '+rachaMovil()+' días seguidos.');vHoy()});
 }
 
 /* ============ ENTRENO ============ */
 var cur=diaSemana(hoyISO()),borrador={},fechaSes=null;
 function pick(k){cur=k;cargarBorr();vTr();window.scrollTo({top:0,behavior:'smooth'})}
-function ejerciciosHoy(s){ // aplica swaps de disposición y de "me duele"
- var f=fechaSes||hoyISO(),a=ajustesDe(f);
- return s.ej.map(function(id,i){
+/* fecha con la que trabaja Entreno: la elegida a mano en el selector de fecha (fechaSes, siempre
+   hoy o pasada), o si no, la fecha real del día de la semana que se está viendo (cur). Así, si se
+   elige un día futuro de esta semana en el selector de días, todo (regen, ajustes, guardado) usa
+   su fecha real; si se elige un día pasado sin fijar fecha a mano, se sigue tratando como hoy. */
+function fechaCtx(){
+ if(fechaSes)return fechaSes;
+ var f=fechaDeDia(cur);
+ return f>=hoyISO()?f:hoyISO();
+}
+function ejerciciosHoy(s){ // aplica regeneraciones, swaps de disposición y "me duele"
+ var f=fechaCtx(),a=ajustesDe(f),base=idsConRegen(s,f);
+ return base.map(function(id,i){
   var b=borrador[cur+i];
   if(b&&b.cambio)return b.cambio.por;
-  if(a.swap[id]&&disponible(a.swap[id])&&s.ej.indexOf(a.swap[id])<0)return a.swap[id];
+  if(a.swap[id]&&disponible(a.swap[id])&&base.indexOf(a.swap[id])<0)return a.swap[id];
   return id;});
 }
+function musculosHTML(id){return musculosDe(id).map(function(m){return '<span class="chip mchip">'+esc(MUSC[m]||m)+'</span>'}).join('')}
+/* "Regenerar": cambia un ejercicio de hoy por otro disponible del mismo patrón o músculo primario.
+   Cicla entre los candidatos sin repetir hasta agotarlos; descarta lo apuntado en ese hueco. */
+function regenerar(i){
+ var f=fechaCtx(),s=sesionDe(cur,f);if(!s)return;
+ var baseId=s.ej[i],ids=ejerciciosHoy(s),otros=ids.filter(function(x,j){return j!==i});
+ var cand=candidatosRegen(baseId,otros,f);
+ if(!cand.length){toast('No hay otra opción para este músculo con tu material',1);return}
+ S.regen=S.regen||{};S.regen[f]=S.regen[f]||{};
+ var actual=S.regen[f][i],idx=actual?cand.indexOf(actual):-1,next=cand[(idx+1+cand.length)%cand.length];
+ S.regen[f][i]=next;delete borrador[cur+i];guardarBorr();save();
+ toast('Cambiado a '+LIB[next].n+'. Trabaja '+musculosSesionTxt([next])+'.');
+ vTr();setTimeout(function(){op(i)},50);
+}
+/* "Regenerar día": lo mismo pero para todos los huecos de la sesión, manteniendo la cobertura muscular. */
+function regenerarDia(){
+ var f=fechaCtx(),s=sesionDe(cur,f);if(!s)return;
+ var haceLog=Object.keys(borrador).some(function(k){var b=borrador[k];return b&&((b.reps&&b.reps.some(function(r){return r>0}))||b.peso!==undefined||b.rpe)});
+ var ir=function(){
+  var nuevos=s.ej.slice(),sinAlt=[];
+  s.ej.forEach(function(baseId,i){
+   var otros=nuevos.filter(function(x,j){return j!==i});
+   var cand=candidatosRegen(baseId,otros,f);
+   if(cand.length)nuevos[i]=cand[0];else sinAlt.push(LIB[baseId]?LIB[baseId].n:baseId);
+  });
+  S.regen=S.regen||{};S.regen[f]={};
+  nuevos.forEach(function(id,i){if(id!==s.ej[i])S.regen[f][i]=id});
+  borrador={};if(S.borr)delete S.borr[borrKey()];save();
+  toast(sinAlt.length?'Día regenerado. Sin alternativa para: '+sinAlt.join(', '):'Día regenerado. Hoy tocan: '+musculosSesionTxt(idsConRegen(s,f)));
+  vTr();
+ };
+ if(haceLog)pregunta('Ya has apuntado algo en la sesión de hoy. ¿Regenerar el día y perder lo apuntado?',ir);else ir();
+}
+/* días de fuerza de la semana actual, de hoy en adelante, que aún no tienen una sesión guardada
+   (si ya se guardó, esa sesión es historial y no se toca). */
+function fechasFuerzaSemanaDesdeHoy(){
+ var hoy=hoyISO(),out=[];
+ DIAS.forEach(function(k){
+  var f=fechaDeDia(k);
+  if(f<hoy)return;
+  if(queToca(k,f).tipo!=='fuerza')return;
+  if(sesDe(f))return;
+  out.push({dia:k,f:f});
+ });
+ return out;
+}
+/* "Regenerar semana": aplica el mismo cambio de "Regenerar día" a todas las sesiones de fuerza
+   de hoy en adelante dentro de la semana actual. Días pasados y sesiones ya guardadas no se tocan. */
+function regenerarSemana(){
+ var dias=fechasFuerzaSemanaDesdeHoy();
+ if(!dias.length){toast('No queda ninguna sesión de fuerza por regenerar esta semana',1);return}
+ var haceLog=Object.keys(borrador).some(function(k){var b=borrador[k];return b&&((b.reps&&b.reps.some(function(r){return r>0}))||b.peso!==undefined||b.rpe)});
+ var ir=function(){
+  var resumen=[],sinAltTotal=[];
+  dias.forEach(function(x){
+   var s=sesionDe(x.dia,x.f);if(!s)return;
+   var nuevos=s.ej.slice(),sinAlt=[];
+   s.ej.forEach(function(baseId,i){
+    var otros=nuevos.filter(function(v,j){return j!==i});
+    var cand=candidatosRegen(baseId,otros,x.f);
+    if(cand.length)nuevos[i]=cand[0];else sinAlt.push(LIB[baseId]?LIB[baseId].n:baseId);
+   });
+   S.regen=S.regen||{};S.regen[x.f]={};
+   if(S.borr)delete S.borr[x.f+'|'+x.dia];
+   nuevos.forEach(function(id,i){if(id!==s.ej[i])S.regen[x.f][i]=id});
+   resumen.push(fmtF(x.f)+': '+musculosSesionTxt(idsConRegen(s,x.f)));
+   sinAltTotal=sinAltTotal.concat(sinAlt);
+  });
+  borrador={};if(S.borr)delete S.borr[borrKey()];save();
+  var sinAltU=sinAltTotal.filter(function(v,i,a){return a.indexOf(v)===i});
+  toast((sinAltU.length?'Sin alternativa para: '+sinAltU.join(', ')+'. ':'')+'Semana regenerada. '+resumen.join(' · '));
+  refrescar();
+ };
+ pregunta('¿Regenerar la semana? Cambia los ejercicios de '+dias.length+' sesión'+(dias.length===1?'':'es')+' de fuerza, de hoy en adelante.'+(haceLog?' Se pierde lo apuntado hoy que no hayas guardado.':''),ir);
+}
 function vTr(){
- var f=fechaSes||hoyISO();
- $('days').innerHTML=DIAS.map(function(k){var q=queToca(k,f);
-  return '<button class="day'+(q.tipo!=='fuerza'?' rest':'')+'" aria-pressed="'+(k===cur)+'" onclick="pick(\''+k+'\')"><span class="d">'+DIAL[k]+'</span><span class="l">'+(marcaDia(k,fechaDeDia(k))||(q.tipo==='fuerza'?q.k:(q.tipo==='padel'?'pádel':'movil')))+'</span></button>'}).join('');
+ var f=fechaCtx();
+ if($('btnRestaurarSemana'))$('btnRestaurarSemana').hidden=!haySemanaAjustada();
+ $('days').innerHTML=DIAS.map(function(k){var kf=fechaDeDia(k),q=queToca(k,kf),ov=(S.plan||{})[kf];
+  return '<button class="day'+(q.tipo!=='fuerza'?' rest':'')+'"'+(ov?' style="border-color:var(--warn)" title="'+esc(ov.motivo||'Ajustado esta semana')+'"':'')+' aria-pressed="'+(k===cur)+'" onclick="pick(\''+k+'\')"><span class="d">'+DIAL[k]+'</span><span class="l">'+(marcaDia(k,kf)||(q.tipo==='fuerza'?q.k:(q.tipo==='padel'?'pádel':'movil')))+(ov?' ↻':'')+'</span></button>'}).join('');
  var s=sesionDe(cur,f),m=$('main'),q=queToca(cur,f);
  $('when').textContent='Semana '+S.semana+(esDeload()?' · DESCARGA':'');
  if(!s){
   $('tt').textContent=q.tipo==='padel'?'Pádel':'Movilidad';$('ss').textContent='';
-  m.innerHTML='<div class="rest-day"><h3 style="font-size:19px;color:var(--dim)">Hoy no toca hierro</h3><p>'+(q.tipo==='padel'?'Calentamiento y registro del partido en la pestaña Pádel.':'8 minutos de movilidad desde Hoy. Bici suave si te apetece.')+'</p></div>'+extrasHTML(true);
+  if($('regenRow'))$('regenRow').hidden=true;
+  var planOv=(S.plan||{})[f];
+  m.innerHTML='<div class="rest-day"><h3 style="font-size:19px;color:var(--dim)">Hoy no toca hierro</h3><p>'+(q.tipo==='padel'?'Calentamiento y registro del partido en la pestaña Pádel.':'8 minutos de movilidad desde Hoy. Bici suave si te apetece.')+'</p>'
+  +(planOv&&planOv.motivo?nota('<b>Ajuste de la semana</b>'+esc(planOv.motivo),'w'):'')
+  +'<div class="row" style="margin-top:14px"><button class="btn gh sm" onclick="fuerzaExtra()">Entrenar fuerza igualmente</button></div></div>'+extrasHTML(true);
   progBar(null);return;}
- $('tt').textContent=s.n;$('ss').textContent=s.s;
  var a=ajustesDe(f),ids=ejerciciosHoy(s),html='';
+ $('tt').textContent=s.n;$('ss').innerHTML=esc(s.s)+'<br><span style="color:var(--acc)">Hoy tocan: '+esc(musculosSesionTxt(ids))+'</span>';
+ if($('regenRow'))$('regenRow').hidden=false;
  if(s.falta)html+=nota('<b>Faltan '+s.falta+' ejercicios</b>Con el material y las articulaciones marcadas en Ajustes no hay alternativa para algún patrón.','w');
  if(esDeload())html+=nota('<b>Semana de descarga</b>85% del peso y una serie menos. No es opcional.','w');
  if(a.avisos.length)html+=nota('<b>Ajustes de hoy</b>'+a.avisos.map(esc).join('<br>'),'w');
@@ -179,11 +290,12 @@ function vTr(){
   var L=LIB[id],sg=sugerir(id,f),b=borrador[cur+i]||{},nS=seriesDe(id,f),sets='';
   for(var j=0;j<nS;j++){var v=(b.reps&&b.reps[j])||'';
    sets+='<div class="serie'+(v?' ok':'')+'"><label>S'+(j+1)+'</label><input type="text" inputmode="numeric" placeholder="'+(L.seg?'seg':'reps')+'" value="'+v+'" oninput="setRep(\''+cur+i+'\','+j+',this.value)"></div>';}
-  var cambiado=b.cambio?'<span class="chip" style="color:var(--warn);border-color:var(--warn)">cambiado</span>':(id!==s.ej[i]?'<span class="chip">ajustado</span>':'');
+  var regHoy=(S.regen&&S.regen[f])||{};
+  var cambiado=b.cambio?'<span class="chip" style="color:var(--warn);border-color:var(--warn)">cambiado</span>':(regHoy[i]!==undefined?'<span class="chip" style="color:var(--ok);border-color:var(--ok)">regenerado</span>':(id!==s.ej[i]?'<span class="chip">ajustado</span>':''));
   var alt=alternativa(id,ids);
   var hh=hechoB(b,nS);
   return '<article class="ex'+(hh?' done':'')+'" id="e'+i+'"><div class="exrow"><button class="exok" onclick="toggleHecho('+i+')" aria-label="Marcar hecho" aria-pressed="'+hh+'">✓</button>'
-  +'<button class="exhd" onclick="op('+i+')" aria-expanded="false"><span class="num">'+(i+1<10?'0':'')+(i+1)+'</span><span class="name">'+esc(L.n)+cambiado+'</span>'
+  +'<button class="exhd" onclick="op('+i+')" aria-expanded="false"><span class="num">'+(i+1<10?'0':'')+(i+1)+'</span><span class="name">'+esc(L.n)+cambiado+'<br>'+musculosHTML(id)+'</span>'
   +'<span class="kgb"><b>'+(sg.peso?sg.peso+' kg':'sin peso')+'</b><span>'+nS+'×'+(L.r[0]===L.r[1]?L.r[0]:L.r[0]+'-'+L.r[1])+(L.seg?'s':'')+'</span></span><span class="chev">▶</span></button></div>'
   +'<div class="body">'
   +'<div class="why"><b>Por qué este peso:</b> '+esc(sg.txt)+'</div>'
@@ -193,6 +305,7 @@ function vTr(){
   +(L.e?'<p class="err">'+esc(L.e)+'</p>':'')
   +'<div class="vids"><a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+encodeURIComponent(L.q)+'"><i>▶</i>Ver técnica</a>'
   +(alt?'<button class="vid duele" onclick="meDuele('+i+')">Me duele → '+esc(LIB[alt].n)+'</button>':'')
+  +'<button class="vid regen" onclick="regenerar('+i+')">↻ Regenerar</button>'
   +(b.cambio?'<button class="vid" onclick="deshacerCambio('+i+')">Volver a '+esc(LIB[b.cambio.de].n)+'</button>':'')+'</div>'
   +sustituirHTML(s.orig&&s.orig[i]||s.ej[i],ids)
   +'<div class="slab">Lo que has hecho hoy</div><div class="sets">'+sets
@@ -204,9 +317,9 @@ function vTr(){
   +'<div class="row" style="margin-top:10px"><button class="btn sm exhecho" onclick="toggleHecho('+i+')">'+(hh?'Desmarcar':'Hecho')+'</button></div>'
   +'</div></article>'}).join('');
  html+=extrasHTML(false);
- var esHoy=(f===hoyISO());
+ var esHoy=(f===hoyISO()),esFuturo=(f>hoyISO());
  html+='<div class="row" style="margin-top:20px"><label>Día</label><input class="inp" type="date" value="'+f+'" max="'+hoyISO()+'" onchange="setFecha(this.value)">'
- +(esHoy?'<span class="mkcal">hoy</span>':'<span class="mkcal" style="color:var(--warn)">retroactivo</span>')+'</div>';
+ +(esHoy?'<span class="mkcal">hoy</span>':(esFuturo?'<span class="mkcal">'+fmtF(f)+'</span>':'<span class="mkcal" style="color:var(--warn)">retroactivo</span>'))+'</div>';
  html+='<div class="row"><button class="btn" onclick="guardarSesion()">Guardar sesión</button><span class="mkcal" id="progTxt"></span><button class="btn gh sm" onclick="talCual()">Rellenar tal cual</button><button class="btn gh sm" onclick="limpiar()">Limpiar</button></div>';
  html+=nota('<b>Me duele</b>Cada ejercicio tiene una alternativa a un toque. Si algo duele, cámbialo y sigue: queda apuntado en la sesión. Si el dolor se repite dos sesiones, márcalo en Ajustes como articulación en fase mala y el motor lo saca del plan hasta que lo desmarques.');
  html+=nota('<b>Hecho y sin hacer</b>Marca cada ejercicio con ✓ al terminarlo, o apunta sus series y se marca solo. Al guardar, lo que no esté marcado queda como <i>sin hacer</i>. Si no marcas nada, doy por hecho el plan entero: peso propuesto, tope de repeticiones y RPE 7.');
@@ -220,33 +333,44 @@ function sustituirHTML(orig,ids){var act=S.cfg.sustituye[orig],c=mismoPat(orig,i
 function sustituir(orig,v){if(v)S.cfg.sustituye[orig]=v;else delete S.cfg.sustituye[orig];save();vTr();toast(v?'Desde ahora, '+LIB[v].n+' en lugar de '+LIB[orig].n:'Vuelve '+LIB[orig].n)}
 function op(i){var e=$('e'+i);if(!e)return;if(!e.classList.contains('open'))cerrarOtros(e);var o=e.classList.toggle('open');e.querySelector('.exhd').setAttribute('aria-expanded',o)}
 function bd(k){if(!borrador[k])borrador[k]={reps:[]};if(!borrador[k].reps)borrador[k].reps=[];return borrador[k]}
-function setRep(k,j,v){var b=bd(k);b.reps[j]=parseInt(v)||0;autoHecho(k);guardarBorr();progBar(sesionDe(cur,fechaSes||hoyISO()));
+function setRep(k,j,v){var b=bd(k);b.reps[j]=parseInt(v)||0;autoHecho(k);guardarBorr();progBar(sesionDe(cur,fechaCtx()));
  var el=event.target.parentNode;el.classList.toggle('ok',!!parseInt(v));
  if(parseInt(v))startT(descansoDe(parseInt(k.slice(3))));}
 function setPeso(k,v){bd(k).peso=parseFloat(v)||0;guardarBorr()}
 function setRpe(k,v){bd(k).rpe=parseInt(v)||0;guardarBorr()}
 function setNota(k,v){bd(k).nota=v;guardarBorr()}
-function meDuele(i){var s=sesionDe(cur,fechaSes||hoyISO()),ids=ejerciciosHoy(s),id=ids[i],alt=alternativa(id,ids);
+function meDuele(i){var s=sesionDe(cur,fechaCtx()),ids=ejerciciosHoy(s),id=ids[i],alt=alternativa(id,ids);
  if(!alt)return;var b=bd(cur+i);b.cambio={de:s.ej[i],por:alt};b.reps=[];b.peso=undefined;delete b.hecho;guardarBorr();
  toast('Cambiado a '+LIB[alt].n+'. Queda apuntado.');vTr();
  setTimeout(function(){op(i)},50)}
 function deshacerCambio(i){var b=bd(cur+i);delete b.cambio;b.reps=[];b.peso=undefined;delete b.hecho;guardarBorr();vTr()}
 function setFecha(v){fechaSes=v||hoyISO();cur=diaSemana(fechaSes);cargarBorr();vTr();toast(fechaSes===hoyISO()?'Se guardará con fecha de hoy':'Se guardará con fecha '+fmtF(fechaSes))}
-function talCual(){var f=fechaSes||hoyISO(),s=sesionDe(cur,f);if(!s)return;
+function talCual(){var f=fechaCtx(),s=sesionDe(cur,f);if(!s)return;
  ejerciciosHoy(s).forEach(function(id,i){var L=LIB[id],sg=sugerir(id,f),b=bd(cur+i),n=seriesDe(id,f);
   for(var j=0;j<n;j++)if(!b.reps[j])b.reps[j]=L.r[1];
   if(b.peso===undefined)b.peso=sg.peso;if(!b.rpe)b.rpe=7});
  guardarBorr();vTr();toast('Rellenado con el plan. Cambia lo que fuera distinto.')}
 function limpiar(){pregunta('¿Borrar lo que has apuntado hoy?',function(){if(S.borr)delete S.borr[borrKey()];borrador={};save();vTr();toast('Borrado')})}
 function guardarSesion(){
- var f=fechaSes||hoyISO(),s=sesionDe(cur,f),c=construirEj(s,f);
+ var f=fechaCtx(),s=sesionDe(cur,f),c=construirEj(s,f);
  if(!c.ej.length){toast('Nada que guardar: marca algo como hecho o añade un extra',1);return}
+ var eraExtra=tipoBase(cur,f).tipo!=='fuerza';
  var reg={f:f,s:s?s.k:'X',dia:cur,jor:cur,sem:S.semana,ej:c.ej,omit:c.omit,val:0,auto:c.asumidos,listo:dispDe(f)};
  var prev=sesDe(f);if(prev)S.hist[prev.i]=reg;else S.hist.push(reg);
  S.hist.sort(function(a,b){return a.f<b.f?-1:1});
  if(S.borr)delete S.borr[borrKey()];clearTimeout(_tBorr);save();fechaSes=null;
+ if(s){if(eraExtra)revisarReplan(f,'fuerza_extra',{k:s.k});else revisarReplan(f,'sesion',{});}
+ revisarCoachDiario('sesion');
  toast(resumenGuardado(c,f));
  cur=diaSemana(hoyISO());cargarBorr();vTr();
+}
+/* fuerza el día actual a sesión de fuerza aunque el plan no lo pida hoy; el motor
+   reajusta el resto de la semana en cuanto se guarda la sesión (ver guardarSesion). */
+function fuerzaExtra(){
+ var f=fechaCtx(),letra=proximaLetraExtra(f);
+ S.plan=S.plan||{};S.plan[f]={tipo:'fuerza',k:letra,motivo:'Fuerza fuera de plan, elegida a mano.',auto:0};
+ save();vTr();
+ toast('Sesión de fuerza '+letra+' añadida hoy. Al guardarla, se ajusta el resto de la semana.');
 }
 
 /* ============ PROGRESO ============ */
@@ -316,11 +440,11 @@ function vHist(){
 function cerrarSemana(){
  if(!S.hist.length){toast('Guarda al menos una sesión antes de cerrar la semana',1);return}
  pregunta('¿Cerrar la semana '+S.semana+'? Se genera la '+(S.semana+1)+' con los pesos actualizados.',function(){
-  S.semana++;save();var msg='Semana '+S.semana+' generada.';
+  S.semana++;S.regen={};S.plan={};save();var msg='Semana '+S.semana+' generada.';
   if(esDeload())msg+=' DESCARGA: 85% y una serie menos.';
   if(S.semana%4===1&&S.semana>1)msg+=' Cambio de bloque: rotan ejercicios.';
   if(S.semana===6)msg+=' Se abren las dominadas negativas.';
-  toast(msg);vHist()});
+  toast(msg);refrescar()});
 }
 
 /* ============ PÁDEL ============ */
@@ -354,7 +478,9 @@ function sel10(id,v){return '<select class="inp" id="'+id+'">'+[0,1,2,3,4,5,6,7,
 function guardarPadel(){
  var r={f:$('pF').value||hoyISO(),min:parseInt($('pMin').value)||0,int:parseInt($('pInt').value)||3,rodD:parseInt($('pRD').value)||0,rodI:parseInt($('pRI').value)||0,codo:parseInt($('pCo').value)||0,hielo:$('pHielo').checked?1:0,nota:$('pNota').value.trim()};
  var i=padelDe(r.f);if(i>=0)S.padel[i]=r;else S.padel.push(r);
- S.padel.sort(function(a,b){return a.f<b.f?-1:1});save();toast('Partido guardado');vPadel();
+ S.padel.sort(function(a,b){return a.f<b.f?-1:1});save();
+ revisarReplan(r.f,'padel_extra',{});revisarCoachDiario('padel');
+ toast('Partido guardado');vPadel();
 }
 function borrarPadel(i){pregunta('¿Borrar el partido del '+fmtF(S.padel[i].f)+'?',function(){S.padel.splice(i,1);save();vPadel()})}
 
@@ -398,7 +524,9 @@ function guardarCuerpo(){
  var r={f:hoyISO(),peso:num('cPeso'),cint:num('cCint'),rodD:parseInt($('cRD').value)||0,rodI:parseInt($('cRI').value)||0,mun:parseInt($('cMun').value)||0,cad:parseInt($('cCad').value)||0,sueN:num('cSueN'),sueS:num('cSueS'),cig:$('cCig')?num('cCig'):null,sis:num('cSis'),dia:num('cDia'),nota:$('cNota').value.trim()};
  if(r.peso==null&&r.cint==null&&r.sueN==null){toast('Apunta al menos peso, cintura o sueño',1);return}
  var i=cuerpoDe(r.f);if(i>=0)S.cuerpo[i]=r;else S.cuerpo.push(r);
- S.cuerpo.sort(function(a,b){return a.f<b.f?-1:1});save();toast('Registrado');vCuerpo();
+ S.cuerpo.sort(function(a,b){return a.f<b.f?-1:1});save();
+ revisarReplan(r.f,'cuerpo',{rodD:r.rodD,rodI:r.rodI});revisarCoachDiario('cuerpo');
+ toast('Registrado');vCuerpo();
 }
 function borrarCuerpo(f){var i=cuerpoDe(f);if(i<0)return;pregunta('¿Borrar el registro del '+fmtF(f)+'?',function(){S.cuerpo.splice(i,1);save();vCuerpo()})}
 
@@ -426,6 +554,7 @@ function vComida(){
  S.comidas.forEach(function(c){if(semanaNat(c.f)!==w)return;tot++;dias[c.f]=1;if(!c.plan)fuera++});
  var trans=(new Date(hoy+'T00:00:00').getDay()+6)%7+1;
  o+='<div class="grid">'+stat(Object.keys(dias).length+'/'+trans,'días con registro')+stat(tot,'comidas apuntadas')+stat(fuera,'fuera de plan')+stat(rachaComida(),'días seguidos apuntando')+'</div>';
+ o+='<div class="row"><button class="btn gh sm" id="btnAnComida" onclick="analizarComidaHoy()">Analizar mi día con el Coach</button></div><div id="anComida"></div>';
  /* referencia */
  o+='<h3 class="sec">El plato</h3><div class="grid">'+stat('½','plato de verdura')+stat('¼','proteína, una palma')+stat('¼','hidrato, un puño')+stat('1','cucharada de aceite')+'</div>';
  o+='<div class="eq"><div class="item"><label>'+PLATO.mitad+'</label></div><div class="item"><label>'+PLATO.cuarto1+'</label></div><div class="item"><label>'+PLATO.cuarto2+'</label></div><div class="item"><label>'+PLATO.grasa+'</label></div></div>';
@@ -448,8 +577,24 @@ function vComida(){
 function momentoAhora(){var h=new Date().getHours();return h<10?'Desayuno':(h<13?'Media mañana':(h<16?'Comida':(h<20?'Merienda':'Cena')))}
 function moverDiaCom(d){var x=new Date((diaCom||hoyISO())+'T00:00:00');x.setDate(x.getDate()+d);var f=iso(x);if(f>hoyISO())return;diaCom=f;vComida()}
 function addComida(){var t=($('cmT').value||'').trim();if(!t){toast('Escribe qué has comido',1);return}
- S.comidas.push({f:diaCom||hoyISO(),h:$('cmH').value,t:t,plan:$('cmPlan').checked?1:0});S.comidas.sort(function(a,b){return a.f<b.f?-1:1});save();vComida();toast('Apuntado')}
+ S.comidas.push({f:diaCom||hoyISO(),h:$('cmH').value,t:t,plan:$('cmPlan').checked?1:0});S.comidas.sort(function(a,b){return a.f<b.f?-1:1});save();
+ revisarCoachDiario('comida');
+ vComida();toast('Apuntado')}
 function delComida(i){S.comidas.splice(i,1);save();vComida()}
+/* botón "Analizar mi día": valoración corta a demanda (no cuenta para el límite
+   de la revisión diaria automática) que puede proponer ajustar objetivos de
+   comida si hace falta. */
+function analizarComidaHoy(){
+ var b=$('btnAnComida');if(b)b.disabled=true;
+ $('anComida').innerHTML='<div class="msg a"><span class="spin"></span>Mirando el día…</div>';
+ var msgs=[{role:'user',content:contexto()+'\n\n=== ANALIZAR MI DÍA (comida) ===\nValora en pocas frases cómo ha ido la comida de hoy frente al objetivo y al método del plato. Si hace falta, usa ajustar_objetivos_comida.'}];
+ coachFetch(msgs).then(function(x){
+  if(b)b.disabled=false;
+  var txt=x.ok?(x.d.texto||'Sin comentarios.'):coachErrorTxt(x);
+  if(x.ok&&x.d.acciones&&x.d.acciones.length){txt+='\n\n'+coachProcesarAcciones(x.d.acciones);refrescar()}
+  $('anComida').innerHTML='<div class="msg a">'+esc(txt).replace(/\n/g,'<br>')+'</div>';
+ });
+}
 function usarPlato(i){var p=S.platos[i];$('cmT').value=p.n+(p.t?' ('+p.t+')':'');$('cmT').focus()}
 function guardarPlato(){var t=($('cmT').value||'').trim();if(!t){toast('Escribe primero el plato',1);return}
  S.platos.push({n:t,t:''});save();vComida();toast('Plato guardado')}
@@ -458,7 +603,7 @@ function delPlato(i){S.platos.splice(i,1);save();vComida()}
 function rachaComida(){var set={};S.comidas.forEach(function(c){set[c.f]=1});var d=new Date(),n=0;if(!set[iso(d)])d.setDate(d.getDate()-1);while(set[iso(d)]){n++;d.setDate(d.getDate()-1)}return n}
 function menuHTML(k){return '<div class="eq">'+MENU_DIA[k].map(function(x){return '<div class="item"><label><span class="mtime">'+x.h+'</span><br>'+x.t+'</label></div>'}).join('')+'</div>'}
 function verMenu(k){$('menuDia').innerHTML=menuHTML(k)}
-function addNota(){var el=$('ncom');if(!el.value.trim())return;S.notas.comida.push({t:el.value.trim(),f:hoyISO()});save();vComida()}
+function addNota(){var el=$('ncom');if(!el.value.trim())return;S.notas.comida.push({t:el.value.trim(),f:hoyISO()});save();revisarCoachDiario('nota');vComida()}
 function delNota(i){S.notas.comida.splice(i,1);save();vComida()}
 function ck(id,v){S['ck'+id]=v;save()}
 function resetShop(){Object.keys(S).forEach(function(k){if(k.indexOf('cksh')===0)delete S[k]});save();vComida()}
@@ -473,9 +618,21 @@ function contexto(){
  t.push('MATERIAL: barra de '+e.barra+' kg, barras de mancuerna de '+e.barraMan+' kg, kettlebell de '+e.kb+' kg, '+e.nFijas+' mancuernas fijas de '+e.fijas+' kg y mancuernas de 2 kg. Discos: '+Object.keys(e.discos).map(function(k){return e.discos[k]+'×'+k+' kg'}).join(', ')+'. Aparatos: '+Object.keys(e.tiene).filter(function(k){return e.tiene[k]}).map(function(k){return NOM[k]||k}).join(', ')+'.');
  var mal=Object.keys(S.artic).filter(function(k){return S.artic[k]}).map(function(k){return ARTIC[k]});
  t.push('PROGRAMA: semana '+S.semana+', fase '+fase()+(esDeload()?' (DESCARGA)':'')+'. Fuerza '+S.cfg.fuerza.map(function(k){return DIAN[k]}).join(' y ')+' (A y B, cuerpo entero, 35-40 min). Pádel '+(S.cfg.verano?'parado por verano':S.cfg.padel.map(function(k){return DIAN[k]}).join(' y ')+' a las '+S.cfg.padelHora)+'. Movilidad diaria de 8 min. '+(mal.length?'Articulaciones marcadas en fase mala: '+mal.join(', ')+'.':''));
+ /* semana actual con sus ajustes automáticos o del Coach, día a día */
+ var hoy=hoyISO();
+ t.push('SEMANA ACTUAL, día a día: '+semanaDe(hoy).map(function(f){
+  var q=queToca(diaSemana(f),f),ov=(S.plan||{})[f];
+  var lab=fmtF(f)+' '+DIAN[diaSemana(f)]+': '+(q.tipo==='fuerza'?'fuerza '+q.k:(q.tipo==='padel'?'pádel':'movilidad'))+(registrado(f)?' [registrado]':'');
+  return lab+(ov&&ov.motivo?' — ajustado: '+ov.motivo:'');
+ }).join(' | '));
+ /* preguntas del día, últimos 10 días: cómo ha venido cada día */
+ var diasHoy=Object.keys(S.hoy||{}).sort().slice(-10);
+ if(diasHoy.length)t.push('CÓMO HA VENIDO CADA DÍA (últimos registros de "¿cómo vienes hoy?"): '+diasHoy.map(function(f){var d=S.hoy[f];return f+': rodillas '+(d.rod!=null?d.rod:'?')+'/10, '+(d.sue!=null?d.sue+' h dormidas':'sueño sin apuntar')+(d.padel?', jugó el día antes':'')}).join(' | '));
  if(S.hist.length){
-  t.push('HISTORIAL DE FUERZA ('+S.hist.length+' sesiones, últimas 20):');
-  S.hist.slice(-20).forEach(function(x){t.push(x.f+' ['+x.s+', sem '+x.sem+(x.val?', validada':'')+(x.listo?', rodillas '+x.listo.rod+'/10':'')+']: '+x.ej.map(function(q){return nombreEj(q)+(q.extra?' [EXTRA]':'')+' '+(q.min?q.min+'min':(q.peso||0)+'kg '+(q.reps||[]).join('-')+' RPE'+q.rpe)+(q.auto?' [asumido]':'')+(q.cambio?' [cambiado por dolor desde '+(LIB[q.cambio.de]||{}).n+']':'')+(q.nota?' ("'+q.nota+'")':'')}).join(' | ')+(x.omit&&x.omit.length?' | SIN HACER: '+x.omit.map(function(id){return (LIB[id]||{}).n||id}).join(', '):''))});
+  var lim4sem=diasAtras(28),recientes=S.hist.filter(function(x){return x.f>=lim4sem});
+  if(!recientes.length)recientes=S.hist.slice(-8);
+  t.push('HISTORIAL DE FUERZA ('+S.hist.length+' sesiones en total; aquí las últimas 4 semanas, '+recientes.length+'):');
+  recientes.forEach(function(x){t.push(x.f+' ['+x.s+', sem '+x.sem+(x.val?', validada':'')+(x.listo?', rodillas '+x.listo.rod+'/10':'')+']: '+x.ej.map(function(q){var L=LIB[q.id],m=musculosDe(q.id)[0];return nombreEj(q)+(m?' ('+(MUSC[m]||m)+')':'')+(q.extra?' [EXTRA]':'')+' '+(q.min?q.min+'min':(q.peso||0)+'kg '+(q.reps||[]).join('-')+' RPE'+q.rpe)+(q.auto?' [asumido]':'')+(q.cambio?' [cambiado por dolor desde '+(LIB[q.cambio.de]||{}).n+']':'')+(q.nota?' ("'+q.nota+'")':'')}).join(' | ')+(x.omit&&x.omit.length?' | SIN HACER: '+x.omit.map(function(id){return (LIB[id]||{}).n||id}).join(', '):''))});
  } else t.push('HISTORIAL DE FUERZA: todavía no hay sesiones guardadas.');
  if(S.padel.length)t.push('PÁDEL (últimos 10): '+S.padel.slice(-10).map(function(p){return p.f+' '+p.min+'min int'+p.int+' rodillas '+p.rodD+'/'+p.rodI+' codo '+p.codo+(p.hielo?' hielo':'')+(p.nota?' ("'+p.nota+'")':'')}).join(' | '));
  if(S.cuerpo.length)t.push('CUERPO (registro semanal, últimos 10): '+S.cuerpo.slice(-10).map(function(c){return c.f+': peso '+(c.peso||'?')+', cintura '+(c.cint||'?')+', dolor RD'+c.rodD+' RI'+c.rodI+' muñ'+c.mun+' cad'+c.cad+', sueño '+(c.sueN||'?')+'+'+(c.sueS||0)+'h'+(c.cig!=null?', '+c.cig+' cig':'')+(c.sis?', TA '+c.sis+'/'+c.dia:'')}).join(' | '));
@@ -486,17 +643,91 @@ function contexto(){
  if(Object.keys(S.cfg.sustituye||{}).length)t.push('SUSTITUCIONES PERMANENTES QUE HA ELEGIDO: '+Object.keys(S.cfg.sustituye).map(function(k){return (LIB[k]||{}).n+' → '+(LIB[S.cfg.sustituye[k]]||{}).n}).join(', '));
  if(S.notas.comida.length)t.push('NOTAS DE COMIDA: '+S.notas.comida.map(function(n){return n.f+': '+n.t}).join(' | '));
  t.push('COMIDA OBJETIVO: ~'+S.cfg.kcal+' kcal, ~'+S.cfg.prot+' g proteína, método del plato, sin contar. Sin restricción de sal ni DASH (no hay hipertensión conocida).');
+ /* memoria del propio Coach: lo que ya ha aplicado o propuesto antes, para no repetirse y para poder construir sobre ello */
+ if(S.coachLog&&S.coachLog.length)t.push('CAMBIOS QUE YA HAS APLICADO O PROPUESTO ANTES (más reciente primero, hasta 15): '+S.coachLog.slice(0,15).map(function(l){return l.f+' ['+l.estado+'] '+l.accion+': '+l.detalle}).join(' | '));
  t.push('NOTA SOBRE LOS DATOS: los ejercicios [asumidos] no los apuntó; se dieron por hechos según el plan. Menos confianza que los medidos. Los [cambiados por dolor] indican dónde ha habido molestia real.');
  t.push('ESTILO: responde en español, sinceridad extrema, sin halagos, pros y contras cuando ayuden a decidir. Usa SUS datos reales. Si te falta un dato, pregúntalo en vez de suponerlo. Máximo 250 palabras salvo que pida más. Sobre el tabaco: no sermonees; si pregunta o si es relevante para lo que pregunta, dilo una vez con datos.');
  return t.join('\n\n');
 }
+/* endpoint del Coach: mismo origen normalmente; si la PWA se sirve desde GitHub
+   Pages (estático, sin servidor) usa la función de Vercel. */
+function coachURL(){
+ if(/\.github\.io$/.test(location.hostname))return 'https://osmagym.vercel.app/api/coach';
+ return '/api/coach';
+}
+function coachFetch(msgs){
+ return fetch(coachURL(),{method:'POST',headers:{'Content-Type':'application/json','x-coach-code':(S.coachCfg&&S.coachCfg.codigo)||''},body:JSON.stringify({messages:msgs})})
+ .then(function(r){return r.json().catch(function(){return {}}).then(function(d){return {ok:r.ok,status:r.status,d:d}})})
+ .catch(function(e){return {ok:false,status:0,d:{error:'red'},red:true}});
+}
+function coachErrorTxt(x){
+ if(x.red)return 'Ha fallado la conexión con el Coach. Comprueba la red (o que estás en la tailnet, si usas la Pi) y vuelve a intentarlo.';
+ if(x.status===503)return 'El Coach no está configurado. Falta la clave de MiniMax en el servidor (ver LEEME).';
+ if(x.status===401)return 'Código del Coach incorrecto. Revísalo en Ajustes → App y notificaciones.';
+ if(x.status===504)return 'El Coach ha tardado demasiado en responder. Prueba otra vez.';
+ return 'No he podido responder ('+(x.d&&x.d.error||x.status)+'). Prueba otra vez.';
+}
+/* Aplica (o propone) cada acción que ha devuelto el Coach, registra el resultado
+   en S.coachLog y devuelve un resumen en texto para añadir a la respuesta. */
+function coachProcesarAcciones(acciones){
+ if(!acciones||!acciones.length)return '';
+ var auto=!(S.coachCfg&&S.coachCfg.auto===0),resumen=[];
+ S.coachLog=S.coachLog||[];
+ acciones.forEach(function(a){
+  var r=coachAplicarAccion(a.name,a.input,auto);
+  var entrada={f:hoyISO(),accion:a.name,input:a.input,motivo:(a.input&&a.input.motivo)||'',
+   detalle:r.ok?r.detalle:r.motivo,estado:r.ok?(auto?'aplicado':'propuesta'):'rechazado',
+   deshacer:(r.ok&&auto)?r.deshacer:null};
+  S.coachLog.unshift(entrada);
+  resumen.push((entrada.estado==='aplicado'?'✓ ':entrada.estado==='propuesta'?'○ propuesta (pulsa Aplicar en "Cambios del Coach"): ':'✗ no aplicado: ')+entrada.detalle);
+ });
+ if(S.coachLog.length>40)S.coachLog.length=40;
+ save();
+ return resumen.join('\n');
+}
+function coachAplicarPropuesta(i){
+ var e=S.coachLog[i];if(!e||e.estado!=='propuesta')return;
+ var r=coachAplicarAccion(e.accion,e.input,true);
+ e.detalle=r.ok?r.detalle:r.motivo;e.estado=r.ok?'aplicado':'rechazado';e.deshacer=r.ok?r.deshacer:null;
+ save();refrescar();if($('ai')&&!$('ai').hidden)vAI();toast(r.ok?'Aplicado':'No se ha podido aplicar: '+r.motivo,r.ok?0:1);
+}
+function coachDeshacer(i){
+ var e=S.coachLog[i];if(!e||e.estado!=='aplicado')return;
+ coachDeshacerAccion(e.deshacer);e.estado='deshecho';save();refrescar();if($('ai')&&!$('ai').hidden)vAI();toast('Deshecho');
+}
+/* Revisión diaria automática: como mucho una vez al día por tipo de disparador,
+   más las veces que se quiera "a demanda" (chat, "Analizar mi día"). Nunca
+   bloquea la UI: se lanza en segundo plano y solo actualiza la vista si hace falta. */
+var revisionCoachHoy=null;
+function revisarCoachDiario(tipo){
+ if(!S.coachCfg)return;
+ var hoy=hoyISO();S.coachCfg.revisiones=S.coachCfg.revisiones||{};
+ if(S.coachCfg.revisiones[tipo]===hoy)return;
+ S.coachCfg.revisiones[tipo]=hoy;save();
+ var msgs=[{role:'user',content:contexto()+'\n\n=== REVISIÓN DIARIA AUTOMÁTICA ('+tipo+') ===\nAcabo de registrar algo. Revisa el contexto completo (semana, historial reciente, cómo he venido cada día, comida) y, solo si de verdad hace falta, ajusta algo con las herramientas. Si no hace falta nada, dilo en una frase corta.'}];
+ coachFetch(msgs).then(function(x){
+  if(!x.ok)return;
+  var resumenAcc=coachProcesarAcciones(x.d.acciones);
+  var texto=(x.d.texto||'').trim();
+  revisionCoachHoy={f:hoy,texto:texto||('Revisado. '+(resumenAcc?resumenAcc.split('\n')[0]:'Sin cambios.'))};
+  if($('hoy')&&!$('hoy').hidden)vHoy();
+ }).catch(function(){});
+}
 function vAI(){
- var o='<div class="hd"><h2>Coach</h2></div><p class="sub">Lleva tu perfil, tus lesiones, tu historial de fuerza, de pádel y de cuerpo. Pregunta lo que quieras.</p>';
+ var o='<div class="hd"><h2>Coach</h2></div><p class="sub">Lleva tu perfil, tus lesiones, tu historial de fuerza, de pádel y de cuerpo. Pregunta lo que quieras, y puede ajustar el plan él solo si se lo permites.</p>';
+ o+='<div class="row"><label><input type="checkbox" class="chk" '+(S.coachCfg&&S.coachCfg.auto===0?'':'checked')+' onchange="S.coachCfg.auto=this.checked?1:0;save();vAI()">El Coach aplica cambios solo</label></div>';
  o+='<div class="sug">'+['¿Voy progresando bien?','La rodilla derecha me falló ayer, ¿qué hago?','¿Puedo entrenar si he dormido 4 horas?','Adapta la cena de hoy, estoy de obra','¿Cuándo paso a dominadas?','¿Qué hago con el codo después del pádel?'].map(function(q){return '<button onclick="preguntarIA(\''+q.replace(/'/g,"\\'")+'\')">'+q+'</button>'}).join('')+'</div>';
  o+='<div id="chatBox">'+(chat.length?chat.map(function(m){return '<div class="msg '+(m.r==='u'?'u':'a')+'">'+esc(m.t).replace(/\n/g,'<br>')+'</div>'}).join(''):'<div class="msg a">Cuéntame. Puedo mirar tu progresión ejercicio por ejercicio, decirte si lo que notas en una rodilla tiene sentido con lo que llevas, o ajustarte la comida de un día concreto.</div>')+'</div>';
  o+='<div class="row" style="margin-top:14px"><input class="nota" id="aiQ" placeholder="Escribe tu pregunta" style="flex:1;min-width:180px" onkeydown="if(event.key===\'Enter\')preguntarIA()"><button class="btn sm" id="aiB" onclick="preguntarIA()">Enviar</button></div>';
  if(chat.length)o+='<div class="row"><button class="btn gh sm" onclick="chat=[];vAI()">Empezar de cero</button></div>';
  o+=nota('<b>No sustituye a tu médico ni a un fisio</b>Puede equivocarse. Para una rodilla que se bloquea, cambios de medicación o dudas clínicas, el médico. La visita de fisio para rodillas y cadera sigue pendiente.','w');
+ if(S.coachLog&&S.coachLog.length){
+  o+='<h3 class="sec">Cambios del Coach</h3><div class="eq">'+S.coachLog.slice(0,20).map(function(l,i){
+   var col=l.estado==='aplicado'?'var(--ok)':(l.estado==='rechazado'?'var(--warn)':(l.estado==='deshecho'?'var(--dim)':'var(--acc)'));
+   var btn=l.estado==='aplicado'?'<button class="btn gh sm" onclick="coachDeshacer('+i+')">Deshacer</button>':(l.estado==='propuesta'?'<button class="btn sm" onclick="coachAplicarPropuesta('+i+')">Aplicar</button>':'');
+   return '<div class="eqi"><label><span class="chip" style="color:'+col+';border-color:'+col+'">'+l.estado+'</span> '+esc(l.detalle)+' <span class="u">'+fmtF(l.f)+'</span></label>'+btn+'</div>';
+  }).join('')+'</div>';
+ }
  $('ai').innerHTML=o;var b=$('chatBox');if(b&&chat.length)b.scrollTop=b.scrollHeight;
 }
 function preguntarIA(pre){
@@ -505,15 +736,16 @@ function preguntarIA(pre){
  $('chatBox').innerHTML+='<div class="msg a" id="pend"><span class="spin"></span>Mirando tus datos…</div>';
  var msgs=[{role:'user',content:contexto()+'\n\n=== PREGUNTA ===\n'+chat[0].t}];
  for(var i=1;i<chat.length;i++)msgs.push({role:chat[i].r==='u'?'user':'assistant',content:chat[i].t});
- fetch('/api/coach',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs})})
- .then(function(r){return r.json().then(function(d){return {ok:r.ok,status:r.status,d:d}})})
- .then(function(x){
-  var txt=x.ok?(x.d.texto||''):'';
-  if(!x.ok)txt=x.status===503?'El Coach no está configurado en el servidor. Hay que poner la clave de la API en coach.json (ver LEEME).':'No he podido responder ('+(x.d.error||x.status)+'). Prueba otra vez.';
+ coachFetch(msgs).then(function(x){
+  var txt=x.ok?(x.d.texto||''):coachErrorTxt(x);
+  if(x.ok&&x.d.acciones&&x.d.acciones.length){
+   var resumenAcc=coachProcesarAcciones(x.d.acciones);
+   txt=(txt?txt+'\n\n':'')+resumenAcc;
+   refrescar();
+  }
   if(!txt)txt='No he podido responder. Prueba otra vez.';
   chat.push({r:'a',t:txt});vAI();
- })
- .catch(function(){chat.push({r:'a',t:'Ha fallado la conexión. Comprueba que estás en la tailnet y vuelve a intentarlo.'});vAI()});
+ });
 }
 
 /* ============ AJUSTES ============ */
@@ -544,14 +776,17 @@ function vAjustes(){
  /* ejercicios propios */
  o+='<h3 class="sec">Ejercicios propios</h3>';
  var ncus=Object.keys(S.ejCustom);
- if(ncus.length)o+='<div class="eq">'+ncus.map(function(k){var x=S.ejCustom[k];return '<div class="eqi"><label>'+esc(x.n)+' <span class="u">'+PATN[x.pat]+(x.req&&x.req.length?' · '+esc(nomMaterial(x.req[0])):'')+(x.alt&&x.alt.length?' · me duele → '+esc((LIB[x.alt[0]]||{}).n||''):'')+'</span></label><button class="btn gh sm" onclick="delEjer(\''+k+'\')">Quitar</button></div>'}).join('')+'</div>';
+ if(ncus.length)o+='<div class="eq">'+ncus.map(function(k){var x=S.ejCustom[k];return '<div class="eqi"><label>'+esc(x.n)+' <span class="u">'+PATN[x.pat]+(x.req&&x.req.length?' · '+esc(nomMaterial(x.req[0])):'')+(x.alt&&x.alt.length?' · me duele → '+esc((LIB[x.alt[0]]||{}).n||''):'')+'</span><br>'+musculosHTML(k)+'</label><button class="btn gh sm" onclick="delEjer(\''+k+'\')">Quitar</button></div>'}).join('')+'</div>';
  o+='<div class="eq" style="padding:14px 16px"><div class="row"><input class="nota" id="exN" placeholder="Nombre del ejercicio"></div>'
  +'<div class="row"><label>Patrón</label><select class="inp" id="exP">'+Object.keys(PATN).map(function(k){return '<option value="'+k+'">'+PATN[k]+'</option>'}).join('')+'</select>'
  +'<label>Tipo</label><select class="inp" id="exT"><option value="corporal">Peso corporal</option><option value="mancuerna">Mancuerna</option><option value="banda">Banda</option><option value="kb">Kettlebell</option><option value="barra">Barra</option></select></div>'
  +'<div class="row"><label>Material</label><select class="inp" id="exR"><option value="">Ninguno especial</option>'+Object.keys(NOM).map(function(k){return '<option value="'+k+'">'+NOM[k]+'</option>'}).join('')+e.custom.map(function(c){return '<option value="'+c.id+'">'+esc(c.n)+'</option>'}).join('')+'</select>'
  +'<label>Si duele, cambiar por</label><select class="inp" id="exA"><option value="">Ninguno</option>'+Object.keys(LIB).map(function(k){return '<option value="'+k+'">'+esc(LIB[k].n)+'</option>'}).join('')+'</select></div>'
  +'<div class="row"><label>Series</label><input class="inp" id="exS" style="width:56px" value="3"><label>Reps</label><input class="inp" id="exR1" style="width:50px" value="8"><span style="color:var(--dim)">a</span><input class="inp" id="exR2" style="width:50px" value="12"><label>Peso inicial</label><input class="inp" id="exI" style="width:56px" placeholder="kg"></div>'
- +'<div class="row"><input class="nota" id="exC" placeholder="Cómo se ejecuta (opcional)"></div><div class="row"><button class="btn sm" onclick="addEjer()">Crear ejercicio</button></div></div>';
+ +'<div class="row"><input class="nota" id="exC" placeholder="Cómo se ejecuta (opcional)"></div>'
+ +'<div class="row"><label>Grupos musculares (si no marcas ninguno, se deduce del patrón)</label></div>'
+ +'<div class="row" style="flex-wrap:wrap;gap:6px 14px">'+Object.keys(MUSC).map(function(k){return '<label style="font-size:12.5px;color:var(--dim);display:flex;align-items:center;gap:5px"><input type="checkbox" class="chk" id="exM_'+k+'" style="width:16px;height:16px">'+MUSC[k]+'</label>'}).join('')+'</div>'
+ +'<div class="row"><button class="btn sm" onclick="addEjer()">Crear ejercicio</button></div></div>';
  /* movilidad */
  o+='<h3 class="sec">Movilidad de 8 minutos</h3><div class="eq">'+MOV.map(function(m,i){var off=(S.cfg.movOff||[]).indexOf(i)>=0;
   return '<div class="eqi"><input type="checkbox" id="mv'+i+'" '+(off?'':'checked')+' onchange="toggleMov('+i+',this.checked)"><label for="mv'+i+'">'+esc(m.n)+' <span class="u">'+m.seg+' s</span></label></div>'}).join('')
@@ -562,6 +797,8 @@ function vAjustes(){
  +'<div class="eqi"><label>Proteína g/día</label><input class="inp" style="width:74px" value="'+S.cfg.prot+'" oninput="S.cfg.prot=parseInt(this.value)||130;save()"></div>'
  +'<div class="eqi"><input type="checkbox" id="tab" '+(S.cfg.tabaco?'checked':'')+' onchange="S.cfg.tabaco=this.checked;save()"><label for="tab">Registrar cigarrillos en Cuerpo</label></div></div>';
  /* app */
+ o+='<h3 class="sec">Coach</h3><div class="eq" style="padding:14px 16px"><div class="row"><label>Código del Coach</label><input class="nota" id="coachCod" type="password" placeholder="solo si la PWA se sirve desde GitHub Pages" value="'+esc((S.coachCfg&&S.coachCfg.codigo)||'')+'" style="flex:1;min-width:170px" oninput="S.coachCfg.codigo=this.value;save()"></div></div>';
+ o+=nota('<b>Cuándo hace falta</b>Si usas la app desde la Pi o en local, normalmente no hace falta. Si la abres desde txetxaki.github.io, el Coach pasa por un servidor público (Vercel) y pide este código para no dejarlo abierto a cualquiera.');
  o+='<h3 class="sec">App y notificaciones</h3><div class="eq" style="padding:14px 16px">'
  +'<div class="row"><button class="btn sm" id="btnInst" hidden onclick="instalar()">Instalar en el móvil</button><button class="btn gh sm" onclick="pedirNotif()">Activar notificaciones</button><button class="btn gh sm" onclick="probarNotif()">Probar</button></div>'
  +'<div class="row"><span class="mkcal">Estado: '+estadoNotif()+'</span></div>'
@@ -591,10 +828,12 @@ function addEjer(){
  var n=($('exN').value||'').trim();if(!n){toast('Ponle nombre',1);return}
  var r1=parseInt($('exR1').value)||8,r2=parseInt($('exR2').value)||12;if(r2<r1){var t=r1;r1=r2;r2=t}
  var tipo=$('exT').value,req=$('exR').value,alt=$('exA').value,ini=parseFloat($('exI').value),id=slug(n),pat=$('exP').value;
+ var mus=Object.keys(MUSC).filter(function(k){var el=$('exM_'+k);return el&&el.checked});
+ if(!mus.length)mus=(MUSC_POR_PAT[pat]||[]).slice();
  S.ejCustom[id]={n:n,pat:pat,req:req?[req]:[],tipo:tipo,inc:tipo==='barra'?2:(tipo==='kb'?2:1),r:[r1,r2],s:parseInt($('exS').value)||3,ini:isNaN(ini)?(tipo==='mancuerna'?2:0):ini,
-  zona:['rodilla','unilateral','bisagra','gluteo','cadera_lat'].indexOf(pat)>=0?'pierna':(pat==='core'?'core':'superior'),evita:[],alt:alt?[alt]:[],nivel:1,
+  zona:['rodilla','unilateral','bisagra','gluteo','cadera_lat'].indexOf(pat)>=0?'pierna':(pat==='core'?'core':'superior'),evita:[],alt:alt?[alt]:[],nivel:1,musculos:mus,
   c:($('exC').value||'').trim()||'Ejercicio añadido por ti.',b:'Exhala en el esfuerzo. Nunca bloquees el aire.',e:'',q:n,propio:1};
- LIB[id]=S.ejCustom[id];save();vAjustes();toast('"'+n+'" creado. Entra en la rotación de '+PATN[pat]);
+ LIB[id]=S.ejCustom[id];save();vAjustes();toast('"'+n+'" creado. Entra en la rotación de '+PATN[pat]+'. Trabaja '+musculosSesionTxt([id])+'.');
 }
 function delEjer(k){pregunta('¿Quitar "'+S.ejCustom[k].n+'"?',function(){delete S.ejCustom[k];delete LIB[k];Object.keys(S.cfg.sustituye).forEach(function(o){if(o===k||S.cfg.sustituye[o]===k)delete S.cfg.sustituye[o]});save();vAjustes()})}
 function exportar(){var t=JSON.stringify(S);
@@ -618,7 +857,7 @@ function estadoNotif(){
 function pedirNotif(){if(!('Notification' in window)){toast('Este navegador no las soporta',1);return}
  Notification.requestPermission().then(function(p){vAjustes();if(p==='granted'){toast('Notificaciones activadas');probarNotif()}else toast('Permiso denegado',1)})}
 function probarNotif(){if(Notification.permission!=='granted'){toast('Actívalas primero',1);return}
- if(swReg&&swReg.showNotification)swReg.showNotification('Atlético 47',{body:'Funcionan.',icon:'icon-192.png',vibrate:[180,90,180]});else new Notification('Atlético 47',{body:'Funcionan.'})}
+ if(swReg&&swReg.showNotification)swReg.showNotification('OsmaGym',{body:'Funcionan.',icon:'icon-192.png',vibrate:[180,90,180]});else new Notification('OsmaGym',{body:'Funcionan.'})}
 function suscribirPush(){
  var k=(($('vapid')||{}).value||'').trim();
  if(!k){toast('Pega primero la clave pública VAPID',1);return}
@@ -635,6 +874,7 @@ load(function(){
  cargarBorr();
  $('today').textContent=new Date().toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'}).toUpperCase();
  $('foot').textContent='Semana '+S.semana+' · '+S.hist.length+' sesiones · '+S.padel.length+' partidos · descarga cada 5 semanas';
+ revisarDiasPerdidos();
  var t=new URLSearchParams(location.search).get('t');
  vw(t&&TABS.indexOf(t)>=0?t:'hoy');
 });

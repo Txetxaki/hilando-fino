@@ -1,5 +1,5 @@
 [Unit]
-Description=Atletico 47 - planificador de notificaciones push
+Description=OsmaGym - planificador de notificaciones push
 After=network-online.target
 Wants=network-online.target
 
