@@ -180,6 +180,12 @@ test.describe('public static-prerender routes', () => {
   });
 
   test('contact flow hands over to the direct mailbox instead of a fake retryable failure', async ({ page }) => {
+    // While the Web3Forms key is still the placeholder, nothing may leave the browser.
+    const web3formsRequests: string[] = [];
+    await page.route('https://api.web3forms.com/**', async (route) => {
+      web3formsRequests.push(route.request().url());
+      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true }) });
+    });
     await page.goto('/contacto');
     await expect(page.getByText('Este formulario no es un servicio de urgencias')).toBeVisible();
     const button = page.getByRole('button', { name: 'Enviar solicitud' });
@@ -188,12 +194,13 @@ test.describe('public static-prerender routes', () => {
     await page.getByRole('textbox', { name: 'Email' }).fill('persona@example.com');
     await page.getByLabel('He leído la información de privacidad').check();
     await button.click();
-    // No CONTACT_* environment is configured for e2e, so this exercises the degraded path a
-    // visitor hits whenever the API is unreachable: a usable mailbox, never a dead end.
+    // The shipped access key is the placeholder, so this exercises the degraded path: a usable
+    // mailbox, never a dead end and never a request to Web3Forms.
     await expect(page.getByRole('status')).toContainText('info@hilandofinopsicologia.com');
     await expect(page.locator('.contact-form').getByRole('link', { name: 'info@hilandofinopsicologia.com' })).toHaveAttribute('href', 'mailto:info@hilandofinopsicologia.com');
     await expect(page.getByRole('status')).not.toContainText(/éxito|enviad[ao]/i);
     await expect(page.getByRole('status')).not.toContainText(/vuelve a intentarlo/i);
+    expect(web3formsRequests).toEqual([]);
   });
 
   test('contact form only offers modalities the server actually accepts', async ({ page }) => {

@@ -107,7 +107,7 @@ type ApprovedModality = (typeof approvedContactModalities)[number];
         @if (form.invalid && submitted()) {
           <p class="error-summary" role="alert">Revisa los campos obligatorios antes de enviar.</p>
         }
-        <p id="privacy-note">Consulta las rutas de <a routerLink="/privacidad">privacidad</a>, <a routerLink="/aviso-legal">aviso legal</a> y <a routerLink="/cookies">cookies</a>.</p>
+        <p id="privacy-note">Consulta las rutas de <a routerLink="/privacidad">privacidad</a>, <a routerLink="/aviso-legal">aviso legal</a> y <a routerLink="/cookies">cookies</a>. Al enviar el formulario, tu mensaje se transmite mediante el servicio Web3Forms y llega a mi correo electrónico; si prefieres no usarlo, escríbeme directamente a {{ practiceEmail }}.</p>
         <button class="button primary" type="submit" [disabled]="sending()">{{ sending() ? 'Enviando…' : 'Enviar solicitud' }}</button>
         <p id="contact-status" role="status">{{ statusMessage() }}</p>
         @if (status() === 'unavailable') {

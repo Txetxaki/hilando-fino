@@ -169,6 +169,7 @@ const expectedPaths = [
   'src/app/contact/contact-page.component.ts',
   'src/app/contact/contact-submission.spec.ts',
   'src/app/contact/contact-submission.ts',
+  'src/app/contact/web3forms.config.ts',
   'src/app/contact/contact.constants.ts',
   'src/app/contact/contact.types.ts',
   'src/app/content/content-matrix.ts',

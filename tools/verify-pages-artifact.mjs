@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
-import { contactSubmissionMessages } from '../src/app/contact/contact-submission.ts';
+import { contactSubmissionMessages, web3formsEndpoint as contactSubmissionEndpoint } from '../src/app/contact/contact-submission.ts';
 import { publicRouteManifest, requiredPagesArtifactFiles } from '../src/app/content/public-routes.ts';
 import { practiceIdentity } from '../src/app/content/practice-identity.ts';
 
@@ -45,6 +45,7 @@ if (contactHonestMessageSegments.length === 0) {
 const contactDishonestMessageVariants = [contactDishonestMessage, hexEscapeNonAscii(contactDishonestMessage)];
 let contactHonestMessageFound = false;
 let contactMailboxFound = false;
+let web3formsEndpointFound = false;
 
 if (!existsSync(browserDir)) failures.push('dist/hilando-fino/browser is missing. Run npm run build:pages first.');
 
@@ -105,18 +106,19 @@ for (const file of walk(browserDir)) {
 
   const text = readTextIfSafe(file);
   if (!text) continue;
-  // '/api/contact' used to be banned here as proof the static artifact carried no backend.
-  // It no longer is: the client now always attempts the call and collapses every failure into
-  // the mailbox handover, so on Pages that attempt is the normal path, not a pretence that the
-  // API exists. The path is a same-origin relative string, inert in a static bundle, and the
-  // honest-message assertion above is what actually proves the degraded path shipped. Secrets,
-  // approval flags and the LocalBusiness claim stay banned — those would be real leaks.
+  // The client posts to Web3Forms (https://api.web3forms.com/submit); there is no same-origin
+  // backend on Pages. Secrets, approval flags and the LocalBusiness claim stay banned.
+  if (text.includes(contactSubmissionEndpoint)) web3formsEndpointFound = true;
   for (const forbidden of ['CONTACT_CSRF_SECRET', 'CONTACT_ENABLED=true', 'CONTACT_RETENTION_APPROVED=true', 'contact_provider_failure', 'LocalBusiness']) {
     if (text.includes(forbidden)) failures.push(`${rel} contains forbidden Pages artifact text: ${forbidden}`);
   }
   if (contactHonestMessageSegments.every((variants) => variants.some((variant) => text.includes(variant)))) contactHonestMessageFound = true;
   if (text.includes(practiceIdentity.email)) contactMailboxFound = true;
   if (contactDishonestMessageVariants.some((variant) => text.includes(variant))) failures.push(`${rel} still contains the old dishonest/retryable contact failure message`);
+}
+
+if (!web3formsEndpointFound) {
+  failures.push(`Pages artifact never includes the Web3Forms endpoint ${contactSubmissionEndpoint}, so the contact form has no transport.`);
 }
 
 if (!contactHonestMessageFound) {

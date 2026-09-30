@@ -1,10 +1,15 @@
 import { practiceIdentity } from '../content/practice-identity';
+import {
+  ciudadRealFitLabels,
+  modalityPreferenceLabels,
+  preferredContactLabels,
+  reasonCategoryLabels
+} from './contact.constants';
 import type { ContactRequest } from './contact.types';
+import { web3formsAccessKey, web3formsPlaceholderKey } from './web3forms.config';
 
-export const contactApiRoutes = {
-  csrf: '/api/contact/csrf',
-  submit: '/api/contact'
-} as const;
+export const web3formsEndpoint = 'https://api.web3forms.com/submit';
+export const contactEmailSubject = 'Nuevo mensaje desde hilandofinopsicologia.com';
 
 export const contactSubmissionMessages = {
   sent: 'Gracias. He recibido tu solicitud y te responderé lo antes posible.',
@@ -22,72 +27,59 @@ export interface ContactSubmissionResult {
 
 export interface ContactSubmissionDeps {
   fetch: typeof globalThis.fetch;
+  /** Overridable for tests; defaults to the key in web3forms.config.ts. */
+  accessKey?: string;
 }
 
 /**
  * Every failure the visitor cannot act on collapses into `unavailable`, whose message
- * names the mailbox. The static preview has no `/api/contact` at all, so that path is
- * the normal one there, not an edge case.
+ * names the mailbox. While the access key is still the placeholder nothing is sent.
+ * Success requires both an ok HTTP status and `success: true` in the JSON body.
  */
 export async function submitContactRequest(request: ContactRequest, deps: ContactSubmissionDeps): Promise<ContactSubmissionResult> {
-  const csrfToken = await requestCsrfToken(deps);
-  if (!csrfToken) return unavailable();
+  const accessKey = (deps.accessKey ?? web3formsAccessKey).trim();
+  if (!accessKey || accessKey === web3formsPlaceholderKey) return unavailable();
+
+  // A filled honeypot means a bot: send nothing and do not say why.
+  if (request.website?.trim()) return { status: 'rejected', message: contactSubmissionMessages.rejected };
 
   let response: Response;
   try {
-    response = await deps.fetch(contactApiRoutes.submit, {
+    response = await deps.fetch(web3formsEndpoint, {
       method: 'POST',
-      credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(toWireBody(request, csrfToken))
+      body: JSON.stringify(toWireBody(request, accessKey))
     });
   } catch {
     return unavailable();
   }
 
-  if (response.status === 202) return { status: 'sent', message: contactSubmissionMessages.sent };
-
-  // 4xx is something the visitor can fix or retry; anything else is ours to fix.
-  if (response.status >= 400 && response.status < 500) {
-    const serverMessage = messageFrom(await readJson(response));
-    return { status: 'rejected', message: serverMessage ?? contactSubmissionMessages.rejected };
-  }
-
+  const body = await readJson(response);
+  if (response.ok && body?.['success'] === true) return { status: 'sent', message: contactSubmissionMessages.sent };
   return unavailable();
 }
 
-async function requestCsrfToken(deps: ContactSubmissionDeps): Promise<string | null> {
-  try {
-    const response = await deps.fetch(contactApiRoutes.csrf, {
-      method: 'GET',
-      credentials: 'same-origin',
-      headers: { Accept: 'application/json' },
-      cache: 'no-store'
-    });
-    if (!response.ok) return null;
-    const body = await readJson(response);
-    const token = body?.['csrfToken'];
-    return body?.['ok'] === true && typeof token === 'string' && token ? token : null;
-  } catch {
-    return null;
-  }
-}
-
-function toWireBody(request: ContactRequest, csrfToken: string): Record<string, unknown> {
-  return {
+function toWireBody(request: ContactRequest, accessKey: string): Record<string, unknown> {
+  const details = [
+    `Preferencia de contacto: ${preferredContactLabels[request.preferredContact]}`,
+    `Modalidad preferida: ${modalityPreferenceLabels[request.modalityPreference]}`,
+    `Encaje con Ciudad Real: ${ciudadRealFitLabels[request.ciudadRealFit]}`,
+    `Motivo amplio: ${reasonCategoryLabels[request.reasonCategory]}`
+  ].join('\n');
+  const body: Record<string, unknown> = {
+    access_key: accessKey,
+    subject: contactEmailSubject,
+    from_name: request.name,
     name: request.name,
-    email: request.email ?? '',
     phone: request.phone ?? '',
-    preferredContact: request.preferredContact,
-    modalityPreference: request.modalityPreference,
-    ciudadRealFit: request.ciudadRealFit,
-    reasonCategory: request.reasonCategory,
-    message: request.message ?? '',
-    privacyConsent: request.privacyConsent,
-    // Forwarded rather than blanked so the server-side honeypot still sees what a bot typed.
-    website: request.website ?? '',
-    csrfToken
+    message: `${request.message ?? '(Sin mensaje)'}\n\n${details}`,
+    botcheck: false
   };
+  if (request.email) {
+    body['email'] = request.email;
+    body['replyto'] = request.email;
+  }
+  return body;
 }
 
 async function readJson(response: Response): Promise<Record<string, unknown> | null> {
@@ -97,11 +89,6 @@ async function readJson(response: Response): Promise<Record<string, unknown> | n
   } catch {
     return null;
   }
-}
-
-function messageFrom(body: Record<string, unknown> | null): string | null {
-  const message = body?.['message'];
-  return typeof message === 'string' && message.trim() ? message : null;
 }
 
 function unavailable(): ContactSubmissionResult {

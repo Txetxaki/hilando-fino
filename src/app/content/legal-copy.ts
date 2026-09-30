@@ -142,6 +142,7 @@ export const legalCopy: Record<'legalNotice' | 'privacy' | 'cookies', LegalSecti
     {
       heading: 'Destinatarios — ¿quién puede acceder a tus datos?',
       body: [
+        'Los mensajes enviados a través del formulario de contacto se procesan mediante el servicio Web3Forms (web3forms.com), que actúa como encargado del tratamiento por cuenta de la responsable: recibe el contenido del formulario y lo reenvía a su correo electrónico profesional. Los datos que recoge el formulario son nombre, correo electrónico y teléfono (si los indicas), preferencia de contacto, modalidad preferida, encaje con Ciudad Real, motivo amplio y el mensaje opcional. Puedes evitar este procedimiento escribiendo directamente al correo electrónico indicado arriba.',
         'Pueden acceder a tus datos los proveedores que prestan servicios técnicos necesarios para el funcionamiento de la consulta y de esta web, siempre bajo el correspondiente contrato de encargo de tratamiento.',
         'Fuera de esos casos, tus datos solo se comunican a organismos públicos o a las Fuerzas y Cuerpos de Seguridad cuando exista una obligación legal, y a entidades financieras cuando resulte necesario para el cobro de los servicios.'
       ]
