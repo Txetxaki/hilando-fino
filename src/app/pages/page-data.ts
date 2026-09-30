@@ -86,7 +86,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
         title: 'Del cuerpo y el movimiento a la psicología clínica.',
         image: 'aboutBody',
         body: [
-          'Antes de dedicarme a la psicología recorrí un camino ligado al arte, el movimiento y la expresión corporal. Aquella experiencia me enseñó que las emociones no solo se cuentan con palabras, sino también a través del cuerpo, las relaciones y la forma en que vivimos nuestras experiencias.',
+          'Antes de dedicarme a la psicología recorrí un camino ligado al arte, el movimiento y la expresión corporal. En ese viaje, el teatro y, muy especialmente, el mundo del clown, fueron grandes maestros para mí. El clown es una figura fascinante que vive del fracaso, de tropezar y de saber reírse de sí misma; a través de él aprendí el inmenso valor de la vulnerabilidad y de abrazar nuestras imperfecciones. Toda aquella experiencia escénica me enseñó que las emociones no solo se cuentan con palabras, sino también a través del cuerpo, las relaciones y la forma en que habitamos nuestras experiencias.',
           'Con el tiempo decidí orientar ese interés hacia la psicología clínica, formándome como Psicóloga General Sanitaria y ampliando mi formación en diferentes modelos terapéuticos para ofrecer una atención rigurosa y adaptada a cada persona.',
           'Actualmente trabajo con niños, adolescentes, adultos y familias, acompañando procesos relacionados con la ansiedad, el trauma, el duelo, las dificultades emocionales y las relaciones familiares.'
         ],
