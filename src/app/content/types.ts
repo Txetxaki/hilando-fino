@@ -41,6 +41,9 @@ export interface PageSection {
   links?: { label: string; href: string }[];
   /** Optional smaller side photo for this section, laid out two-column next to the copy. */
   image?: SiteImageKey;
+  /** Widens the default ~20rem media column - for a section whose photo is landscape
+      rather than the portrait shape that column width was designed around. */
+  wideMedia?: boolean;
 }
 
 export interface PageCard {

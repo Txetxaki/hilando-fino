@@ -76,7 +76,7 @@ import { pageContents } from './page-data';
       }
 
       @for (section of content().sections; track section.title) {
-        <section class="content-band" [class.has-media]="section.image" [id]="sectionId(section.title)">
+        <section class="content-band" [class.has-media]="section.image" [class.wide-media]="section.wideMedia" [id]="sectionId(section.title)">
           <div class="section-text">
             @if (section.eyebrow) {
               <p class="eyebrow">{{ section.eyebrow }}</p>

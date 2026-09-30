@@ -103,15 +103,17 @@ export const siteImages = {
     alt: 'Retrato de Marta Martín con gafas y camisa blanca, en actitud reflexiva.',
     sizes: '(max-width: 720px) 92vw, 22rem'
   },
-  /* vinculos.jpg, 3456x5184 portrait. Side image for the section on the body
-     and on bonds. */
+  /* familias.jpg, 5184x3456 landscape. Side image for the section on the body
+     and on bonds - swapped with childrenFamiliesHero below because the vertical
+     vinculos.jpg reads better next to that hero's tall copy column, and this
+     landscape shot fits the method section's (now widened) media column. */
   methodBonds: {
-    base: 'cuerpo-y-vinculos',
+    base: 'infancia-y-familias',
     widths: [480, 720, 960],
     width: 960,
-    height: 1440,
-    alt: 'Manos colocando muñecos de madera de colores sobre una mesa, representando vínculos y relaciones.',
-    sizes: '(max-width: 720px) 92vw, 22rem'
+    height: 640,
+    alt: 'Mano sosteniendo una bandeja de madera con figuras de colores, un recurso de juego terapéutico.',
+    sizes: '(max-width: 720px) 92vw, 28rem'
   },
   /* duelo.jpg, 3456x5184 portrait. Hero for the adults intervention area. */
   adultsHero: {
@@ -133,14 +135,16 @@ export const siteImages = {
     alt: 'Mujer embarazada sentada al aire libre, con las manos sobre el vientre.',
     sizes: '(max-width: 720px) 92vw, 26rem'
   },
-  /* familias.jpg, 5184x3456 landscape. Hero for the children-and-families
-     intervention area. */
+  /* vinculos.jpg, 3456x5184 portrait. Hero for the children-and-families
+     intervention area - swapped with methodBonds below: this tall photo sits
+     much better next to the hero's tall copy column than the landscape shot
+     that used to be here. */
   childrenFamiliesHero: {
-    base: 'infancia-y-familias',
+    base: 'cuerpo-y-vinculos',
     widths: [480, 720, 960],
     width: 960,
-    height: 640,
-    alt: 'Mano sosteniendo una bandeja de madera con figuras de colores, un recurso de juego terapéutico.',
+    height: 1440,
+    alt: 'Manos colocando muñecos de madera de colores sobre una mesa, representando vínculos y relaciones.',
     sizes: '(max-width: 720px) 92vw, 26rem'
   },
   /* adolescentes.jpg, 3456x5184 portrait. Hero for the adolescents

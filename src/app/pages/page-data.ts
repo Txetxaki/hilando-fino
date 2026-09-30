@@ -145,6 +145,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
         eyebrow: 'Cuerpo y emoción',
         title: 'Lo que sentimos también se expresa en el cuerpo y en los vínculos.',
         image: 'methodBonds',
+        wideMedia: true,
         body: [
           'Mi formación en Terapia Gestalt y Bioenergética enriquece esta manera de entender la terapia, ayudándome a prestar atención tanto a la experiencia emocional como al papel del cuerpo y de las relaciones en el bienestar psicológico.',
           'Muchas veces el malestar no aparece solo como pensamiento: también se manifiesta como tensión, bloqueo, impulsividad, cansancio o dificultad para poner límites. Trabajar con esa complejidad exige un ritmo prudente y una relación terapéutica segura.'

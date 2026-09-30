@@ -220,6 +220,19 @@ h3 { margin: 0 0 .9rem; font-size: clamp(1.45rem, 2.8vw, 2rem); font-weight: 500
   .content-band.has-media .section-media { order: -1; max-width: 20rem; margin-inline: auto; }
 }
 
+/* A landscape photo in the media column (e.g. "vínculos" now showing the
+   families photo) needs a wider track than the 20rem the column was set up
+   for portrait crops - otherwise it renders as a thin strip. Scoped to
+   min-width: 901px so it never fights the mobile single-column collapse
+   above (equal-or-lower specificity there would otherwise lose to this rule
+   and leave the grid with a stray, near-zero-width second track). */
+@media (min-width: 901px) {
+  .content-band.has-media.wide-media { grid-template-columns: minmax(0, 1fr) minmax(0, 28rem); }
+}
+@media (max-width: 900px) {
+  .content-band.has-media.wide-media .section-media { max-width: 28rem; }
+}
+
 /* Blocks that carry their own fill sit inside the section rhythm as big soft
    panels, mirroring the mock's `bg-crema rounded-[40px]` treatment. */
 .block-band { padding: clamp(2.25rem, 5vw, 4rem); border-radius: var(--radius-panel); background: var(--color-crema); border-top: 0; margin: clamp(3rem, 7vw, 6rem) 0; }
