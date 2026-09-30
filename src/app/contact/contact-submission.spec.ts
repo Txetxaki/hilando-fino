@@ -1,11 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { contactSubmissionMessages, submitContactRequest } from './contact-submission';
+import { contactSubmissionMessages, submitContactRequest, web3formsEndpoint } from './contact-submission';
 import type { ContactRequest } from './contact.types';
+import { web3formsAccessKey, web3formsPlaceholderKey } from './web3forms.config';
+
+const realKey = 'test-access-key-1234';
 
 const payload: ContactRequest = {
   name: 'Persona',
   email: 'persona@example.com',
+  phone: '600000000',
   preferredContact: 'email',
   modalityPreference: 'in-person-ciudad-real',
   ciudadRealFit: 'yes',
@@ -17,91 +21,102 @@ const payload: ContactRequest = {
 const jsonResponse = (status: number, body: unknown): Response =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 
-const htmlResponse = (status: number): Response =>
-  new Response('<!doctype html><title>404</title>', { status, headers: { 'Content-Type': 'text/html' } });
+describe('contact submission transport (Web3Forms)', () => {
+  it('ships with the placeholder key until the owner pastes the real one', () => {
+    expect(web3formsAccessKey).toBe(web3formsPlaceholderKey);
+    expect(web3formsPlaceholderKey).toBe('REPLACE_WITH_WEB3FORMS_ACCESS_KEY');
+  });
 
-describe('contact submission transport', () => {
-  it('sends the payload with the server-issued CSRF token and reports success', async () => {
-    const fetchMock = vi
-      .fn<typeof globalThis.fetch>()
-      .mockResolvedValueOnce(jsonResponse(200, { ok: true, csrfToken: 'token-123' }))
-      .mockResolvedValueOnce(jsonResponse(202, { ok: true, message: 'Solicitud recibida.' }));
+  it('falls back to the direct email route and never calls fetch while the key is the placeholder', async () => {
+    const fetchMock = vi.fn<typeof globalThis.fetch>();
 
-    const result = await submitContactRequest(payload, { fetch: fetchMock });
+    const result = await submitContactRequest(payload, { fetch: fetchMock, accessKey: web3formsPlaceholderKey });
+
+    expect(result.status).toBe('unavailable');
+    expect(result.message).toContain('info@hilandofinopsicologia.com');
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('treats an empty key as unavailable too', async () => {
+    const fetchMock = vi.fn<typeof globalThis.fetch>();
+    const result = await submitContactRequest(payload, { fetch: fetchMock, accessKey: '  ' });
+    expect(result.status).toBe('unavailable');
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('posts the JSON payload to Web3Forms and reports success only on ok + success:true', async () => {
+    const fetchMock = vi.fn<typeof globalThis.fetch>().mockResolvedValueOnce(jsonResponse(200, { success: true, message: 'Email sent successfully!' }));
+
+    const result = await submitContactRequest(payload, { fetch: fetchMock, accessKey: realKey });
 
     expect(result).toEqual({ status: 'sent', message: contactSubmissionMessages.sent });
-    expect(fetchMock.mock.calls[0]?.[0]).toBe('/api/contact/csrf');
-    const [postUrl, postInit] = fetchMock.mock.calls[1] ?? [];
-    expect(postUrl).toBe('/api/contact');
-    expect(postInit?.method).toBe('POST');
-    expect(postInit?.credentials).toBe('same-origin');
-    expect(JSON.parse(String(postInit?.body))).toMatchObject({ name: 'Persona', csrfToken: 'token-123' });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0] ?? [];
+    expect(url).toBe('https://api.web3forms.com/submit');
+    expect(web3formsEndpoint).toBe('https://api.web3forms.com/submit');
+    expect(init?.method).toBe('POST');
+    const headers = init?.headers as Record<string, string>;
+    expect(headers['Content-Type']).toBe('application/json');
+    expect(headers['Accept']).toBe('application/json');
+    const body = JSON.parse(String(init?.body));
+    expect(body).toMatchObject({
+      access_key: realKey,
+      subject: 'Nuevo mensaje desde hilandofinopsicologia.com',
+      from_name: 'Persona',
+      name: 'Persona',
+      email: 'persona@example.com',
+      replyto: 'persona@example.com',
+      phone: '600000000',
+      botcheck: false
+    });
+    expect(body.message).toContain('Prefiero que me respondan por la tarde.');
+    expect(JSON.stringify(body)).not.toContain('csrf');
   });
 
-  it('never leaks the honeypot value or an undeclared field into the request body', async () => {
-    const fetchMock = vi
-      .fn<typeof globalThis.fetch>()
-      .mockResolvedValueOnce(jsonResponse(200, { ok: true, csrfToken: 'token-123' }))
-      .mockResolvedValueOnce(jsonResponse(202, { ok: true }));
-
-    await submitContactRequest({ ...payload, website: '' }, { fetch: fetchMock });
-
-    const body = JSON.parse(String(fetchMock.mock.calls[1]?.[1]?.body));
-    expect(Object.keys(body).sort()).toEqual(
-      ['ciudadRealFit', 'csrfToken', 'email', 'message', 'modalityPreference', 'name', 'phone', 'preferredContact', 'privacyConsent', 'reasonCategory', 'website'].sort()
-    );
+  it('omits email/replyto when the visitor gave no email', async () => {
+    const fetchMock = vi.fn<typeof globalThis.fetch>().mockResolvedValueOnce(jsonResponse(200, { success: true }));
+    await submitContactRequest({ ...payload, email: undefined }, { fetch: fetchMock, accessKey: realKey });
+    const body = JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body));
+    expect(body.email).toBeUndefined();
+    expect(body.replyto).toBeUndefined();
   });
 
-  it('degrades to the direct email route when the API is not deployed', async () => {
-    const fetchMock = vi.fn<typeof globalThis.fetch>().mockResolvedValueOnce(htmlResponse(404));
+  it('shows an error when Web3Forms answers success:false', async () => {
+    const fetchMock = vi.fn<typeof globalThis.fetch>().mockResolvedValueOnce(jsonResponse(200, { success: false, message: 'Invalid access key' }));
 
-    const result = await submitContactRequest(payload, { fetch: fetchMock });
+    const result = await submitContactRequest(payload, { fetch: fetchMock, accessKey: realKey });
 
     expect(result.status).toBe('unavailable');
     expect(result.message).toContain('info@hilandofinopsicologia.com');
-    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it('degrades to the direct email route when the network fails', async () => {
+  it('never reports success on a non-ok response even if the body says success', async () => {
+    const fetchMock = vi.fn<typeof globalThis.fetch>().mockResolvedValueOnce(jsonResponse(500, { success: true }));
+    const result = await submitContactRequest(payload, { fetch: fetchMock, accessKey: realKey });
+    expect(result.status).not.toBe('sent');
+  });
+
+  it('shows an error on a non-JSON response', async () => {
+    const fetchMock = vi.fn<typeof globalThis.fetch>().mockResolvedValueOnce(new Response('<html></html>', { status: 200 }));
+    const result = await submitContactRequest(payload, { fetch: fetchMock, accessKey: realKey });
+    expect(result.status).not.toBe('sent');
+  });
+
+  it('shows an error on network failure', async () => {
     const fetchMock = vi.fn<typeof globalThis.fetch>().mockRejectedValue(new TypeError('Failed to fetch'));
 
-    const result = await submitContactRequest(payload, { fetch: fetchMock });
+    const result = await submitContactRequest(payload, { fetch: fetchMock, accessKey: realKey });
 
     expect(result.status).toBe('unavailable');
     expect(result.message).toContain('info@hilandofinopsicologia.com');
   });
 
-  it('degrades to the direct email route when the provider is disabled server-side', async () => {
-    const fetchMock = vi
-      .fn<typeof globalThis.fetch>()
-      .mockResolvedValueOnce(jsonResponse(200, { ok: true, csrfToken: 'token-123' }))
-      .mockResolvedValueOnce(jsonResponse(503, { ok: false, message: 'El formulario todavía no está activado.' }));
+  it('sends nothing when the honeypot is filled', async () => {
+    const fetchMock = vi.fn<typeof globalThis.fetch>();
 
-    const result = await submitContactRequest(payload, { fetch: fetchMock });
+    const result = await submitContactRequest({ ...payload, website: 'https://spam.example' }, { fetch: fetchMock, accessKey: realKey });
 
-    expect(result.status).toBe('unavailable');
-    expect(result.message).toContain('info@hilandofinopsicologia.com');
-  });
-
-  it('surfaces the server message for a rejected submission', async () => {
-    const fetchMock = vi
-      .fn<typeof globalThis.fetch>()
-      .mockResolvedValueOnce(jsonResponse(200, { ok: true, csrfToken: 'token-123' }))
-      .mockResolvedValueOnce(jsonResponse(429, { ok: false, message: 'Demasiados intentos. Inténtalo más tarde.' }));
-
-    const result = await submitContactRequest(payload, { fetch: fetchMock });
-
-    expect(result).toEqual({ status: 'rejected', message: 'Demasiados intentos. Inténtalo más tarde.' });
-  });
-
-  it('falls back to a generic rejection message when the server sends none', async () => {
-    const fetchMock = vi
-      .fn<typeof globalThis.fetch>()
-      .mockResolvedValueOnce(jsonResponse(200, { ok: true, csrfToken: 'token-123' }))
-      .mockResolvedValueOnce(jsonResponse(400, { ok: false }));
-
-    const result = await submitContactRequest(payload, { fetch: fetchMock });
-
-    expect(result).toEqual({ status: 'rejected', message: contactSubmissionMessages.rejected });
+    expect(result.status).toBe('rejected');
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });

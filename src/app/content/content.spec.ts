@@ -367,3 +367,11 @@ function shortestHomeDepth(inbound: Map<string, Set<string>>, path: string): num
   }
   return Infinity;
 }
+
+describe('privacy policy and the contact transport', () => {
+  it('discloses that contact-form messages go through Web3Forms as a processor', () => {
+    const text = JSON.stringify(legalCopy.privacy);
+    expect(text).toContain('Web3Forms');
+    expect(text).toContain('encargado del tratamiento');
+  });
+});

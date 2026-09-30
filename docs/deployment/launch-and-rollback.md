@@ -47,9 +47,7 @@ Do not set `CONTACT_ENABLED=true` on GitHub Pages or any static preview. GitHub 
 
 ## Where the form degrades
 
-The browser never assumes `/api/contact` exists. Any unreachable, non-JSON, or `5xx` answer — which is exactly what GitHub Pages returns, since the Express bundle is excluded from that artifact — collapses into one visitor-facing outcome: the status line names `info@hilandofinopsicologia.com` and renders it as a `mailto:` link. The static preview is therefore usable rather than a dead end, and no deployment can leave a visitor with nowhere to write.
-
-This means the contact form only *sends* where the Express server actually runs. GitHub Pages serves the site; it cannot serve the API. Running live contact requires a Node host for `dist/hilando-fino/server/server.mjs` with the environment above.
+The client no longer calls `/api/contact`. It posts JSON to Web3Forms (`https://api.web3forms.com/submit`) with the public access key from `src/app/contact/web3forms.config.ts`. Success requires an OK response and `success: true`. A placeholder key, a network failure or a `success: false` answer collapses into one visitor-facing outcome: the status line names `info@hilandofinopsicologia.com` as a `mailto:` link, so no deployment can leave a visitor with nowhere to write. The Express `/api/contact` code described below is legacy and unused by the client.
 
 ### Site and API must share one origin
 

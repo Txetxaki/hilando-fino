@@ -36,7 +36,7 @@ The GitHub Pages artifact is static only and deploys from `dist/hilando-fino/bro
 
 This repository is public, and so is the Pages preview. `noindex` is not access control; do not publish secrets, patient data, private clinical notes, or approved-only production claims in the preview or in the source tree.
 
-Live contact is blocked. `CONTACT_ENABLED=true` alone is not a working activation path: the UI intentionally does not submit, and the provider implementation rejects until a separate legal/provider/retention/HTTPS deployment approval change lands. Multi-instance contact also requires approved shared CSRF replay storage or sticky sessions.
+Contact form: on GitHub Pages the browser posts submissions straight to [Web3Forms](https://web3forms.com) (`https://api.web3forms.com/submit`), which forwards them to the practice mailbox. The public access key goes in one place, `src/app/contact/web3forms.config.ts`. While it is still `REPLACE_WITH_WEB3FORMS_ACCESS_KEY` nothing is sent and the form shows the "write to me directly" fallback. The legacy Express `/api/contact` boundary is not used by the client and stays blocked (`CONTACT_ENABLED=true` is not an activation path).
 
 Use Node `24.15.0` (`.nvmrc`, `.node-version`, `package.json#engines`, CI, and lockfile-pinned `node@24.15.0` dev dependency). Run `npm ci` first so scripts resolve the same local Node runtime; do not use floating `npx -p node@...` execution.
 
