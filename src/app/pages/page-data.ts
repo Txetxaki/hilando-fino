@@ -45,9 +45,11 @@ const evaluationSection = {
 export const pageContents: Record<StandardPageKey, PageContent> = {
   home: {
     page: contentPages.home,
+    heroImage: 'homeHero',
     sections: [
       {
         title: 'Tirando del hilo',
+        image: 'tirandoDelHilo',
         body: [
           'Trabajo desde una idea sencilla: antes de intervenir necesito comprender bien. No se trata de encajarte en una etiqueta, sino de mirar historia, contexto, cuerpo, emociones y vínculos.',
           'Mi forma de acompañar es integradora, con evaluación cuidadosa y comunicación clara. La prioridad es que entiendas qué te ocurre, qué necesitas y qué camino terapéutico puede tener sentido para tu situación.'
@@ -77,13 +79,14 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
   about: {
     page: contentPages.about,
     heroNote: 'Siempre me ha interesado comprender a las personas.',
-    heroImage: 'martaDesk',
+    heroImage: 'aboutPortrait',
     sections: [
       {
         eyebrow: 'Mi trayectoria',
         title: 'Del cuerpo y el movimiento a la psicología clínica.',
+        image: 'aboutBody',
         body: [
-          'Antes de dedicarme a la psicología recorrí un camino ligado al arte, el movimiento y la expresión corporal. Aquella experiencia me enseñó que las emociones no solo se cuentan con palabras, sino también a través del cuerpo, las relaciones y la forma en que vivimos nuestras experiencias.',
+          'Antes de dedicarme a la psicología recorrí un camino ligado al arte, el movimiento y la expresión corporal. En ese viaje, el teatro y, muy especialmente, el mundo del clown, fueron grandes maestros para mí. El clown es una figura fascinante que vive del fracaso, de tropezar y de saber reírse de sí misma; a través de él aprendí el inmenso valor de la vulnerabilidad y de abrazar nuestras imperfecciones. Toda aquella experiencia escénica me enseñó que las emociones no solo se cuentan con palabras, sino también a través del cuerpo, las relaciones y la forma en que habitamos nuestras experiencias.',
           'Con el tiempo decidí orientar ese interés hacia la psicología clínica, formándome como Psicóloga General Sanitaria y ampliando mi formación en diferentes modelos terapéuticos para ofrecer una atención rigurosa y adaptada a cada persona.',
           'Actualmente trabajo con niños, adolescentes, adultos y familias, acompañando procesos relacionados con la ansiedad, el trauma, el duelo, las dificultades emocionales y las relaciones familiares.'
         ],
@@ -104,6 +107,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
       {
         eyebrow: 'Ciudad Real',
         title: 'Una consulta pensada para acompañar de cerca.',
+        image: 'aboutDesk',
         body: [
           'Acompaño a personas y familias que buscan atención psicológica en Ciudad Real y valoran un lenguaje claro, una relación terapéutica cuidada y un proceso construido paso a paso.',
           'Si estás comparando opciones, puede ayudarte leer también la página local y la explicación sobre trauma y duelo.'
@@ -124,12 +128,13 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
   method: {
     page: contentPages.method,
     heroNote: 'Creo en una psicología integradora.',
-    heroImage: 'martaWorking',
+    heroImage: 'methodHero',
     sections: [
       evaluationSection,
       {
         eyebrow: 'Integración',
         title: 'No una técnica para todo, sino un proceso ajustado a cada persona.',
+        image: 'methodProcess',
         body: [
           'Cada persona tiene una historia única y merece una intervención adaptada a sus necesidades. Por eso comienzo siempre realizando una evaluación cuidadosa para comprender no solo los síntomas, sino también aquello que los mantiene.',
           'Trabajo desde un enfoque integrador que combina intervenciones con respaldo científico con una mirada humanista centrada en la persona, sus emociones, sus relaciones y sus recursos.'
@@ -139,6 +144,8 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
       {
         eyebrow: 'Cuerpo y emoción',
         title: 'Lo que sentimos también se expresa en el cuerpo y en los vínculos.',
+        image: 'methodBonds',
+        wideMedia: true,
         body: [
           'Mi formación en Terapia Gestalt y Bioenergética enriquece esta manera de entender la terapia, ayudándome a prestar atención tanto a la experiencia emocional como al papel del cuerpo y de las relaciones en el bienestar psicológico.',
           'Muchas veces el malestar no aparece solo como pensamiento: también se manifiesta como tensión, bloqueo, impulsividad, cansancio o dificultad para poner límites. Trabajar con esa complejidad exige un ritmo prudente y una relación terapéutica segura.'
@@ -202,6 +209,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
   childrenFamilies: hubPage({
     key: 'childrenFamilies',
     hub: 'children-families',
+    heroImage: 'childrenFamiliesHero',
     heroNote: 'Juego, autorregulación y vínculo para recuperar la calma en casa.',
     introInHero: true,
     intro:
@@ -231,6 +239,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
   adolescents: hubPage({
     key: 'adolescents',
     hub: 'adolescents',
+    heroImage: 'adolescentsHero',
     heroNote: 'Autorregulación, autoestima y vínculos en una etapa de transformación.',
     intro:
       'La adolescencia es una etapa de transformación física, emocional y social. Acompaño a los adolescentes a transitar este periodo trabajando la autorregulación corporal, la autoestima y las relaciones con su entorno. En paralelo, invito a las familias a reaprender sobre las dinámicas familiares para adaptarse a esta nueva etapa con serenidad y confianza.',
@@ -246,6 +255,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
   adults: hubPage({
     key: 'adults',
     hub: 'adults',
+    heroImage: 'adultsHero',
     heroNote: 'Acompañamiento individual para recuperar la calma, la claridad y el equilibrio.',
     intro: 'En la vida adulta muchas personas sostienen mucho durante demasiado tiempo. Ansiedad, estrés, duelo, trauma o dificultades vinculares pueden ser señales de que hace falta parar y comprender.',
     situations: 'Ansiedad, estrés, trauma, duelo, dependencia emocional, relaciones de pareja y crecimiento personal se abordan atendiendo a historia, cuerpo, emociones, límites y patrones relacionales.',
@@ -273,6 +283,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
   perinatal: hubPage({
     key: 'perinatal',
     hub: 'perinatal',
+    heroImage: 'perinatalHero',
     heroNote: 'Sostener a quien sostiene: cuidado para la maternidad y la primera crianza.',
     intro:
       'Apoyo y cuidado en las etapas de concepción, embarazo y posparto. Te acompaño a atender los profundos cambios emocionales y corporales de este proceso, favoreciendo la adaptación a la maternidad o la paternidad y el fortalecimiento de un apego seguro con tu bebé desde sus primeros días.',
@@ -497,6 +508,7 @@ export const pageContents: Record<StandardPageKey, PageContent> = {
 function hubPage(input: {
   key: 'childrenFamilies' | 'adolescents' | 'adults' | 'perinatal' | 'educationTraining';
   hub: HubKey;
+  heroImage?: SiteImageKey;
   heroNote: string;
   intro: string;
   /** Only set when her doc gives the intro no heading at all — it belongs in the hero copy, not a content-band section (currently just Infancia y familias). When absent, intro and situations render together under "Qué puede estar pasando." as before. */
@@ -513,6 +525,7 @@ function hubPage(input: {
     : [{ eyebrow: hubLabels[input.hub], title: 'Qué puede estar pasando.', body: [input.intro, input.situations], links: input.links }];
   return {
     page,
+    heroImage: input.heroImage,
     heroNote: input.heroNote,
     heroBody: input.introInHero ? [input.intro] : undefined,
     heroLinks: input.introInHero ? input.heroLinks : undefined,

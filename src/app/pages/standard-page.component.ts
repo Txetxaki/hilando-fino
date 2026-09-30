@@ -19,17 +19,11 @@ import { pageContents } from './page-data';
       <header class="hero woven-hero" [class.has-media]="heroImage()">
         <div class="hero-text">
           @if (content().page.key === 'home') {
-            <!-- The mark itself carries the <h1>. The home hero shows no heading text
-                 by design, but a page still needs exactly one level-1 heading, and the
-                 brand name is what it should be for search and for screen readers.
-                 aria-label supplies that name, so nothing new appears on screen and the
-                 image keeps alt="" (the heading already names it). -->
-            <h1 class="hero-logo-heading" aria-label="{{ content().page.h1 }}">
-              <picture class="hero-logo">
-                <source type="image/webp" srcset="images/logo-220.webp 220w, images/logo-440.webp 440w, images/logo-660.webp 660w" sizes="(max-width: 545px) 88vw, 480px" />
-                <img src="images/logo-660.png" srcset="images/logo-220.png 220w, images/logo-440.png 440w, images/logo-660.png 660w" sizes="(max-width: 545px) 88vw, 480px" width="660" height="258" alt="" fetchpriority="high" decoding="async" />
-              </picture>
-            </h1>
+            <!-- The logo mark now lives only in the sticky header. The home hero's
+                 large photo is the main visual, so the page's one required <h1> stays
+                 in the document for search and screen readers without duplicating the
+                 header's visible brand name on screen. -->
+            <h1 class="visually-hidden">{{ content().page.h1 }}</h1>
             <p class="hero-copy">Trabajo desde una mirada integradora, que une el conocimiento clínico, con el respeto por la historia, el cuerpo y el ritmo de cada persona</p>
             <div class="hero-actions">
               <a routerLink="/contacto" class="button primary">Pedir cita</a>
@@ -82,20 +76,37 @@ import { pageContents } from './page-data';
       }
 
       @for (section of content().sections; track section.title) {
-        <section class="content-band" [id]="sectionId(section.title)">
-          @if (section.eyebrow) {
-            <p class="eyebrow">{{ section.eyebrow }}</p>
-          }
-          <h2>{{ section.title }}</h2>
-          @for (paragraph of section.body; track paragraph) {
-            <p>{{ paragraph }}</p>
-          }
-          @if (section.links?.length) {
-            <div class="inline-links" aria-label="Enlaces relacionados">
-              @for (link of section.links; track link.href) {
-                <a [routerLink]="linkPath(link.href)" [queryParams]="linkQueryParams(link.href)">{{ link.label }}</a>
-              }
-            </div>
+        <section class="content-band" [class.has-media]="section.image" [class.wide-media]="section.wideMedia" [id]="sectionId(section.title)">
+          <div class="section-text">
+            @if (section.eyebrow) {
+              <p class="eyebrow">{{ section.eyebrow }}</p>
+            }
+            <h2>{{ section.title }}</h2>
+            @for (paragraph of section.body; track paragraph) {
+              <p>{{ paragraph }}</p>
+            }
+            @if (section.links?.length) {
+              <div class="inline-links" aria-label="Enlaces relacionados">
+                @for (link of section.links; track link.href) {
+                  <a [routerLink]="linkPath(link.href)" [queryParams]="linkQueryParams(link.href)">{{ link.label }}</a>
+                }
+              </div>
+            }
+          </div>
+          @if (section.image; as imageKey) {
+            <picture class="section-media">
+              <source type="image/webp" [srcset]="webpSrcset(image(imageKey))" [sizes]="image(imageKey).sizes" />
+              <img
+                [src]="fallbackSrc(image(imageKey))"
+                [srcset]="jpgSrcset(image(imageKey))"
+                [sizes]="image(imageKey).sizes"
+                [width]="image(imageKey).width"
+                [height]="image(imageKey).height"
+                [alt]="image(imageKey).alt"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           }
         </section>
       }

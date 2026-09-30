@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AnalyticsService } from '../core/analytics/analytics.service';
 import { mailtoHref, practiceIdentity } from '../content/practice-identity';
+import { fallbackSrc, jpgSrcset, siteImages, webpSrcset } from '../content/site-images';
 import { contactSubmissionMessages, submitContactRequest, type ContactSubmissionStatus } from './contact-submission';
 import {
   approvedContactModalities,
@@ -25,10 +26,25 @@ type ApprovedModality = (typeof approvedContactModalities)[number];
   imports: [ReactiveFormsModule, RouterLink],
   template: `
     <article class="page-shell contact-page">
-      <header class="hero compact-hero">
-        <p class="overline-pill">Un primer mensaje breve, práctico y respetuoso con tu privacidad</p>
-        <h1>Contacto</h1>
-        <p class="hero-copy">Cuéntame lo mínimo necesario para orientar tu consulta. No hace falta relatar historia clínica ni compartir detalles íntimos en este primer contacto.</p>
+      <header class="hero compact-hero has-media">
+        <div class="hero-text">
+          <p class="overline-pill">Un primer mensaje breve, práctico y respetuoso con tu privacidad</p>
+          <h1>Contacto</h1>
+          <p class="hero-copy">Cuéntame lo mínimo necesario para orientar tu consulta. No hace falta relatar historia clínica ni compartir detalles íntimos en este primer contacto.</p>
+        </div>
+        <picture class="hero-media">
+          <source type="image/webp" [srcset]="webpSrcset(contactImage)" [sizes]="contactImage.sizes" />
+          <img
+            [src]="fallbackSrc(contactImage)"
+            [srcset]="jpgSrcset(contactImage)"
+            [sizes]="contactImage.sizes"
+            [width]="contactImage.width"
+            [height]="contactImage.height"
+            [alt]="contactImage.alt"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
       </header>
 
       <section class="emergency-boundary" aria-labelledby="emergency-title">
@@ -126,6 +142,10 @@ export class ContactPageComponent {
   readonly ciudadRealFitLabels = ciudadRealFitLabels;
   readonly mailtoHref = mailtoHref;
   readonly practiceEmail = practiceIdentity.email;
+  readonly contactImage = siteImages.contactHero;
+  readonly webpSrcset = webpSrcset;
+  readonly jpgSrcset = jpgSrcset;
+  readonly fallbackSrc = fallbackSrc;
 
   readonly submitted = signal(false);
   readonly sending = signal(false);

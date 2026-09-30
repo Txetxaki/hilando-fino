@@ -5,7 +5,7 @@ Paquete de identidad de marca y de configuración de un [Claude Project](https:/
 ## Contenido
 
 - `logo.png` — logo original de la marca. Es el master: la cabecera sirve las variantes ya escaladas de `public/images/logo-*` (WebP + PNG, 220/440/660 px), porque el original pesa 278 kB y se muestra a 220 px.
-- `public/images/` — fotografías reales de la consulta entregadas por Marta (2026-07-31), en WebP + JPG a 480/720/960/1280 px, más `og-hilando-fino.jpg` (1200×630) para redes sociales. El manifiesto con dimensiones y textos alternativos vive en `src/app/content/site-images.ts`.
+- `public/images/` — fotografías reales de la consulta entregadas por Marta (2026-07-31 y 2026-09-27), en WebP + JPG a 480/720/960/1280 px (951 px como máximo para `psicologia-perinatal-*`, entregada a menor resolución), más `og-hilando-fino.jpg` (1200×630) para redes sociales. El manifiesto con dimensiones y textos alternativos vive en `src/app/content/site-images.ts`.
 - `identidad-de-marca/guia-de-marca.md` — paleta de colores (extraída por píxel del logo, con verificación de contraste WCAG), tipografía y uso del logo.
 - `claude-project/` — todo lo necesario para levantar un Project de contenidos en claude.ai / Claude Desktop:
   - `instrucciones-personalizadas.md` — pegar en "Instrucciones del proyecto".

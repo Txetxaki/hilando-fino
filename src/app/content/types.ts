@@ -39,6 +39,11 @@ export interface PageSection {
   title: string;
   body: string[];
   links?: { label: string; href: string }[];
+  /** Optional smaller side photo for this section, laid out two-column next to the copy. */
+  image?: SiteImageKey;
+  /** Widens the default ~20rem media column - for a section whose photo is landscape
+      rather than the portrait shape that column width was designed around. */
+  wideMedia?: boolean;
 }
 
 export interface PageCard {
@@ -48,7 +53,24 @@ export interface PageCard {
   status?: ApprovalStatus;
 }
 
-export type SiteImageKey = 'martaDesk' | 'martaWorking' | 'consultingRoom' | 'sandtray' | 'projectiveFigures' | 'dixitCards';
+export type SiteImageKey =
+  | 'homeHero'
+  | 'tirandoDelHilo'
+  | 'aboutPortrait'
+  | 'aboutBody'
+  | 'aboutDesk'
+  | 'methodHero'
+  | 'methodProcess'
+  | 'methodBonds'
+  | 'adultsHero'
+  | 'perinatalHero'
+  | 'childrenFamiliesHero'
+  | 'adolescentsHero'
+  | 'contactHero'
+  | 'consultingRoom'
+  | 'sandtray'
+  | 'projectiveFigures'
+  | 'dixitCards';
 
 /**
  * Editorial blocks that only some pages need. Keeping them as a discriminated
