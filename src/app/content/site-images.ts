@@ -204,4 +204,5 @@ export const siteImages = {
   }
 } as const satisfies Record<string, SiteImage>;
 
-export const ogImagePath = 'images/og-hilando-fino.jpg';
+export const ogImagePath = 'images/og-como-trabajo.jpg';
+export const ogImageAlt = 'Mujer reclinada en un sillón con un libro sobre el rostro, rodeada de plantas, en un momento de pausa.';

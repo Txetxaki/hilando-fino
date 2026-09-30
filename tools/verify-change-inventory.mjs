@@ -125,7 +125,7 @@ const expectedPaths = [
   'public/images/logo-440.webp',
   'public/images/logo-660.png',
   'public/images/logo-660.webp',
-  'public/images/og-hilando-fino.jpg',
+  'public/images/og-como-trabajo.jpg',
   'public/images/proceso-terapeutico-480.jpg',
   'public/images/proceso-terapeutico-480.webp',
   'public/images/proceso-terapeutico-720.jpg',
