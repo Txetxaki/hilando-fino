@@ -22,9 +22,10 @@ const jsonResponse = (status: number, body: unknown): Response =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 
 describe('contact submission transport (Web3Forms)', () => {
-  it('ships with the placeholder key until the owner pastes the real one', () => {
-    expect(web3formsAccessKey).toBe(web3formsPlaceholderKey);
+  it('ships with a real access key, not the placeholder', () => {
     expect(web3formsPlaceholderKey).toBe('REPLACE_WITH_WEB3FORMS_ACCESS_KEY');
+    expect(web3formsAccessKey).not.toBe(web3formsPlaceholderKey);
+    expect(web3formsAccessKey).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
   });
 
   it('falls back to the direct email route and never calls fetch while the key is the placeholder', async () => {
