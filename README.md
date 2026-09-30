@@ -5,7 +5,7 @@ Paquete de identidad de marca y de configuración de un [Claude Project](https:/
 ## Contenido
 
 - `logo.png` — logo original de la marca. Es el master: la cabecera sirve las variantes ya escaladas de `public/images/logo-*` (WebP + PNG, 220/440/660 px), porque el original pesa 278 kB y se muestra a 220 px.
-- `public/images/` — fotografías reales de la consulta entregadas por Marta (2026-07-31 y 2026-09-27), en WebP + JPG a 480/720/960/1280 px (951 px como máximo para `psicologia-perinatal-*`, entregada a menor resolución), más `og-hilando-fino.jpg` (1200×630) para redes sociales. El manifiesto con dimensiones y textos alternativos vive en `src/app/content/site-images.ts`.
+- `public/images/` — fotografías reales de la consulta entregadas por Marta (2026-07-31 y 2026-09-27), en WebP + JPG a 480/720/960/1280 px (951 px como máximo para `psicologia-perinatal-*`, entregada a menor resolución), más `og-como-trabajo.jpg` (1200×630, la foto de «Cómo trabajo») para redes sociales. El manifiesto con dimensiones y textos alternativos vive en `src/app/content/site-images.ts`.
 - `identidad-de-marca/guia-de-marca.md` — paleta de colores (extraída por píxel del logo, con verificación de contraste WCAG), tipografía y uso del logo.
 - `claude-project/` — todo lo necesario para levantar un Project de contenidos en claude.ai / Claude Desktop:
   - `instrucciones-personalizadas.md` — pegar en "Instrucciones del proyecto".
@@ -36,7 +36,7 @@ The GitHub Pages artifact is static only and deploys from `dist/hilando-fino/bro
 
 This repository is public, and so is the Pages preview. `noindex` is not access control; do not publish secrets, patient data, private clinical notes, or approved-only production claims in the preview or in the source tree.
 
-Live contact is blocked. `CONTACT_ENABLED=true` alone is not a working activation path: the UI intentionally does not submit, and the provider implementation rejects until a separate legal/provider/retention/HTTPS deployment approval change lands. Multi-instance contact also requires approved shared CSRF replay storage or sticky sessions.
+Contact form: on GitHub Pages the browser posts submissions straight to [Web3Forms](https://web3forms.com) (`https://api.web3forms.com/submit`), which forwards them to the practice mailbox. The public access key goes in one place, `src/app/contact/web3forms.config.ts`. While it is still `REPLACE_WITH_WEB3FORMS_ACCESS_KEY` nothing is sent and the form shows the "write to me directly" fallback. The legacy Express `/api/contact` boundary is not used by the client and stays blocked (`CONTACT_ENABLED=true` is not an activation path).
 
 Use Node `24.15.0` (`.nvmrc`, `.node-version`, `package.json#engines`, CI, and lockfile-pinned `node@24.15.0` dev dependency). Run `npm ci` first so scripts resolve the same local Node runtime; do not use floating `npx -p node@...` execution.
 

@@ -4,7 +4,7 @@ import { Meta, Title } from '@angular/platform-browser';
 
 import { pageByPath } from '../../content/content-matrix';
 import { notFoundContent } from '../../content/not-found';
-import { ogImagePath } from '../../content/site-images';
+import { ogImageAlt, ogImagePath } from '../../content/site-images';
 import { siteConfig } from '../../../environments/site-config';
 import { schemaForPage } from './schema';
 
@@ -33,7 +33,7 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:image', content: `${siteUrl}/${ogImagePath}` });
     this.meta.updateTag({ property: 'og:image:width', content: '1200' });
     this.meta.updateTag({ property: 'og:image:height', content: '630' });
-    this.meta.updateTag({ property: 'og:image:alt', content: 'Marta Martín en su consulta de psicología en Ciudad Real.' });
+    this.meta.updateTag({ property: 'og:image:alt', content: ogImageAlt });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
