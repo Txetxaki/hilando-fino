@@ -10,13 +10,22 @@ import type { PageBlock, SiteImageKey } from '../content/types';
 import { workshopLines } from '../content/workshops';
 import { pageContents } from './page-data';
 
+function classNames(...names: (string | false | undefined)[]): string {
+  return names.filter(Boolean).join(' ');
+}
+
 @Component({
   selector: 'hf-standard-page',
   standalone: true,
   imports: [RouterLink],
   template: `
-    <article class="page-shell" [class.local-page]="content().page.key === 'local'" [class.trauma-page]="content().page.key === 'traumaLocal'" [class.home-page]="content().page.key === 'home'">
-      <header class="hero woven-hero" [class.has-media]="heroImage()">
+    <!-- Layout-critical classes are bound as ONE [class] value with no static class
+         attribute next to it. A static class plus [class.x] bindings makes hydration
+         re-apply the static attribute (wiping the classes the server rendered) and
+         restore the bound ones on the next update pass, which reflows the page for a
+         frame. With a lone [class] binding hydration only adds and removes tokens. -->
+    <article [class]="articleClass()">
+      <header [class]="heroClass()">
         <div class="hero-text">
           @if (content().page.key === 'home') {
             <!-- The logo mark now lives only in the sticky header. The home hero's
@@ -76,7 +85,7 @@ import { pageContents } from './page-data';
       }
 
       @for (section of content().sections; track section.title) {
-        <section class="content-band" [class.has-media]="section.image" [class.wide-media]="section.wideMedia" [id]="sectionId(section.title)">
+        <section [class]="sectionClass(section)" [id]="sectionId(section.title)">
           <div class="section-text">
             @if (section.eyebrow) {
               <p class="eyebrow">{{ section.eyebrow }}</p>
@@ -297,6 +306,11 @@ export class StandardPageComponent {
     const key = this.content().heroImage;
     return key ? siteImages[key] : undefined;
   });
+  readonly articleClass = computed(() => {
+    const key = this.content().page.key;
+    return classNames('page-shell', key === 'local' && 'local-page', key === 'traumaLocal' && 'trauma-page', key === 'home' && 'home-page');
+  });
+  readonly heroClass = computed(() => classNames('hero woven-hero', this.heroImage() && 'has-media'));
   readonly credentialGroups = credentialGroups;
   readonly methodModels = methodModels;
   readonly methodResources = methodResources;
@@ -308,6 +322,10 @@ export class StandardPageComponent {
       assertStandardPageKey(key);
       this.pageKey.set(key);
     });
+  }
+
+  sectionClass(section: { image?: SiteImageKey; wideMedia?: boolean }): string {
+    return classNames('content-band', section.image && 'has-media', section.wideMedia && 'wide-media');
   }
 
   image(key: SiteImageKey): SiteImage {

@@ -217,7 +217,7 @@ h3 { margin: 0 0 .9rem; font-size: clamp(1.45rem, 2.8vw, 2rem); font-weight: 500
 .section-media img { display: block; width: 100%; height: auto; border-radius: var(--radius-panel); box-shadow: var(--shadow-card); }
 @media (max-width: 900px) {
   .content-band.has-media { grid-template-columns: 1fr; }
-  .content-band.has-media .section-media { order: -1; max-width: 20rem; margin-inline: auto; }
+  .content-band.has-media .section-media { order: -1; width: min(100%, 20rem); margin-inline: auto; }
 }
 
 /* A landscape photo in the media column (e.g. "vínculos" now showing the
@@ -230,7 +230,7 @@ h3 { margin: 0 0 .9rem; font-size: clamp(1.45rem, 2.8vw, 2rem); font-weight: 500
   .content-band.has-media.wide-media { grid-template-columns: minmax(0, 1fr) minmax(0, 28rem); }
 }
 @media (max-width: 900px) {
-  .content-band.has-media.wide-media .section-media { max-width: 28rem; }
+  .content-band.has-media.wide-media .section-media { width: min(100%, 28rem); }
 }
 
 /* Blocks that carry their own fill sit inside the section rhythm as big soft
